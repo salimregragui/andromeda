@@ -1,0 +1,27 @@
+.NavigationItem {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    font-weight: 600;
+    font-size: 14px;
+    margin-left: 30px;
+    margin-top: 14%;
+}
+
+.NavigationItem a {
+    color: #181818;
+    text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+}
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.NavigationItem a.active {
+    color: #dadada;
+}
+
+@media (min-width: 500px) {
+
+}

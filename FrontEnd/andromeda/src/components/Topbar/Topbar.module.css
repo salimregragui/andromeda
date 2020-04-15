@@ -1,0 +1,31 @@
+.Topbar {
+    width: 100%;
+    height: 70px;
+    background-color: white;
+    border-bottom: 1px solid #dadada;
+}
+
+.Logo {
+    width: 220px;
+    height: 100%;
+    font-weight: 700;
+    font-size: 22px;
+    color: #181818;
+    border-right: 1px solid #dadada;
+    text-align: left;
+    align-items: center;
+    padding-left: 30px;
+    float: left;
+}
+
+.Logo span {
+    margin: 0;
+    position: relative;
+    top: 30%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.Logo span:hover {
+    cursor: pointer;
+}

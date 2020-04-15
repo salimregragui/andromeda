@@ -1,0 +1,143 @@
+.LandingTop {
+    width: 100%;
+    height: auto;
+    float: left;
+}
+
+.LandingTop img {
+    width: 40%;
+    float: left;
+    margin-left: 80px;
+    margin-top: 20px;
+}
+
+.LandingTop_Text {
+    width: 50%;
+    text-align: left;
+    float: right;
+    margin-top: 60px;
+}
+
+.LandingTop_Text h1 {
+    font-weight: 700;
+    font-size: 32px;
+    width: 95%;
+}
+
+.LandingTop_Text p {
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 50px;
+    line-height: 30px;
+    width: 92%;
+}
+
+.LandingTop_Text button {
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    border-radius: 20px;
+    border-color: blue;
+    color: blue;
+    font-weight: 600;
+    margin-left: 20px;
+    background-color: white;
+
+    transition: 0.3s;
+}
+
+.LandingTop_Text button:hover {
+    cursor: pointer;
+    background-color: blue;
+    color: white;
+
+    transition: 0.3s;
+}
+
+.LandingTop_Text button:focus {
+    outline: none;
+}
+.promiseLeft {
+    width: 100%;
+    height: auto;
+    float: left;
+    margin-top: 50px;
+}
+
+.promiseLeft img {
+    width: 40%;
+    float: left;
+    margin-left: 80px;
+    margin-top: 20px;
+}
+
+.promiseLeft_Text {
+    width: 50%;
+    text-align: left;
+    float: right;
+    margin-top: 150px;
+}
+
+.promiseLeft_Text span {
+    font-weight: 600;
+    color: #c1c1c1;
+    margin-bottom: 0px;
+}
+
+.promiseLeft_Text h1 {
+    font-weight: 700;
+    font-size: 32px;
+    width: 95%;
+    margin-top: 0px;
+}
+
+.promiseLeft_Text p {
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 20px;
+    line-height: 30px;
+    width: 70%;
+}
+.promiseRight {
+    width: 100%;
+    height: auto;
+    float: left;
+    margin-top: 50px;
+}
+
+.promiseRight img {
+    width: 40%;
+    float: right;
+    margin-right: 80px;
+    margin-top: 20px;
+}
+
+.promiseRight_Text {
+    width: 50%;
+    text-align: right;
+    float: left;
+    margin-top: 150px;
+}
+
+.promiseRight_Text span {
+    font-weight: 600;
+    color: #c1c1c1;
+    margin-bottom: 0px;
+}
+
+.promiseRight_Text h1 {
+    font-weight: 700;
+    font-size: 32px;
+    width: 95%;
+    margin-left: 5%;
+    margin-top: 0px;
+}
+
+.promiseRight_Text p {
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 20px;
+    line-height: 30px;
+    width: 70%;
+    margin-left: 30%;
+}
