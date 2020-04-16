@@ -1,0 +1,77 @@
+.SignIn {
+    width: 100%;
+    height: auto;
+    float: left;
+}
+
+.SignIn img {
+    width: 40%;
+    float: right;
+    margin-right: 80px;
+    margin-top: 50px;
+}
+
+.SignIn_Content {
+    width: 50%;
+    text-align: center;
+    float: left;
+    margin-top: 40px;
+    color: #181818;
+}
+
+.SignIn_Content h1 {
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.SignIn_Content h2 {
+    text-align: left;
+    margin-left: 20%;
+    margin-top: 40px;
+}
+
+.SignIn_Content label {
+    font-weight: 700;
+    font-size: 14px;
+    margin-right: 45%;
+    margin-top: 20px;
+}
+
+.SignIn_Content input {
+    width: 57%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #8A8A8A;
+    padding-left: 3%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.SignIn_Content input:focus {
+    outline: none;
+}
+
+.SignIn_Content button {
+    width: 60%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #3459D6;
+    border: none;
+    color: white;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.SignIn_Content button:hover {
+    background-color: rgb(27, 66, 196);
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.SignIn_Content a {
+    text-decoration: none;
+    color: #8A8A8A;
+    font-size: 14px;
+}

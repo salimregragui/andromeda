@@ -1,17 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 import Layout from './containers/Layout/Layout';
 import Landing from './components/Landing/Landing';
+import Authentification from './containers/Authentification/Authentification';
+import { Switch, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <Layout>
-        <Landing />
-      </Layout>
-    </div>
-  );
+class App extends Component {
+
+  render() {
+    return (
+      <div className="App">
+        <Layout>
+          <Switch>
+            <Route path="/" exact component= {Landing} />
+            <Route path="/auth" component= {Authentification} />
+          </Switch>
+        </Layout>
+      </div>
+    );
+  }
 }
 
 export default App;

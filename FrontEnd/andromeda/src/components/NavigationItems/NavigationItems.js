@@ -5,8 +5,8 @@ import classes from './NavigationItems.module.css';
 const NavigationItems = () => {
     return (
         <ul className={classes.NavigationItems}>
-            <NavigationItem link="/signin" exact>Connexion</NavigationItem>
-            <NavigationItem link="/signup" exact>Inscription</NavigationItem>
+            <NavigationItem link="/auth/signin" exact>Connexion</NavigationItem>
+            <NavigationItem link="/auth/signup" exact>Inscription</NavigationItem>
         </ul>
     )
 }

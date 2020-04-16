@@ -16,6 +16,7 @@
     text-align: left;
     float: right;
     margin-top: 60px;
+    color: #26343D;
 }
 
 .LandingTop_Text h1 {
@@ -37,8 +38,8 @@
     width: 200px;
     height: 40px;
     border-radius: 20px;
-    border-color: blue;
-    color: blue;
+    border: 2px solid #3459D6;
+    color: #3459D6;
     font-weight: 600;
     margin-left: 20px;
     background-color: white;
@@ -48,7 +49,7 @@
 
 .LandingTop_Text button:hover {
     cursor: pointer;
-    background-color: blue;
+    background-color: #3459D6;
     color: white;
 
     transition: 0.3s;
@@ -62,6 +63,7 @@
     height: auto;
     float: left;
     margin-top: 50px;
+    color: #26343D;
 }
 
 .promiseLeft img {
@@ -103,6 +105,7 @@
     height: auto;
     float: left;
     margin-top: 50px;
+    color: #26343D;
 }
 
 .promiseRight img {

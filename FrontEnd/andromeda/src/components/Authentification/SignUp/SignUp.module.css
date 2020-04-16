@@ -1,0 +1,82 @@
+.SignUp {
+    width: 100%;
+    height: auto;
+    float: left;
+}
+
+.SignUp img {
+    width: 40%;
+    float: left;
+    margin-left: 80px;
+    margin-top: 50px;
+}
+
+.SignUp_Content {
+    width: 50%;
+    text-align: center;
+    float: right;
+    margin-top: 10px;
+    color: #181818;
+}
+
+.SignUp_Content h1 {
+    font-weight: 700;
+    font-size: 24px;
+    color: #181818;
+}
+
+.SignUp_Content h2 {
+    text-align: left;
+    margin-left: 20%;
+    margin-top: 40px;
+}
+
+.SignUp_Content label {
+    font-weight: 700;
+    font-size: 14px;
+    margin-top: 20px;
+    width: 60%;
+    margin-left: 20%;
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.SignUp_Content input {
+    width: 57%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #8A8A8A;
+    padding-left: 3%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.SignUp_Content input:focus {
+    outline: none;
+}
+
+.SignUp_Content button {
+    width: 60%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #3459D6;
+    border: none;
+    color: white;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.SignUp_Content button:hover {
+    background-color: rgb(27, 66, 196);
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.SignUp_Content a {
+    text-decoration: none;
+    color: #8A8A8A;
+    font-size: 14px;
+}

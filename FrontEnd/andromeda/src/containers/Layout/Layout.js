@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import classes from './Layout.module.css';
 import Topbar from '../../components/Topbar/Topbar';
+import {withRouter} from 'react-router-dom';
 
-export default class Layout extends Component {
+class Layout extends Component {
     render() {
         return (
             <React.Fragment>
-                <Topbar />
+                {this.props.location.pathname !== '/auth/signin' && this.props.location.pathname !== '/auth/signup' ? <Topbar /> : null}
                 <main className={classes.Content}>
                     {this.props.children}
                 </main>
@@ -14,3 +15,5 @@ export default class Layout extends Component {
         )
     }
 }
+
+export default withRouter(Layout);
