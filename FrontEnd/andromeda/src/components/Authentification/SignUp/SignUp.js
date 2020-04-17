@@ -10,16 +10,20 @@ const SignUp = (props) => {
             <div className={classes.SignUp_Content}>
                 <h1><NavLink className={classes.H1_nav} to='/'>Andromeda</NavLink></h1>
                 <h2>Bienvenue parmis nous !</h2>
+                
                 <label for="email">Adresse Email :</label>
-                <input type="text" placeholder="Votre Email" value={props.email} onChange={props.changedEmail} /><br/>
+                <input type="text" name="email" placeholder="Votre Email" value={props.email} onChange={props.changed} /><br/>
+                
                 <br/>
                 <label for="pass">Mot de passe :</label>
-                <input type="password" placeholder="Votre Mot de passe" value={props.password} onChange={props.changedPass} /><br/>
+                <input type="password" name="password" placeholder="Votre Mot de passe" value={props.password} onChange={props.changed} /><br/>
+                
                 <br/>
                 <label for="pass">Confirmer Mot de passe :</label>
-                <input type="password" placeholder="Confirmer votre Mot de passe" value={props.password} onChange={props.changedPass} /><br/>
+                <input type="password" name="confirmPassword" placeholder="Confirmer votre Mot de passe" value={props.confirmPass} onChange={props.changed} /><br/>
+                
                 <br/><br/><br/>
-                <button>S'inscrire</button>
+                <button onClick={props.submitedSignUp}>S'inscrire</button>
 
                 <br/><br/><br/>
                 <NavLink 

@@ -2,31 +2,107 @@ import React, { Component } from 'react';
 import SignIn from '../../components/Authentification/SignIn/SignIn';
 import SignUp from '../../components/Authentification/SignUp/SignUp';
 import { Switch, Route } from 'react-router-dom';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import * as authActions from '../../store/actions/index';
+import Logout from './Logout/Logout';
 
-export default class Authentification extends Component {
+class Authentification extends Component {
     state = {
-        email: '',
-        password: ''
+        signIn: {
+            email: '',
+            password: ''
+        },
+        signUp: {
+            email: '',
+            password: '',
+            confirmPassword: ''
+        },
+        errors: []
     }
 
-    emailChangedHandler = (event) => {
-        this.setState({email: event.target.value});
-        console.log(this.state);
+    componentDidMount() {
+        if (localStorage.getItem('token')) {
+            this.props.history.push('/dashboard');
+        }
     }
 
-    passChangedHandler = (event) => {
-        this.setState({password: event.target.value});
-        console.log(this.state);
+    changedSignInHandler = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        const changedSignIn = {...this.state.signIn}
+        changedSignIn[name] = value;
+
+        this.setState({signIn: changedSignIn})
+    }
+
+    changedSignUpHandler = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        const changedSignUp = {...this.state.signUp}
+        changedSignUp[name] = value;
+
+        this.setState({signUp: changedSignUp})
+    }
+
+    submitSignInHandler = () => {
+        this.props.onAuth(this.state.signIn.email, this.state.signIn.password);
+        this.props.history.push('/dashboard');
+    }
+
+    submitSignUpHandler = () => {
+        const user = {
+            email: this.state.signUp.email,
+            password: this.state.signUp.password
+        }
+        axios.post('http://localhost:8000/api/auth/register', user)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                let errorsList = [...this.state.errors];
+                errorsList.push(error);
+                this.setState({errors: errorsList});
+                console.log(this.state.errors);
+            })
     }
 
     render() {
         return (
             <React.Fragment>
                 <Switch>
-                    <Route path="/auth/signin" render= {() => <SignIn email={this.state.email} password={this.state.password} changedEmail={this.emailChangedHandler} changedPass={this.passChangedHandler} />} />
-                    <Route path="/auth/signup" component= {SignUp} />
+                    <Route path="/auth/signin" render= {() => 
+                        <SignIn email={this.state.signIn.email} 
+                                password={this.state.signIn.password} 
+                                changed={this.changedSignInHandler} 
+                                submitedSignIn= {this.submitSignInHandler}/>} 
+                        />
+                    <Route path="/auth/signup" render= {() => 
+                        <SignUp email={this.state.signUp.email}
+                                password={this.state.signUp.password}
+                                confirmPass={this.state.signUp.confirmPassword}
+                                changed={this.changedSignUpHandler}
+                                submitedSignUp={this.submitSignUpHandler}/>} />
+
+                    <Route path="/auth/logout" component={Logout} />
                 </Switch>
             </React.Fragment>
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, pass) => dispatch(authActions.auth(email, pass))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Authentification);

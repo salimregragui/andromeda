@@ -6,7 +6,7 @@ const Landing = () => {
     return (
         <React.Fragment>
             <div className={classes.LandingTop}>
-                <img src={landingImage} alt="Landing Image" />
+                <img src={landingImage} alt="Landing" />
                 <div className={classes.LandingTop_Text}>
                     <h1>Trouvez les cours qu'il vous faut, pour atteindre vos objectifs.</h1>
                     <p>
@@ -20,7 +20,7 @@ const Landing = () => {
             </div>
 
             <div className={classes.promiseRight}>
-                <img src={landingImage} alt="Landing Image" />
+                <img src={landingImage} alt="promise 1" />
                 <div className={classes.promiseRight_Text}>
                     <span>On vous promet</span>
                     <h1>Des cours de qualité</h1>
@@ -32,7 +32,7 @@ const Landing = () => {
             </div>
 
             <div className={classes.promiseLeft}>
-                <img src={landingImage} alt="Landing Image" />
+                <img src={landingImage} alt="promise 2" />
                 <div className={classes.promiseLeft_Text}>
                     <span>On vous promet</span>
                     <h1>Des cours de qualité</h1>
@@ -44,7 +44,7 @@ const Landing = () => {
             </div>
 
             <div className={classes.promiseRight}>
-                <img src={landingImage} alt="Landing Image" />
+                <img src={landingImage} alt="promise 3" />
                 <div className={classes.promiseRight_Text}>
                     <span>On vous promet</span>
                     <h1>Des cours de qualité</h1>

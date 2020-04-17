@@ -10,13 +10,13 @@ const SignIn = (props) => {
             <div className={classes.SignIn_Content}>
                 <h1>Andromeda</h1>
                 <h2>Bon retour parmis nous !</h2>
-                <label for="email">Adresse Email :</label><br/>
-                <input type="text" placeholder="Votre Email" value={props.email} onChange={props.changedEmail} /><br/>
+                <label>Adresse Email :</label><br/>
+                <input type="text" name="email" placeholder="Votre Email" value={props.email} onChange={props.changed} /><br/>
                 <br/>
-                <label for="pass">Mot de passe :</label><br/>
-                <input type="password" placeholder="Votre Mot de passe" value={props.password} onChange={props.changedPass} />
+                <label>Mot de passe :</label><br/>
+                <input type="password" name="password" placeholder="Votre Mot de passe" value={props.password} onChange={props.changed} />
                 <br/><br/><br/>
-                <button>Se connecter</button>
+                <button onClick={props.submitedSignIn}>Se connecter</button>
                 <br/><br/><br/><br/>
                 <NavLink 
                     to='/auth/signup'
