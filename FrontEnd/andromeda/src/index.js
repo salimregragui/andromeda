@@ -12,15 +12,19 @@ import thunk from 'redux-thunk';
 import authReducer from './store/reducers/auth';
 import axios from 'axios';
 
+//Token qui va être ajouté à toutes les requetes http vers le backend
 const token = localStorage.getItem('token');
-
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
+//Permet d'utiliser redux devtools sur chrome
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+//on combine tous les reducers de notre store en 1 seul
 const rootReducer = combineReducers({
   auth: authReducer
 });
+
+//on créer notre store avec le thunk middleware qui permet le déclenchement d'actions asynchrones
 const store = createStore(rootReducer, composeEnhancers(
   applyMiddleware(thunk)
 ));

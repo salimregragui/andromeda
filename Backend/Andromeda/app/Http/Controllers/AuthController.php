@@ -43,7 +43,7 @@ class AuthController extends Controller
             
         ]);
 
-        return $this->login(request());
+        return response()->json(['message' => 'Compte créer !']);
     }
 
     /**
