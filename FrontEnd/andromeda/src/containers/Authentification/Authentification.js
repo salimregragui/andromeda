@@ -53,25 +53,18 @@ class Authentification extends Component {
     }
 
     submitSignUpHandler = () => {
-        const user = {
-            email: this.state.signUp.email,
-            password: this.state.signUp.password
-        }
-        axios.post('http://localhost:8000/api/auth/register', user)
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                let errorsList = [...this.state.errors];
-                errorsList.push(error);
-                this.setState({errors: errorsList});
-                console.log(this.state.errors);
-            })
+        this.props.onRegister(this.state.signUp.email, this.state.signUp.password);
     }
 
     render() {
+        let error = null;
+
+        if (this.props.error) {
+            error = (<div>{this.props.error.message}</div>);
+        }
         return (
             <React.Fragment>
+                {error}
                 <Switch>
                     <Route path="/auth/signin" render= {() => 
                         <SignIn email={this.state.signIn.email} 
@@ -95,13 +88,15 @@ class Authentification extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user
+        user: state.auth.user,
+        error: state.auth.error
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, pass) => dispatch(authActions.auth(email, pass))
+        onAuth: (email, pass) => dispatch(authActions.auth(email, pass)),
+        onRegister: (email, pass) => dispatch(authActions.register(email, pass))
     };
 };
 
