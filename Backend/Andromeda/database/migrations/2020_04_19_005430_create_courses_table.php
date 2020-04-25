@@ -22,12 +22,15 @@ class CreateCoursesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('followed', function (Blueprint $table) {
+        Schema::create('course_user', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->unique(['course_id','user_id']);
+
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->primary(array('course_id', 'user_id'));
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -41,6 +44,12 @@ class CreateCoursesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('courses');
-        Schema::dropIfExists('followed');
+        Schema::dropIfExists('course_user');
     }
 }
+
+/*
+ 'course_id' => factory(App\Course::class),
+        'user_id' => factory(App\User::class),
+        
+*/
