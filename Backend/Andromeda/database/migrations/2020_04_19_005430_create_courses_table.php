@@ -47,9 +47,3 @@ class CreateCoursesTable extends Migration
         Schema::dropIfExists('course_user');
     }
 }
-
-/*
- 'course_id' => factory(App\Course::class),
-        'user_id' => factory(App\User::class),
-        
-*/
