@@ -23,4 +23,9 @@ class Section extends Model
     {
         return $this->hasOne(Summary::class);
     }
+
+    public function Quiz()
+    {
+        return $this->hasOne(Quiz::class);
+    }
 }
