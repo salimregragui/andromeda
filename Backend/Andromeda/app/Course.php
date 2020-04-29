@@ -23,4 +23,11 @@ class Course extends Model
     {
         return $this->hasMany(Resource::class);
     }
+
+    public function Followed()
+    {
+        // permet de lister les utilisateur qui suivent ce cour
+        return $this->belongsToMany('App\User')->using('App\Course_user');
+    }
+
 }
