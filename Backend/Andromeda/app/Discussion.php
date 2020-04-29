@@ -11,7 +11,7 @@ class Discussion extends Model
 
     public function Users()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function Messages()

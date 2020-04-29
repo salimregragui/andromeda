@@ -22,6 +22,10 @@ class DatabaseSeeder extends Seeder
         factory(App\Notification::class)->create();
         factory(App\Message::class)->create();
         factory(App\Bug::class)->create();
-
+        // je lie les utilisateur 1 et 2 a la premiere discussion
+        $u=App\User::find(1);
+        $u->Discussions()->attach(App\Discussion::find(1));
+        $u=App\User::find(2);
+        $u->Discussions()->attach(App\Discussion::find(1));
     }
 }
