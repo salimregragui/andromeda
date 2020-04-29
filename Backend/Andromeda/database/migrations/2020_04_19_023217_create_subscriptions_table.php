@@ -17,7 +17,7 @@ class CreateSubscriptionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->time('date_end');
-            $table->boolean('autorestart');
+            $table->boolean('autorestart')->default(0);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

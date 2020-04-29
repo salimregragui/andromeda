@@ -19,9 +19,15 @@ class CreateDiscussionsTable extends Migration
         });
 
         Schema::create('discussion_user', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+            
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('discussion_id');
-            $table->primary(array('discussion_id', 'user_id'));
+            $table->unsignedBigInteger('user_id');
+
+            $table->unique(['discussion_id','user_id']);
+
+            $table->foreign('discussion_id')->references('id')->on('discussions')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

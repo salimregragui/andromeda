@@ -14,5 +14,14 @@ class DatabaseSeeder extends Seeder
         // $this->call(UserSeeder::class);
         factory(App\Chapter::class)->create();
         factory(App\Summary::class)->create();
+        factory(App\Subscription::class)->create();
+        factory(App\Course_user::class)->create();
+        factory(App\Result::class)->create();
+        factory(App\Resource::class)->create();
+        factory(App\Question::class)->create();
+        factory(App\Notification::class)->create();
+        factory(App\Message::class)->create();
+        factory(App\Bug::class)->create();
+
     }
 }

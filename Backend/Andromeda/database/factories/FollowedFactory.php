@@ -9,7 +9,7 @@ $factory->define(Course_user::class, function (Faker $faker) {
     return [
         //
 
-        'course_id' => factory(App\Course::class),
-        'user_id' => factory(App\User::class),
+        'course_id' => 1,#factory(App\Course::class),
+        'user_id' => 1,#factory(App\User::class),
     ];
 });

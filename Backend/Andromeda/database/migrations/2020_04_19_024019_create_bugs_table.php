@@ -17,8 +17,8 @@ class CreateBugsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('attachment');
-            $table->boolean('approved');
-            $table->boolean('repaired');
+            $table->boolean('approved')->default(0);
+            $table->boolean('repaired')->default(0);
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
