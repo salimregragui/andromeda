@@ -13,8 +13,12 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
     
+    //-------------------------USER---------------------------
+    Route::get('user/showall','UserController@index');
     Route::get('user/{id}/show','UserController@show');
-    //Route::get('user/{user}/update','UserController@update');
+    Route::post('user/{user}/update','UserController@update');
+    Route::delete('user/{user}/delete','UserController@destroy');
+
 
 });
 

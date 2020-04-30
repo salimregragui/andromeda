@@ -19,7 +19,7 @@ class CreateBugsTable extends Migration
             $table->string('attachment');
             $table->boolean('approved')->default(0);
             $table->boolean('repaired')->default(0);
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
