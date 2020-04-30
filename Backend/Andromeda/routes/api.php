@@ -12,5 +12,9 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
+    
+    Route::get('user/{id}/show','UserController@show');
+    //Route::get('user/{user}/update','UserController@update');
 
 });
+
