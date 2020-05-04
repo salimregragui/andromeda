@@ -16,7 +16,7 @@ class Section extends Model
 
     public function Chapters()
     {
-        return $this->hasMany(Chapter::class);
+        return $this->hasMany(Chapter::class)->orderBy('number', 'asc');
     }
 
     public function Summary()

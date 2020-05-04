@@ -19,6 +19,18 @@ Route::group([
     Route::post('user/{user}/update','UserController@update');
     Route::delete('user/{user}/delete','UserController@destroy');
 
+    //-------------------------COURSE---------------------------
+    Route::get('course/showall','CourseController@index');
+    Route::get('course/{id}/show','CourseController@show');
+
+    //-------------------------NOTIFICATION---------------------------
+    Route::get('notification/{user}/showall','NotificationController@index');
+    Route::get('notification/show','NotificationController@show');
+
+
+    
+    // Route::get('notification/{notification}/show','NotificationController@show');
+
 
 });
 

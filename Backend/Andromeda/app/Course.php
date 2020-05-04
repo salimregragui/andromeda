@@ -16,7 +16,7 @@ class Course extends Model
 
     public function Sections()
     {
-        return $this->hasMany(Section::class);
+        return $this->hasMany(Section::class)->orderBy('number', 'asc');
     }
 
     public function Resources()
