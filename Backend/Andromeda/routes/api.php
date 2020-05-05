@@ -12,6 +12,7 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
+    // Route::get('notifications', 'AuthController@notifications');
     
     //-------------------------USER---------------------------
     Route::get('user/showall','UserController@index');
@@ -25,7 +26,7 @@ Route::group([
 
     //-------------------------NOTIFICATION---------------------------
     Route::get('notification/{user}/showall','NotificationController@index');
-    Route::get('notification/show','NotificationController@show');
+    Route::post('notification/show','NotificationController@show');
 
 
     

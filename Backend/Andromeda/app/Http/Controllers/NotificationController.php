@@ -24,7 +24,11 @@ class NotificationController extends Controller
         // return dd(auth()->user());
         // JWTAuth::setToken("t6SdegimC3cXT3syfikuFxanMGUlhRQiru4Ip71HpE8BeRfBG0i674zNShqdbsSa");
         // JWTAuth::toUser(JWTAuth::getToken());
-        return JWTAuth::toUser();
+        // return JWTAuth::toUser();
+        // return dd(JWTAuth::user());
+        $user = JWTAuth::user();
+
+        return response()->json($user->Notifications);
     }
 
 }
