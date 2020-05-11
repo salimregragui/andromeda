@@ -104,4 +104,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Discussion::class);
     }
+
+    public function Tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }
