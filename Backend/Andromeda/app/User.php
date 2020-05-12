@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-
+use App\Progression;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
@@ -108,5 +108,17 @@ class User extends Authenticatable implements JWTSubject
     public function Tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function Progressions()
+    {
+        return $this->hasMany(Progression::class);
+    }
+
+    public function Progression(Course $course)
+    {
+        // a confirmer un user ne peut avoir plusieur progression dans le meme cours
+        return Progression::where(['user_id' => $this->id , 'course_id' => $course->id])->first(); // or get need confirmation
+        
     }
 }
