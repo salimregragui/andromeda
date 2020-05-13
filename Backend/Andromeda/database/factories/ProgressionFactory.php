@@ -11,5 +11,6 @@ $factory->define(Progression::class, function (Faker $faker) {
         'user_id' => 1,
         'course_id' => 1,
         'chapter_id' => 1,
+        'note' => $faker->randomDigit,
     ];
 });

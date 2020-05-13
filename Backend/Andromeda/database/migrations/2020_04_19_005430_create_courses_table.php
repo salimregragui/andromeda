@@ -18,6 +18,9 @@ class CreateCoursesTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->unsignedBigInteger('user_id');
+            
+            $table->float('rating')->nullable();
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
