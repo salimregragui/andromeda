@@ -28,7 +28,7 @@ class CourseController extends Controller
                 }
             }
 
-            $course['numberOfSections']=$cptChapter; // nombre de chapitre dans se cours 
+            $course['numberOfChapter']=$cptChapter; // nombre de chapitre dans se cours 
         }
 
         return ['courses' => $courses];
@@ -52,7 +52,7 @@ class CourseController extends Controller
             }
         }
 
-        $course['numberOfSections']=$cptChapter; // nombre de chapitre dans se cours 
+        $course['numberOfChapter']=$cptChapter; // nombre de chapitre dans se cours 
         
         return ['course' => $course];
     }
