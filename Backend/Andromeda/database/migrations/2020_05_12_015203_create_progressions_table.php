@@ -18,9 +18,9 @@ class CreateProgressionsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('chapter_id');
-            
-            $table->unique(['user_id','course_id','chapter_id']);
 
+            $table->unique(['user_id','course_id']); // il ne peut y avoire qu'une seule progression dans chaque cours suivi par un user
+            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->foreign('chapter_id')->references('id')->on('chapters')->onDelete('cascade');

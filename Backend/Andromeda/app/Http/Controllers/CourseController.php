@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use Illuminate\Http\Request;
-
+use App\User;
+use App\Course_user;
 class CourseController extends Controller
 {
     
@@ -15,12 +16,19 @@ class CourseController extends Controller
         
         foreach ($courses as $course) 
         {
+            $cptChapter=0; //compteur de chapitre dans chaque cours
+
+            $course['suivis']=$course->Followed()->count(); // nombre d'user qui suivent ce cours 
+            
             foreach ($course->Sections as $section) 
             {
                 foreach ($section->Chapters as $chapter) 
                 {
+                    $cptChapter++;
                 }
             }
+
+            $course['numberOfSections']=$cptChapter; // nombre de chapitre dans se cours 
         }
 
         return ['courses' => $courses];
@@ -32,12 +40,19 @@ class CourseController extends Controller
 
         $course=Course::find($id);
 
+        $cptChapter=0; //compteur de chapitre dans chaque cours
+
+        $course['suivis']=$course->Followed()->count(); // nombre d'user qui suivent ce cours 
+        
         foreach ($course->Sections as $section) 
         {
             foreach ($section->Chapters as $chapter) 
             {
+                $cptChapter++;
             }
         }
+
+        $course['numberOfSections']=$cptChapter; // nombre de chapitre dans se cours 
         
         return ['course' => $course];
     }
