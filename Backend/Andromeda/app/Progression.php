@@ -23,7 +23,6 @@ class Progression extends Model
 
     public function Course()
     {
-        // a confirmer un user ne peut avoir plusieur progression dans le meme cours
         return Course::where('id',$this->course_id)->first();
     }
 }

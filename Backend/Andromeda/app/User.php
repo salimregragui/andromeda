@@ -117,8 +117,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function Progression(Course $course)
     {
-        // a confirmer un user ne peut avoir plusieur progression dans le meme cours
-        return Progression::where(['user_id' => $this->id , 'course_id' => $course->id])->first(); // or get need confirmation
-        
+        return Progression::where(['user_id' => $this->id , 'course_id' => $course->id])->first();
     }
 }
