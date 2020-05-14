@@ -23,7 +23,6 @@ Route::group([
     //-------------------------COURSE---------------------------
     Route::get('course/showall','CourseController@index');
     Route::get('course/{id}/show','CourseController@show');
-    Route::get('course/nouveau/showall','CourseController@nouveau');
 
     //-------------------------NOTIFICATION---------------------------
     Route::get('notification/{user}/showall','NotificationController@index');
