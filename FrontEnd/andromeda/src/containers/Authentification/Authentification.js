@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import SignIn from '../../components/Authentification/SignIn/SignIn';
 import SignUp from '../../components/Authentification/SignUp/SignUp';
 import { Switch, Route } from 'react-router-dom';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import * as authActions from '../../store/actions/index';
 import Logout from './Logout/Logout';
@@ -49,7 +48,6 @@ class Authentification extends Component {
 
     submitSignInHandler = () => {
         this.props.onAuth(this.state.signIn.email, this.state.signIn.password);
-        this.props.history.push('/dashboard');
     }
 
     submitSignUpHandler = () => {
@@ -61,6 +59,11 @@ class Authentification extends Component {
 
         if (this.props.error) {
             error = (<div>{this.props.error.message}</div>);
+        }
+
+        if (this.props.logged)
+        {
+            this.props.history.push('/dashboard');
         }
         return (
             <React.Fragment>
@@ -89,7 +92,8 @@ class Authentification extends Component {
 const mapStateToProps = state => {
     return {
         user: state.auth.user,
-        error: state.auth.error
+        error: state.auth.error,
+        logged: state.auth.logged
     };
 };
 

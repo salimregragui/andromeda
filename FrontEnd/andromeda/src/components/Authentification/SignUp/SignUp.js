@@ -11,15 +11,15 @@ const SignUp = (props) => {
                 <h1><NavLink className={classes.H1_nav} to='/'>Andromeda</NavLink></h1>
                 <h2>Bienvenue parmis nous !</h2>
                 
-                <label for="email">Adresse Email :</label>
+                <label>Adresse Email :</label>
                 <input type="text" name="email" placeholder="Votre Email" value={props.email} onChange={props.changed} /><br/>
                 
                 <br/>
-                <label for="pass">Mot de passe :</label>
+                <label>Mot de passe :</label>
                 <input type="password" name="password" placeholder="Votre Mot de passe" value={props.password} onChange={props.changed} /><br/>
                 
                 <br/>
-                <label for="pass">Confirmer Mot de passe :</label>
+                <label>Confirmer Mot de passe :</label>
                 <input type="password" name="confirmPassword" placeholder="Confirmer votre Mot de passe" value={props.confirmPass} onChange={props.changed} /><br/>
                 
                 <br/><br/><br/>
