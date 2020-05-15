@@ -6,10 +6,11 @@ import { Redirect } from 'react-router-dom';
 class Logout extends Component {
     componentDidMount() {
         this.props.onLogout();
+        this.props.history.push('/dashboard');
     }
     render() {
         return (
-            <Redirect to="/" />
+            <React.Fragment></React.Fragment>
         );
     }
 }

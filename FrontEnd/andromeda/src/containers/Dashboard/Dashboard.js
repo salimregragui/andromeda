@@ -1,29 +1,51 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import { connect } from 'react-redux';
 
 class Dashboard extends Component {
     state = {
-        data: null
+        loading: false,
+        data: false
     }
     componentDidMount() {
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
         }
+    }
 
-        axios.post('http://localhost:8000/api/auth/notification/show', localStorage.getItem('token'))
+    getData = () => {
+        this.setState({loading: true});
+        axios.post('http://localhost:8000/api/auth/notification/show', this.props.user)
         .then(response => {
-          this.setState({data: response.data});
           console.log(response.data);
+          this.setState({loading: false, data: true});
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+            console.log(error)
+            this.setState({loading: false, data: true});
+        })
     }
     render() {
+        let spinner = null;
+        if (this.state.loading) {
+            spinner = <Spinner />
+        }
         return (
             <div>
+                {spinner}
                 <h1>My Dashboard</h1>
+                <button onClick={this.getData}>Get Data</button>
             </div>
         )
     }
 }
 
-export default Dashboard;
+const mapStateToProps = state => {
+    return {
+        user: state.auth.user,
+        logged: state.auth.logged
+    };
+};
+
+export default connect(mapStateToProps, null)(Dashboard);

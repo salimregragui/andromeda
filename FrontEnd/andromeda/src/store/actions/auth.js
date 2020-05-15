@@ -26,6 +26,8 @@ export const logout = () => {
 
 export const auth = (email, password) => {
     return dispatch => {
+        dispatch(authStart());
+
         const authData = {
             email: email,
             password: password
@@ -43,6 +45,12 @@ export const auth = (email, password) => {
             dispatch(authFail(error));
         })
     }
+}
+
+export const authStart = () => {
+    return {
+        type: actionTypes.AUTH_START
+    };
 }
 
 export const register = (email, password) => {

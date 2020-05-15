@@ -9,14 +9,18 @@ import axios from 'axios';
 import * as authActions from './store/actions/index';
 import {connect} from 'react-redux';
 import jwt from 'jsonwebtoken';
+import Spinner from './components/UI/Spinner/Spinner';
 
 class App extends Component {
-
+  state = {
+    loading: false
+  }
   componentDidMount() {
     const jwt_secret = 't6SdegimC3cXT3syfikuFxanMGUlhRQiru4Ip71HpE8BeRfBG0i674zNShqdbsSa';
     let token = localStorage.getItem('token');
 
     if (token) {
+      this.setState({loading: true})
       jwt.verify(token, jwt_secret, function(err, decoded) {
         if(err) {
           localStorage.removeItem('token');
@@ -28,14 +32,24 @@ class App extends Component {
       .then(response => {
         console.log(response);
         this.props.onGetUser(token, response.data);
+        this.setState({loading: false})
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.log(error)
+        this.setState({loading: true})
+        })
     }
   }
 
   render() {
+    let spinner = null;
+
+    if (this.state.loading) {
+      spinner = <Spinner />
+    }
     return (
       <div className="App">
+        {spinner}
         <Layout>
           <Switch>
             <Route path="/" exact component= {Landing} />
