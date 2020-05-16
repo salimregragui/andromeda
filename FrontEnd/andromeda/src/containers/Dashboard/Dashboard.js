@@ -8,9 +8,18 @@ class Dashboard extends Component {
         loading: false,
         data: false
     }
+
     componentDidMount() {
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
+        }
+        
+        if (this.props.location.state)
+        {
+            if (this.props.logged && this.props.location.state.from === '/auth/signin')
+            {
+                window.location.reload();
+            }
         }
     }
 

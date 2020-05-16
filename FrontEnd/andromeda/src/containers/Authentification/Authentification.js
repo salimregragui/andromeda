@@ -55,16 +55,23 @@ class Authentification extends Component {
         this.props.onRegister(this.state.signUp.email, this.state.signUp.password);
     }
 
+    componentDidUpdate() {
+        if (this.props.logged)
+        {
+            this.props.history.push({
+                pathname: '/dashboard',
+                state: { 
+                    from: this.props.location.pathname
+                }
+            });
+        }
+    }
+
     render() {
         let error = null;
 
         if (this.props.error) {
             error = (<div>{this.props.error.message}</div>);
-        }
-
-        if (this.props.logged)
-        {
-            this.props.history.push('/dashboard');
         }
 
         let spinner = null;
