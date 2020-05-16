@@ -16,17 +16,17 @@ class App extends Component {
     loading: false
   }
   componentDidMount() {
-    const jwt_secret = 't6SdegimC3cXT3syfikuFxanMGUlhRQiru4Ip71HpE8BeRfBG0i674zNShqdbsSa';
+    // const jwt_secret = 't6SdegimC3cXT3syfikuFxanMGUlhRQiru4Ip71HpE8BeRfBG0i674zNShqdbsSa';
     let token = localStorage.getItem('token');
 
     if (token) {
       this.setState({loading: true})
-      jwt.verify(token, jwt_secret, function(err, decoded) {
-        if(err) {
-          localStorage.removeItem('token');
-          token = null;
-        }
-      });
+      // jwt.verify(token, jwt_secret, function(err, decoded) {
+      //   if(err) {
+      //     localStorage.removeItem('token');
+      //     token = null;
+      //   }
+      // });
   
       axios.post('http://localhost:8000/api/auth/me')
       .then(response => {
