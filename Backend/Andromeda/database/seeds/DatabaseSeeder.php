@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         // je lie les utilisateur 1 et 2 a la premiere discussion
         $u=App\User::find(1);
         $u->Discussions()->attach(App\Discussion::find(1));
-        $u=App\User::find(2);
+        $u=factory(App\User::class)->create();
         $u->Discussions()->attach(App\Discussion::find(1));
     }
 }

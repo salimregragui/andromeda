@@ -15,8 +15,8 @@ Route::group([
     // Route::get('notifications', 'AuthController@notifications');
     
     //-------------------------USER---------------------------
-    Route::get('user/showall','UserController@index');
-    Route::get('user/{id}/show','UserController@show');
+    Route::get('user/showall','UserController@index');//* display all Users
+    Route::get('user/{id}/show','UserController@show');//* Display the specified User
     Route::post('user/{user}/update','UserController@update');
     Route::delete('user/{user}/delete','UserController@destroy');
 
@@ -30,8 +30,8 @@ Route::group([
     Route::get('notification/{notification}','NotificationController@show');//* display specific notification belongs to currently authenticated user
     Route::delete('notification/{notification}','NotificationController@delete');
 
-    
-    // Route::get('notification/{notification}/show','NotificationController@show');
+    //-------------------------DISCUSSION--------------------------------
+    Route::get('discussion/','DiscussionController@index');
 
 
 });

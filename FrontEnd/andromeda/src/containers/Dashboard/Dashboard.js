@@ -13,7 +13,7 @@ class Dashboard extends Component {
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
         }
-        
+
         if (this.props.location.state)
         {
             if (this.props.logged && this.props.location.state.from === '/auth/signin')
@@ -25,7 +25,7 @@ class Dashboard extends Component {
 
     getData = () => {
         this.setState({loading: true});
-        axios.post('http://localhost:8000/api/auth/notification/show', this.props.user)
+        axios.get('http://localhost:8000/api/auth/discussion', this.props.user)
         .then(response => {
           console.log(response.data);
           this.setState({loading: false, data: true});
