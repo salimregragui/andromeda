@@ -21,13 +21,14 @@ Route::group([
     Route::delete('user/{user}/delete','UserController@destroy');
 
     //-------------------------COURSE---------------------------
-    Route::get('course/showall','CourseController@index');
-    Route::get('course/{id}/show','CourseController@show');
+    Route::get('course/showall','CourseController@index'); //* display all courses
+    Route::get('course/{id}/show','CourseController@show');//* display specific course
+    Route::get('course/progression','CourseController@courseProgressions');//* display specific course
 
     //-------------------------NOTIFICATION---------------------------
-    Route::get('notification/{user}/showall','NotificationController@index');
-    Route::post('notification/show','NotificationController@show');
-
+    Route::get('notification/showall','NotificationController@index'); //* display all notification belongs to currently authenticated user
+    Route::get('notification/{notification}','NotificationController@show');//* display specific notification belongs to currently authenticated user
+    Route::delete('notification/{notification}','NotificationController@delete');
 
     
     // Route::get('notification/{notification}/show','NotificationController@show');
