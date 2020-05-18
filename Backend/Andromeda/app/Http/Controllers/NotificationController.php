@@ -11,24 +11,48 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class NotificationController extends Controller
 {
     //
-    public function index(User $user)
+    public function index()
     {
-        return [ 'notifications' => $user->Notifications];
+        try {
+            
+            $user = auth()->userOrFail();
+            return response()->json($user->Notifications);
+
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+           
+            abort(401);
+            
+        }
+        
     }
 
-    public function show()
+    public function show(Notification $notification)
     {
-        // display user notifications
-        // return [ 'notification' => Notification::find($notification)];
-        // return [ 'notification' => auth()->user()->Notifications];
-        // return dd(auth()->user());
-        // JWTAuth::setToken("t6SdegimC3cXT3syfikuFxanMGUlhRQiru4Ip71HpE8BeRfBG0i674zNShqdbsSa");
-        // JWTAuth::toUser(JWTAuth::getToken());
-        // return JWTAuth::toUser();
-        // return dd(JWTAuth::user());
-        $user = JWTAuth::user();
 
-        return response()->json($user->Notifications);
+        try { //* check il user are authentificate 
+            $user = auth()->userOrFail();
+
+            return response()->json(['Notification' => $user->Notifications->where('id',$notification->id)]);
+
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+
+            abort(401);
+
+        }
+    }
+
+    public function destroy(Notification $notification)
+    {
+        //* check if this notification belongs to the currently authenticated user
+        if ($notification->User == auth()->user() ) { 
+        
+            $notification->delete();
+           
+            return response(1 ,200);
+            
+        }
+
+        return 401;
     }
 
 }

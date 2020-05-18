@@ -9,14 +9,9 @@ class Message extends Model
     //
     protected $guarded = [];
 
-    public function UserSender()
+    public function User()
     {
-        return $this->belongsTo(User::class,'user_id_1');
-    }
-
-    public function UserReceiver()
-    {
-        return $this->belongsTo(User::class,'user_id_2');
+        return $this->belongsTo(User::class);
     }
 
     public function Discussion()

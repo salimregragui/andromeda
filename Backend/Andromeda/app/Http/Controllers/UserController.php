@@ -15,10 +15,10 @@ class UserController extends Controller
         return User::all();
     }
 
-    public function show($id)
+    public function show(User $user)
     {
         // Display the specified user
-        return User::find($id);
+        return response()->json(['User' => $user]);
     }
 
     public function update(User $user)

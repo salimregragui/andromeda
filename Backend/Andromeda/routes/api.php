@@ -15,22 +15,25 @@ Route::group([
     // Route::get('notifications', 'AuthController@notifications');
     
     //-------------------------USER---------------------------
-    Route::get('user/showall','UserController@index');
-    Route::get('user/{id}/show','UserController@show');
-    Route::post('user/{user}/update','UserController@update');
-    Route::delete('user/{user}/delete','UserController@destroy');
+    Route::get('user','UserController@index');//* display all Users
+    Route::get('user/{user}','UserController@show');//* Display the specified User
+    Route::post('user/{user}/update','UserController@update');//* update the specified User
+    Route::delete('user/{user}/delete','UserController@destroy');//* delete the specified User
 
     //-------------------------COURSE---------------------------
-    Route::get('course/showall','CourseController@index');
-    Route::get('course/{id}/show','CourseController@show');
+    Route::get('course','CourseController@index'); //* display all courses
+    Route::get('course/progression','CourseController@courseProgressions');//* display all courses followed with progression
+    Route::get('course/{course}','CourseController@show');//* display specific course
 
     //-------------------------NOTIFICATION---------------------------
-    Route::get('notification/{user}/showall','NotificationController@index');
-    Route::post('notification/show','NotificationController@show');
+    Route::get('notification','NotificationController@index'); //* display all notification belongs to currently authenticated user
+    Route::get('notification/{notification}','NotificationController@show');//* display specific notification belongs to currently authenticated user
+    Route::delete('notification/{notification}','NotificationController@destroy');//* delete specific notification belongs to currently authenticated user
 
-
-    
-    // Route::get('notification/{notification}/show','NotificationController@show');
+    //-------------------------DISCUSSION--------------------------------
+    Route::get('discussion/','DiscussionController@index');//* display all discussions belongs to currently authenticated user
+    Route::get('discussion/{discussion}','DiscussionController@show');//* display specific discussion belongs to currently authenticated user
+    Route::delete('discussion/{discussion}','DiscussionController@destroy');//* delete specific discussion belongs to currently authenticated user
 
 
 });
