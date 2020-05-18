@@ -28,10 +28,12 @@ Route::group([
     //-------------------------NOTIFICATION---------------------------
     Route::get('notification/showall','NotificationController@index'); //* display all notification belongs to currently authenticated user
     Route::get('notification/{notification}','NotificationController@show');//* display specific notification belongs to currently authenticated user
-    Route::delete('notification/{notification}','NotificationController@delete');
+    Route::delete('notification/{notification}','NotificationController@destroy');
 
     //-------------------------DISCUSSION--------------------------------
-    Route::get('discussion/','DiscussionController@index');
+    Route::get('discussion/','DiscussionController@index');//* display all discussions belongs to currently authenticated user
+    Route::get('discussion/{discussion}','DiscussionController@show');//* display specific discussion belongs to currently authenticated user
+    Route::delete('discussion/{discussion}','DiscussionController@destroy');//* delete specific discussion belongs to currently authenticated user
 
 
 });

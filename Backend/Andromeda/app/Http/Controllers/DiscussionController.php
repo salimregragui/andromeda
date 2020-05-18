@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Discussion;
 
 class DiscussionController extends Controller
 {
@@ -13,7 +13,7 @@ class DiscussionController extends Controller
      */
     public function index()
     {
-        //
+        //* display all discussions belongs to the currently authenticated user
         try {
             
             $user = auth()->userOrFail();
@@ -28,74 +28,69 @@ class DiscussionController extends Controller
             return response()->json(['Discussions' => $user->Discussions]);
 
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
-            // do something
-            return "error :(";
+
+            abort(401);
+
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $discussion
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Discussion $discussion)
     {
-        //
-    }
+        // display the specified discussion
+        try { //* check il user are authentificate 
+            
+            $user = auth()->userOrFail();
+           
+            if ($user->Discussions->where('id',$discussion->id)->first() != null) { //* check if the user are attache at this disscussion
+   
+                $discussion['users']=$discussion->Users;
+                $discussion['messages']=$discussion->Messages;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+                return response()->json(['Discussion' => $discussion]); 
+               
+            }
+            
+            abort(404);
+            
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+
+            abort(401);
+        }  
+    
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $discussion
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Discussion $discussion)
     {
-        //
+        //* check if this discussion belongs to the currently authenticated user
+
+        foreach ($discussion->Users as $user ) {
+
+            if ( $user->id == auth()->user()->id ) { 
+        
+                auth()->user()->Discussions()->detach($discussion->id);
+
+                if (count($discussion->Users) == 1 ) { //* check if it stay more than one participant  
+                    $discussion->delete();
+                }
+
+                return response(1 ,200);
+
+            }
+        }
+       
+        return 401;
     }
 }

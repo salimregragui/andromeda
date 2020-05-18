@@ -19,8 +19,9 @@ class NotificationController extends Controller
             return response()->json($user->Notifications);
 
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
-            // do something
-            return "error :(";
+           
+            abort(401);
+            
         }
         
     }
@@ -31,24 +32,27 @@ class NotificationController extends Controller
         try { //* check il user are authentificate 
             $user = auth()->userOrFail();
 
-            return response()->json($user->Notifications->where('id',$notification->id));
+            return response()->json(['Notification' => $user->Notifications->where('id',$notification->id)]);
 
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
-            // do something
-            return "error :(";
+
+            abort(401);
+
         }
     }
 
-    public function delete(Notification $notification)
+    public function destroy(Notification $notification)
     {
         //* check if this notification belongs to the currently authenticated user
         if ($notification->User == auth()->user() ) { 
         
             $notification->delete();
-            return 1;
+           
+            return response(1 ,200);
+            
         }
 
-        return 0;
+        return 401;
     }
 
 }
