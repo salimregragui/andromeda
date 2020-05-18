@@ -16,7 +16,8 @@ class Authentification extends Component {
         signUp: {
             email: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
+            username: ''
         },
         errors: []
     }
@@ -52,7 +53,12 @@ class Authentification extends Component {
     }
 
     submitSignUpHandler = () => {
-        this.props.onRegister(this.state.signUp.email, this.state.signUp.password);
+        const signUpData = {
+            email: this.state.signUp.email,
+            password: this.state.signUp.password,
+            username: this.state.signUp.username
+        }
+        this.props.onRegister(signUpData);
     }
 
     componentDidUpdate() {
@@ -94,6 +100,7 @@ class Authentification extends Component {
                         <SignUp email={this.state.signUp.email}
                                 password={this.state.signUp.password}
                                 confirmPass={this.state.signUp.confirmPassword}
+                                username={this.state.signUp.username}
                                 changed={this.changedSignUpHandler}
                                 submitedSignUp={this.submitSignUpHandler}/>} 
                     />
@@ -117,7 +124,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (email, pass) => dispatch(authActions.auth(email, pass)),
-        onRegister: (email, pass) => dispatch(authActions.register(email, pass))
+        onRegister: (signUpData) => dispatch(authActions.register(signUpData))
     };
 };
 

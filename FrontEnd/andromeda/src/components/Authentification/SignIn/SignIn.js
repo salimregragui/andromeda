@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './SignIn.module.css';
-import signInImage from '../../../assets/images/landing-img.png';
+import signInImage from '../../../assets/images/login-img.png';
 import { NavLink } from 'react-router-dom';
 
 const SignIn = (props) => {

@@ -28,11 +28,17 @@ class Dashboard extends Component {
         axios.post('http://localhost:8000/api/auth/notification/show', this.props.user)
         .then(response => {
           console.log(response.data);
-          this.setState({loading: false, data: true});
+          this.setState({loading: false});
         })
         .catch(error => {
             console.log(error)
-            this.setState({loading: false, data: true});
+            this.setState({loading: false});
+            this.props.history.push({
+                pathname: '/error',
+                state: {
+                    error: error
+                }
+              });
         })
     }
     render() {
@@ -43,8 +49,8 @@ class Dashboard extends Component {
         return (
             <div>
                 {spinner}
-                <h1>My Dashboard</h1>
                 <button onClick={this.getData}>Get Data</button>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
             </div>
         )
     }

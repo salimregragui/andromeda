@@ -4,12 +4,13 @@ import Layout from './containers/Layout/Layout';
 import Landing from './components/Landing/Landing';
 import Authentification from './containers/Authentification/Authentification';
 import Dashboard from './containers/Dashboard/Dashboard';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import * as authActions from './store/actions/index';
 import {connect} from 'react-redux';
 import jwt from 'jsonwebtoken';
 import Spinner from './components/UI/Spinner/Spinner';
+import Error from './components/Error/Error';
 
 class App extends Component {
   state = {
@@ -35,8 +36,14 @@ class App extends Component {
         this.setState({loading: false})
       })
       .catch(error => {
-        console.log(error)
-        this.setState({loading: true})
+        this.setState({loading: false})
+        localStorage.removeItem('token');
+        this.props.history.push({
+          pathname: '/error',
+          state: {
+              error: error
+          }
+        });
         })
     }
   }
@@ -55,6 +62,7 @@ class App extends Component {
             <Route path="/" exact component= {Landing} />
             <Route path="/auth" component= {Authentification} />
             <Route path="/dashboard" component= {Dashboard} />
+            <Route path="/error" component= {Error} />
           </Switch>
         </Layout>
       </div>
@@ -68,4 +76,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default withRouter(connect(null, mapDispatchToProps)(App));

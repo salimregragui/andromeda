@@ -6,7 +6,7 @@
 }
 
 .Logo {
-    width: 220px;
+    width: 15%;
     height: 100%;
     font-weight: 700;
     font-size: 22px;
@@ -14,7 +14,7 @@
     border-right: 1px solid #dadada;
     text-align: left;
     align-items: center;
-    padding-left: 30px;
+    padding-left: 3%;
     float: left;
 }
 

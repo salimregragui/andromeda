@@ -1,0 +1,35 @@
+.Error
+{
+    width: 100%;
+    height: auto;
+}
+
+.ErrorImg 
+{
+    width: 600px;
+    float: right;
+    margin-right: 100px;
+}
+
+.ErrorData
+{
+    float: left;
+    margin-left: 130px;
+    text-align: left;
+    width: 500px;
+}
+
+.ErrorData h1 {
+    color: #181818;
+    font-weight: 700;
+    font-size: 100px;
+    margin-bottom: 40px;
+    margin-top: 100px;
+}
+
+.ErrorData span {
+    color: #181818;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+}

@@ -1,0 +1,71 @@
+.LeftBar {
+    height: 100%;
+    width: 18%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    z-index: 1;
+    text-align: left;
+}
+
+.Logo {
+    width: 85%;
+    height: 70px;
+    font-weight: 700;
+    font-size: 22px;
+    color: #181818;
+    border-right: 1px solid #dadada;
+    text-align: left;
+    float: left;
+    border-bottom: 1px solid #dadada;
+    padding-left: 15%;
+}
+
+.Logo span {
+    margin: 0;
+    position: relative;
+    top: 30%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.Logo span:hover {
+    cursor: pointer;
+}
+
+.mainMenu {
+    margin-top: 100px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #c2c2c2;
+    margin-bottom: 30px;
+    padding-left: 15%;
+}
+
+.LeftBar a {
+    text-decoration: none;
+    color: #c2c2c2;
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 20px;
+    padding-left: 15%;
+    height: 20px;
+    line-height: 20px;
+
+    transition: 0.2s;
+}
+
+.LeftBar a img {
+    margin-right: 5px;
+}
+
+.LeftBar a:hover,
+.LeftBar a:active,
+.LeftBar a.active {
+    color: #3459D6;
+    border-left: 3px solid #3459D6;
+
+    transition: 0.2s;
+}

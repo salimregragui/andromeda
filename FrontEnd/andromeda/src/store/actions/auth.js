@@ -54,16 +54,17 @@ export const authStart = () => {
     };
 }
 
-export const register = (email, password) => {
+export const register = (signUpData) => {
     return dispatch => {
         const user = {
-            email: email,
-            password: password
+            email: signUpData.email,
+            password: signUpData.password,
+            username: signUpData.username
         }
         axios.post('http://localhost:8000/api/auth/register', user)
             .then(response => {
                 console.log(response);
-                dispatch(auth(email, password));
+                dispatch(auth(signUpData.email, signUpData.password));
             })
             .catch(error => {
                 dispatch(authFail(error));
