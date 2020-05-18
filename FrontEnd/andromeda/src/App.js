@@ -28,7 +28,7 @@ class App extends Component {
       //     token = null;
       //   }
       // });
-  
+      this.props.onAuthStart();
       axios.post('http://localhost:8000/api/auth/me')
       .then(response => {
         console.log(response);
@@ -52,7 +52,7 @@ class App extends Component {
     let spinner = null;
 
     if (this.state.loading) {
-      spinner = <Spinner />
+      spinner = null
     }
     return (
       <div className="App">
@@ -72,6 +72,7 @@ class App extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
+    onAuthStart: () => dispatch(authActions.authStart()),
     onGetUser: (token, user) => dispatch(authActions.authSuccess(token, user))
   }
 }

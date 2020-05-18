@@ -2,9 +2,10 @@ export {
     auth,
     logout,
     authSuccess,
-    register
+    register,
+    authStart
 } from './auth';
 
 export {
-
+    coursesAll
 } from './courses';

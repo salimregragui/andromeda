@@ -1,19 +1,22 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
+
+export const coursesAllSuccess = (courses) => {
+    return {
+        type: actionTypes.COURSES_ALL_SUCCESS,
+        courses: courses
+    }
+}
 export const coursesAll = () => {
     return dispatch => {
-        axios.post('http://localhost:8000/api/auth/login', authData)
+        axios.get('http://localhost:8000/api/auth/course')
         .then(response => {
-            console.log(response.data.user);
-            localStorage.setItem('token', response.data.access_token);
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-            localStorage.setItem('justLogged', true);
-
-            dispatch(authSuccess(response.data.access_token, response.data.user));
+            console.log(response);
+            dispatch(coursesAllSuccess(response));
         })
         .catch(error => {
-            dispatch(authFail(error));
+            console.log(error);
         })
     }
 }

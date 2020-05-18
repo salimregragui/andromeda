@@ -1,0 +1,9 @@
+.CustomLoading {
+    background-color: #c2c2c2;
+    animation: loadingAnimation 1s infinite;
+}
+
+@keyframes loadingAnimation {
+    from {background-color: #c2c2c2;}
+    to {background-color: #dadada;}
+  }

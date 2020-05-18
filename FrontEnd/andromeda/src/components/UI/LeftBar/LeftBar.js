@@ -19,27 +19,27 @@ const LeftBar = () => {
                 to="/dashboard"
                 activeClassName={classes.active}
                 exact
-            ><img src={homeIcon} /> Accueil</NavLink>
+            ><img src={homeIcon} alt="home"/> Accueil</NavLink>
             <NavLink 
                 to='/classes'
                 activeClassName={classes.active}
                 exact
-            ><img src={ressourcesIcon} /> Classes</NavLink>
+            ><img src={ressourcesIcon} alt="ressources"/> Classes</NavLink>
             <NavLink 
                 to='/ressources'
                 activeClassName={classes.active}
                 exact
-            ><img src={classesIcon} /> Ressources</NavLink>
+            ><img src={classesIcon} alt="classes"/> Ressources</NavLink>
             <NavLink 
                 to='/tasks'
                 activeClassName={classes.active}
                 exact
-            ><img src={tasksIcon} /> Taches</NavLink>
+            ><img src={tasksIcon} alt="tasks"/> Taches</NavLink>
             <NavLink 
                 to='/discussions'
                 activeClassName={classes.active}
                 exact
-            ><img src={discussionIcon} /> Discussions</NavLink>
+            ><img src={discussionIcon} alt="discussion"/> Discussions</NavLink>
         </div>
     )
 }
