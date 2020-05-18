@@ -33,11 +33,9 @@ class CourseController extends Controller
         return ['courses' => $courses->sortByDesc('suivis')->values()->all()]; // order by popular 
     }
 
-    public function show($id)
+    public function show(Course $course)
     {
         // Display the specified course with all sections and chapters
-
-        $course=Course::find($id);
 
         $cptChapter=0; //compteur de chapitre dans chaque cours
 
@@ -88,11 +86,10 @@ class CourseController extends Controller
                 
             }
 
-            return "aucun cours suivi";
+            return abort(404); // aucun cours suivi
 
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
-            // do something
-            return "error :(";
+            abort(401);
         }
     }
 }
