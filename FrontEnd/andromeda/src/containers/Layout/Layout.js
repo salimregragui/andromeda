@@ -4,29 +4,25 @@ import Topbar from '../../components/Topbar/Topbar';
 import LeftBar from '../../components/UI/LeftBar/LeftBar';
 import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import CustomLoading from '../../components/UI/CustomLoading/CustomLoading';
 
 class Layout extends Component {
     render() {
         let leftBar = null;
+        let contentClass = classes.ContentLeftBar;
 
         if (this.props.logged) {
             leftBar = <LeftBar />
         }
 
-        if (this.props.loading) {
-            leftBar = <CustomLoading width="240px"
-                        height="600px"
-                        marginLeft="0px"
-                        marginTop="0px"
-                        marginBottom="0px"
-                        float="left"/>
+        if (this.props.location.pathname === '/error' || this.props.location.pathname === '/') {
+            leftBar = null;
+            contentClass = classes.Content
         }
         return (
             <React.Fragment>
                 {this.props.location.pathname !== '/auth/signin' && this.props.location.pathname !== '/auth/signup' ? <Topbar /> : null}
                 {leftBar}
-                <main className={classes.Content}>
+                <main className={contentClass}>
                     {this.props.children}
                 </main>
             </React.Fragment>

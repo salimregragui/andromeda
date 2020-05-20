@@ -4,6 +4,7 @@ import Layout from './containers/Layout/Layout';
 import Landing from './components/Landing/Landing';
 import Authentification from './containers/Authentification/Authentification';
 import Dashboard from './containers/Dashboard/Dashboard';
+import Testing from './containers/Testing/Testing';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import * as authActions from './store/actions/index';
@@ -63,6 +64,7 @@ class App extends Component {
             <Route path="/auth" component= {Authentification} />
             <Route path="/dashboard" component= {Dashboard} />
             <Route path="/error" component= {Error} />
+            <Route path="/test" component= {Testing} />
           </Switch>
         </Layout>
       </div>

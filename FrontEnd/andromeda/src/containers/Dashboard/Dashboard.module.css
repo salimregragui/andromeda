@@ -10,3 +10,34 @@
 .DashboardGreeting span {
     font-weight: 400;
 }
+
+.Progression {
+    width: 300px;
+    height: 250px;
+    float: right;
+    background-color: white;
+    position: absolute;
+    top: 110px;
+    right: 30px;
+    border-radius: 20px;
+}
+
+.Progression h1 {
+    text-align: left;
+    font-size: 16px;
+    color: #181818;
+    margin-left: 30px;
+    margin-top: 20px;
+    float: left;
+    margin-bottom: 20px;
+}
+
+.Progression a {
+    float: right;
+    margin-top: 25px;
+    text-decoration: none;
+    color: #3459D6;
+    font-weight: 600;
+    font-size: 12px;
+    margin-right: 25px;
+}

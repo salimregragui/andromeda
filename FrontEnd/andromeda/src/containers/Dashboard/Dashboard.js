@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import {NavLink} from 'react-router-dom';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import * as coursesActions from '../../store/actions/index';
 import Course from '../../components/Course/Course';
+import CourseSmall from '../../components/Course/CourseSmall/CourseSmall';
 import classes from './Dashboard.module.css';
 import CustomLoading from '../../components/UI/CustomLoading/CustomLoading';
 
 class Dashboard extends Component {
     state = {
         loading: false,
-        data: false
+        data: false,
+        coursesLoaded: true,
+        progressionLoaded: true
     }
 
     componentDidMount() {
+        document.body.style = 'background: #f1f1f4;';
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
         }
@@ -25,37 +29,61 @@ class Dashboard extends Component {
                 window.location.reload();
             }
         }
+
+        if (!this.props.courses) {
+            this.setState({coursesLoaded: false});
+        }
+
+        if (!this.props.progression) {
+            this.setState({progressionLoaded: false});
+        } 
     }
 
-    getData = () => {
-        // this.setState({loading: true});
-        // axios.get('http://localhost:8000/api/auth/discussion', this.props.user)
-        // .then(response => {
-        //   console.log(response.data);
-        //   this.setState({loading: false});
-        // })
-        // .catch(error => {
-        //     console.log(error)
-        //     this.setState({loading: false});
-        //     this.props.history.push({
-        //         pathname: '/error',
-        //         state: {
-        //             error: error
-        //         }
-        //       });
-        // })
-        this.props.onGetCourses();
+    componentDidUpdate() {
+        if(this.props.logged && !this.state.coursesLoaded) {
+            console.log("get courses !");
+            this.props.onGetCourses();
+            this.setState({coursesLoaded: true});
+        }
+
+        if(this.props.logged && !this.state.progressionLoaded) {
+            console.log("get progression !");
+            this.props.onGetProgression();
+            this.setState({progressionLoaded: true});
+        }
     }
+
     render() {
         let spinner = null;
+        let courses = null;
+        let progression = null;
+
         if (this.state.loading) {
             spinner = <Spinner />
+        }
+
+        if (this.props.courses) {
+            courses = this.props.courses.map(course => (
+                <Course key={course.id}
+                               name={course.name}
+                               nbrLessons={course.numberOfChapter}
+                               nbrMinutes="240"
+                               nbrStudents={course.suivis} />
+            ));
+        }
+
+        if (this.props.progression) {
+            console.log(this.props.progression)
+            // progression = this.props.progression.map(prog => (
+            //     <CourseSmall
+            //                    name={prog.name}
+            //                    nbrLessonsRestantes={prog.progression.chapter_id}/>
+            // ));
         }
         return (
             <div>
                 {spinner}
                 <br/>
-                <button onClick={this.getData}>Get Data</button>
                 {this.props.user ? <div className={classes.DashboardGreeting}>
                     Bonjour {this.props.user.name},<br/>
                     <span>Qu'allez vous apprendre aujourd'hui ?</span>
@@ -71,40 +99,15 @@ class Dashboard extends Component {
                             marginBottom="30px"/>
                         </React.Fragment>
                 }
-                {this.props.courses ? <React.Fragment><Course name="User Experience" 
-                        nbrLessons="16"
-                        nbrMinutes="240"
-                        nbrStudents="100"/>
-                <Course name="Html & Css" 
-                        nbrLessons="11"
-                        nbrMinutes="127"
-                        nbrStudents="1430"/>
-                <Course name="Javascript (ES5, ES6, Ajax...)" 
-                        nbrLessons="42"
-                        nbrMinutes="730"
-                        nbrStudents="7240"/>
-                <Course name="Git & Github" 
-                        nbrLessons="8"
-                        nbrMinutes="90"
-                        nbrStudents="1512"/></React.Fragment> :
-                        <React.Fragment>
-                            <CustomLoading width="700px"
-                            height="80px"
-                            marginLeft="50px"
-                            marginTop="0px"
-                            marginBottom="20px"/>
-                            <CustomLoading width="700px"
-                            height="80px"
-                            marginLeft="50px"
-                            marginTop="0px"
-                            marginBottom="20px"/>
-                            <CustomLoading width="700px"
-                            height="80px"
-                            marginLeft="50px"
-                            marginTop="0px"
-                            marginBottom="20px"/>
-                        </React.Fragment>}
                 
+                {courses}
+                <br/>
+                <div className={classes.Progression}>
+                    <h1>Progression</h1>
+                    <NavLink to='/classes' exact>Voir tout</NavLink>
+
+                    {progression}
+                </div>
             </div>
         )
     }
@@ -114,13 +117,15 @@ const mapStateToProps = state => {
     return {
         user: state.auth.user,
         logged: state.auth.logged,
-        courses: state.courses.courses
+        courses: state.courses.courses,
+        progression: state.courses.progression
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onGetCourses: () => dispatch(coursesActions.coursesAll())
+        onGetCourses: () => dispatch(coursesActions.coursesAll()),
+        onGetProgression: () => dispatch(coursesActions.coursesProgression())
     }
 }
 

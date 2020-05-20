@@ -7,5 +7,6 @@ export {
 } from './auth';
 
 export {
-    coursesAll
+    coursesAll,
+    coursesProgression
 } from './courses';

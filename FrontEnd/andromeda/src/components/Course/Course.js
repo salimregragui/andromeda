@@ -7,7 +7,7 @@ const Course = (props) => {
     return (
         <div className={classes.Course}>
             <div className={classes.CourseLogo}>
-                UX
+                {props.name.substring(0,2).toUpperCase()}
             </div>
             <div className={classes.courseInfos}>
                 {props.name}<br/>

@@ -1,8 +1,7 @@
 .Course {
-    width: 60%;
-    height: 80px;
+    width: 100%;
+    height: 50px;
     background-color: white;
-    margin-left: 50px;
     border-radius: 10px;
     margin-bottom: 20px;
     float: left;
@@ -10,69 +9,50 @@
 
 .CourseLogo {
     float: left;
-    width: 15%;
+    width: 20%;
     height: 100%;
     background-color: #c2c2c2;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-radius: 10px;
     color: white;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 80px;
+    font-size: 12px;
+    line-height: 50px;
+    margin-left: 10%;
 }
 
 .courseInfos {
     float: left;
     font-weight: 600;
-    font-size: 16px;
-    margin-left: 20px;
-    margin-top: 21px;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-top: 10px;
     color: #181818;
     text-align: left;
 }
 
 .courseInfos span {
-    font-size: 14px;
+    font-size: 12px;
     color: #c2c2c2;
-}
-
-.courseaddInfos {
-    float: right;
-    font-weight: 600;
-    font-size: 16px;
-    margin-right: 30px;
-    margin-top: 21px;
-    color: #181818;
-    text-align: right;
-}
-
-.courseaddInfos span {
-    font-size: 14px;
-    color: #c2c2c2;
-}
-
-.courseaddInfos img {
-    width: 14px;
 }
 
 .coursePlayButton {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 5px;
     border: 2px solid #181818;
     float: right;
     background: none;
     font-weight: 600;
-    margin-top: 20px;
-    margin-right: 20px;
+    margin-top: 10px;
     cursor: pointer;
+    margin-right: 10%;
 
     transition: 0.2s;
 }
 
 .coursePlayButton img {
-    margin-top: 5px;
-    margin-left: 2px;
+    margin-top: 4px;
+    width: 8px;
 }
 
 .coursePlayButton:focus {

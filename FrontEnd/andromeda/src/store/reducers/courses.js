@@ -1,7 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    courses: null
+    courses: null,
+    progression: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 courses: action.courses
+            }
+        case actionTypes.COURSES_PROGRESSION_SUCCESS:
+            return {
+                ...state,
+                progression: action.progression
             }
         default:
             return state;

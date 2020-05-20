@@ -1,0 +1,12 @@
+.DashboardGreeting {
+    margin-top: 15px;
+    font-weight: 700;
+    font-size: 30px;
+    text-align: left;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}
+
+.DashboardGreeting span {
+    font-weight: 400;
+}
