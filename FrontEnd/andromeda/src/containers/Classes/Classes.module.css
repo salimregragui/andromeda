@@ -1,0 +1,14 @@
+.ClassesTitle {
+    margin-top: 15px;
+    font-weight: 700;
+    font-size: 30px;
+    text-align: left;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}
+
+.ClassesCourses {
+    float: left;
+    margin-left: 50px;
+    width: 90%;
+}

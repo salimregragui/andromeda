@@ -4,6 +4,7 @@ import Layout from './containers/Layout/Layout';
 import Landing from './components/Landing/Landing';
 import Authentification from './containers/Authentification/Authentification';
 import Dashboard from './containers/Dashboard/Dashboard';
+import Classes from './containers/Classes/Classes';
 import Testing from './containers/Testing/Testing';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import axios from 'axios';
@@ -63,6 +64,7 @@ class App extends Component {
             <Route path="/" exact component= {Landing} />
             <Route path="/auth" component= {Authentification} />
             <Route path="/dashboard" component= {Dashboard} />
+            <Route path="/classes" component= {Classes} />
             <Route path="/error" component= {Error} />
             <Route path="/test" component= {Testing} />
           </Switch>

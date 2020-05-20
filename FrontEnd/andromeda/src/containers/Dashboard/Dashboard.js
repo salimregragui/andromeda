@@ -81,7 +81,7 @@ class Dashboard extends Component {
             progression = this.props.progression.map(prog => (
                 <CourseSmall
                                key={prog.id}
-                               name={prog.name}
+                               name={prog.name.substring(0,15)}
                                nbrLessonsRestantes={prog.progression.chapter_id}/>
             ));
         }
