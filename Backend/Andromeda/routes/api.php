@@ -33,6 +33,7 @@ Route::group([
     //-------------------------DISCUSSION--------------------------------
     Route::get('discussion/','DiscussionController@index');//* display all discussions belongs to currently authenticated user
     Route::get('discussion/{discussion}','DiscussionController@show');//* display specific discussion belongs to currently authenticated user
+    Route::get('discussion/user/{user}','DiscussionController@startDiscussion');
     Route::delete('discussion/{discussion}','DiscussionController@destroy');//* delete specific discussion belongs to currently authenticated user
 
 

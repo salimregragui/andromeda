@@ -62,7 +62,7 @@ class CourseController extends Controller
 
             if ($user->Followed->isNotEmpty())
             {
-                
+                $data =[] ;
                 foreach ($user->followed as $course) 
                 {
                     $cptChapter=0; //compteur de chapitre dans chaque cours
@@ -80,13 +80,14 @@ class CourseController extends Controller
                     }
         
                     $course['numberOfChapter']=$cptChapter; // nombre de chapitre dans se cours 
+                    array_push($data,$course);
                 }
     
-                return response()->json(['course' => $course]);
+                return response()->json(['Courses' => $data]);
                 
             }
 
-            return abort(404); // aucun cours suivi
+            abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
 
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
             abort(401);
