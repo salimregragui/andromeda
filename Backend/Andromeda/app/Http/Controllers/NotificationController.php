@@ -16,7 +16,7 @@ class NotificationController extends Controller
         try {
             
             $user = auth()->userOrFail();
-            return response()->json($user->Notifications);
+            return response()->json(['Notifications' => $user->Notifications]);
 
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
            
@@ -48,11 +48,11 @@ class NotificationController extends Controller
         
             $notification->delete();
            
-            return response(1 ,200);
+            abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
             
         }
 
-        return 401;
+        abort(401);
     }
 
 }

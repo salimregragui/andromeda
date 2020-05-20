@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Discussion;
-
+use App\User;
 class DiscussionController extends Controller
 {
     /**
@@ -17,15 +17,24 @@ class DiscussionController extends Controller
         try {
             
             $user = auth()->userOrFail();
-
+            $discussions =[];
             foreach ($user->Discussions as $discussion)
             {
                 
                 $discussion['users']=$discussion->users;
-                $discussion['messages']=$discussion->Messages;
+                $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion['pivot']->updated_at);
+                   
+                $data['created_at']=$discussion['created_at'];
+                $data['updated_at']=$discussion['updated_at'];
+                $data['id']=$discussion['id'];
+                $data['users']=$discussion['users'];
+                $data['visibleMessages']=$discussion['visibleMessages'];
+                $data['pivot']=$discussion['pivot'];
+
+                array_push($discussions,$data);
             }
 
-            return response()->json(['Discussions' => $user->Discussions]);
+            return response()->json(['Discussions' => $discussions]);
 
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
 
@@ -50,9 +59,16 @@ class DiscussionController extends Controller
             if ($user->Discussions->where('id',$discussion->id)->first() != null) { //* check if the user are attache at this disscussion
    
                 $discussion['users']=$discussion->Users;
-                $discussion['messages']=$discussion->Messages;
-
-                return response()->json(['Discussion' => $discussion]); 
+                $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion['pivot']->updated_at);
+                   
+                    $data['created_at']=$discussion['created_at'];
+                    $data['updated_at']=$discussion['updated_at'];
+                    $data['id']=$discussion['id'];
+                    $data['users']=$discussion['users'];
+                    $data['visibleMessages']=$discussion['visibleMessages'];
+                    $data['pivot']=$discussion['pivot'];
+                    
+                    return response()->json(['Discussion' =>$data]);
                
             }
             
@@ -86,11 +102,40 @@ class DiscussionController extends Controller
                     $discussion->delete();
                 }
 
-                return response(1 ,200);
+                abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
 
             }
         }
        
-        return 401;
+        abort(401);
+    }
+
+    public function startDiscussion(User $user)
+    {
+        if (auth()->user() != null) {
+
+            foreach (auth()->user()->Discussions as $discussion ) {
+                
+                if (count($discussion->Users)== 2 and $discussion->Users->find($user)->id == $user->id ) {
+                   
+                    $discussion['users']=$discussion->Users;
+                    $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion['pivot']->updated_at);
+                   
+                    $data['created_at']=$discussion['created_at'];
+                    $data['updated_at']=$discussion['updated_at'];
+                    $data['id']=$discussion['id'];
+                    $data['users']=$discussion['users'];
+                    $data['visibleMessages']=$discussion['visibleMessages'];
+                    $data['pivot']=$discussion['pivot'];
+                    
+                    return response()->json(['Discussion' =>$data]);
+                }
+            }
+
+            abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
+
+        }
+
+        abort(401);
     }
 }

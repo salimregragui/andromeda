@@ -97,7 +97,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function Discussions()
     {
-        return $this->belongsToMany(Discussion::class);
+        return $this->belongsToMany(Discussion::class)->withTimestamps();
     }
 
     public function Tasks()
