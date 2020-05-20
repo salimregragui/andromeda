@@ -55,20 +55,20 @@ class DiscussionController extends Controller
         try { //* check il user are authentificate 
             
             $user = auth()->userOrFail();
-           
+
             if ($user->Discussions->where('id',$discussion->id)->first() != null) { //* check if the user are attache at this disscussion
    
                 $discussion['users']=$discussion->Users;
-                $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion['pivot']->updated_at);
+                $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion->users->find($user)->pivot->updated_at);
                    
-                    $data['created_at']=$discussion['created_at'];
-                    $data['updated_at']=$discussion['updated_at'];
-                    $data['id']=$discussion['id'];
-                    $data['users']=$discussion['users'];
-                    $data['visibleMessages']=$discussion['visibleMessages'];
-                    $data['pivot']=$discussion['pivot'];
+                $data['created_at']=$discussion['created_at'];
+                $data['updated_at']=$discussion['updated_at'];
+                $data['id']=$discussion['id'];
+                $data['users']=$discussion['users'];
+                $data['visibleMessages']=$discussion['visibleMessages'];
+                $data['pivot']=$discussion['pivot'];
                     
-                    return response()->json(['Discussion' =>$data]);
+                return response()->json(['Discussion' =>$data]);
                
             }
             
@@ -91,23 +91,24 @@ class DiscussionController extends Controller
     public function destroy(Discussion $discussion)
     {
         //* check if this discussion belongs to the currently authenticated user
-
-        foreach ($discussion->Users as $user ) {
-
-            if ( $user->id == auth()->user()->id ) { 
-        
-                auth()->user()->Discussions()->detach($discussion->id);
-
-                if (count($discussion->Users) == 1 ) { //* check if it stay more than one participant  
-                    $discussion->delete();
-                }
-
+        try {
+           
+            $user = auth()->userOrFail();
+           
+            if ( $discussion->Users->find($user))
+            {
+                $user->Discussions->find($discussion)->pivot->update(['updated_at'=> now()]);
                 abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
-
             }
+
+            abort(401);
+
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+            
+            abort(401);
+
         }
        
-        abort(401);
     }
 
     public function startDiscussion(User $user)
