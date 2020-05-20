@@ -4,14 +4,16 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import * as coursesActions from '../../store/actions/index';
 import classes from './Testing.module.css';
+import ReactJson from 'react-json-view'
 
 class Dashboard extends Component {
     state = {
         loading: false,
-        data: false
+        data: null
     }
 
     componentDidMount() {
+        document.body.style = 'background: #f1f1f4;';
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
         }
@@ -27,9 +29,10 @@ class Dashboard extends Component {
 
     getData = () => {
         this.setState({loading: true});
-        axios.get('http://localhost:8000/api/auth/discussion', this.props.user)
+        axios.get('http://localhost:8000/api/auth/course', this.props.user)
         .then(response => {
           console.log(response.data);
+          this.setState({data:response.data});  
           this.setState({loading: false});
         })
         .catch(error => {
@@ -57,6 +60,7 @@ class Dashboard extends Component {
                 <div className={classes.DashboardGreeting}>
                     Page de test pour les requêtes Backend.<br/>
                 </div>
+                <ReactJson style={{backgroundColor:'white',textAlign:'left',width:'80%',marginLeft:'50px'}} src={this.state.data} />
                 <br/>
             </div>
         )

@@ -34,7 +34,7 @@ export const coursesProgression = () => {
         axios.get('http://localhost:8000/api/auth/course/progression')
         .then(response => {
             console.log(response);
-            dispatch(coursesProgressionSuccess(response.data.course));
+            dispatch(coursesProgressionSuccess(response.data.Courses));
         })
         .catch(error => {
             console.log(error);

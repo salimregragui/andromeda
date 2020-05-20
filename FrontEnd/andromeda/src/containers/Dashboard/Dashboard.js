@@ -53,6 +53,10 @@ class Dashboard extends Component {
         }
     }
 
+    coursesChoicesHandler = (name) => {
+
+    }
+
     render() {
         let spinner = null;
         let courses = null;
@@ -74,11 +78,12 @@ class Dashboard extends Component {
 
         if (this.props.progression) {
             console.log(this.props.progression)
-            // progression = this.props.progression.map(prog => (
-            //     <CourseSmall
-            //                    name={prog.name}
-            //                    nbrLessonsRestantes={prog.progression.chapter_id}/>
-            // ));
+            progression = this.props.progression.map(prog => (
+                <CourseSmall
+                               key={prog.id}
+                               name={prog.name}
+                               nbrLessonsRestantes={prog.progression.chapter_id}/>
+            ));
         }
         return (
             <div>
@@ -100,6 +105,12 @@ class Dashboard extends Component {
                         </React.Fragment>
                 }
                 
+                <div className={classes.Choices}>
+                    <button style={{color:"#3459D6"}} onClick={() => {this.coursesChoicesHandler('populaires')}}>Populaires</button>
+                    <button onClick={() => {this.coursesChoicesHandler('nouveaux')}}>Nouveaux</button>
+                    <button onClick={() => {this.coursesChoicesHandler('tendance')}}>Tendance</button>
+                </div>
+
                 {courses}
                 <br/>
                 <div className={classes.Progression}>
