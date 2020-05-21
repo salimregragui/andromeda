@@ -25,6 +25,8 @@ Route::group([
     Route::get('course/progression','CourseController@courseProgressions');//* display all courses followed with progression
     Route::get('course/{course}','CourseController@show');//* display specific course
 
+    Route::get('follow/{course}','CourseController@follow_unfollow');//* follow and unfollow course
+
     //-------------------------NOTIFICATION---------------------------
     Route::get('notification','NotificationController@index'); //* display all notification belongs to currently authenticated user
     Route::get('notification/{notification}','NotificationController@show');//* display specific notification belongs to currently authenticated user

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class Course_user extends Pivot
 {
     //
+    protected $guarded = [];
+    
 }

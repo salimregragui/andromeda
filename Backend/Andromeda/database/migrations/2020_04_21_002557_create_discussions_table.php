@@ -15,6 +15,7 @@ class CreateDiscussionsTable extends Migration
     {
         Schema::create('discussions', function (Blueprint $table) {
             $table->id();
+            $table->string('type');
             $table->timestamps();
         });
 
@@ -23,7 +24,6 @@ class CreateDiscussionsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('discussion_id');
             $table->unsignedBigInteger('user_id');
-
             $table->unique(['discussion_id','user_id']);
 
             $table->foreign('discussion_id')->references('id')->on('discussions')->onDelete('cascade');

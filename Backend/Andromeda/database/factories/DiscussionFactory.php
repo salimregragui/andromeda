@@ -8,5 +8,6 @@ use Faker\Generator as Faker;
 $factory->define(Discussion::class, function (Faker $faker) {
     return [
         //
+        'type' => 'groupe',
     ];
 });

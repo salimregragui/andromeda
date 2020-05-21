@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Discussion;
+use App\Message;
 use App\User;
 class DiscussionController extends Controller
 {
@@ -30,8 +31,11 @@ class DiscussionController extends Controller
                 $data['users']=$discussion['users'];
                 $data['visibleMessages']=$discussion['visibleMessages'];
                 $data['pivot']=$discussion['pivot'];
+                $data['type']=$discussion['type'];
 
-                array_push($discussions,$data);
+                if ($data['visibleMessages']->isNotEmpty() or count($data['users'])>2) { //* to don't display the empty discussion but display discussion if it's group even if it's empty
+                    array_push($discussions,$data);   
+                }
             }
 
             return response()->json(['Discussions' => $discussions]);
@@ -66,8 +70,8 @@ class DiscussionController extends Controller
                 $data['id']=$discussion['id'];
                 $data['users']=$discussion['users'];
                 $data['visibleMessages']=$discussion['visibleMessages'];
-                $data['pivot']=$discussion['pivot'];
-                    
+                $data['pivot']=$discussion->users->find($user)->pivot;
+                $data['type']=$discussion['type'];
                 return response()->json(['Discussion' =>$data]);
                
             }
@@ -97,7 +101,29 @@ class DiscussionController extends Controller
            
             if ( $discussion->Users->find($user))
             {
-                $user->Discussions->find($discussion)->pivot->update(['updated_at'=> now()]);
+                if ($discussion->type == 'groupe' ) { //* si c'est une discussion de groupe en le dettache de cette discussion
+                   
+                    if (count($discussion->users) >=2 ) {
+                        
+                        $message = new Message() ;                    
+                        $message->text=auth()->user()->name.' est parti(e)';
+                        $message->attachment="left";
+                        $message->user_id=$user->id;
+                        $message->discussion_id=$discussion->id;
+                        $message->save();
+    
+                        $user->discussions()->detach($discussion);
+                    }
+                    else { // si il reste un seule user dans la discussion
+                        $discussion->delete();
+                    }
+    
+                }
+                else {
+                   
+                    $user->Discussions->find($discussion)->pivot->update(['updated_at'=> now()]);
+
+                }
                 abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
             }
 
@@ -128,7 +154,7 @@ class DiscussionController extends Controller
                     $data['users']=$discussion['users'];
                     $data['visibleMessages']=$discussion['visibleMessages'];
                     $data['pivot']=$discussion['pivot'];
-                    
+                    $data['type']=$discussion['type'];
                     return response()->json(['Discussion' =>$data]);
                 }
             }

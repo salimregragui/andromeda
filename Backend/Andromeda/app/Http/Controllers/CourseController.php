@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Progression;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -91,6 +92,42 @@ class CourseController extends Controller
 
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
             abort(401);
+        }
+    }
+
+    public function follow_unfollow(Course $course)
+    {
+        try {
+            
+            $user = auth()->userOrFail();
+            
+            if ($user->followed->where('pivot.course_id',$course->id)->isEmpty()) {
+                
+                $progressionNew= new Progression();
+                $progressionNew->user_id=$user->id;
+                $progressionNew->course_id=$course->id;
+                $progressionNew->chapter_id=$course->Sections[0]->Chapters[0]->id;//* il sont par ordre asc see model
+                $progressionNew->save();
+
+                $user->Followed()->attach($course);
+
+                abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
+
+
+            }
+            else {
+
+                $user->Followed()->detach($course);
+                $user->progression($course)->delete();
+                
+                abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
+
+            }
+
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+
+            abort(401);
+
         }
     }
 }
