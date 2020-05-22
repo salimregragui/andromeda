@@ -100,7 +100,68 @@ class DiscussionController extends Controller
             $user = auth()->userOrFail();
            
             if ( $discussion->Users->find($user))
-            {
+            {   
+                $user->Discussions->find($discussion)->pivot->update(['updated_at'=> now()]);
+                abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
+            }
+
+            abort(401);
+
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+            
+            abort(401);
+
+        }
+       
+    }
+
+    public function startDiscussion(User $user)
+    {
+
+        try {
+            $auth = auth()->userOrFail();
+            // l'utilisateur ne peut start une discussion avec lui meme
+            if ($user->id == $auth->id ) {
+                abort(401);
+            }
+            // et il faut que l'autre utilisateur est des discussions
+            if ( $user->Discussions->isNotEmpty()) {
+
+                foreach (auth()->user()->Discussions as $discussion ) {
+                
+                    if ($discussion->type =='groupe' and $discussion->Users->find($user)->id == $user->id ) {
+                       
+                        $discussion['users']=$discussion->Users;
+                        $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion['pivot']->updated_at);
+                       
+                        $data['created_at']=$discussion['created_at'];
+                        $data['updated_at']=$discussion['updated_at'];
+                        $data['id']=$discussion['id'];
+                        $data['users']=$discussion['users'];
+                        $data['visibleMessages']=$discussion['visibleMessages'];
+                        $data['pivot']=$discussion['pivot'];
+                        $data['type']=$discussion['type'];
+                        return response()->json(['Discussion' =>$data]);
+                    }
+                }
+    
+                abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
+    
+            }
+            
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+        
+            abort(401);
+            
+        }
+    }
+
+    public function quitterGroupe(Discussion $discussion)
+    {
+        try {
+            $user = auth()->userOrFail();
+            if ( $discussion->Users->find($user)) {
+               
                 if ($discussion->type == 'groupe' ) { //* si c'est une discussion de groupe en le dettache de cette discussion
                    
                     if (count($discussion->users) >=2 ) {
@@ -117,52 +178,13 @@ class DiscussionController extends Controller
                     else { // si il reste un seule user dans la discussion
                         $discussion->delete();
                     }
-    
-                }
-                else {
-                   
-                    $user->Discussions->find($discussion)->pivot->update(['updated_at'=> now()]);
-
-                }
-                abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
-            }
-
-            abort(401);
-
-        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
-            
-            abort(401);
-
-        }
-       
-    }
-
-    public function startDiscussion(User $user)
-    {
-        if (auth()->user() != null) {
-
-            foreach (auth()->user()->Discussions as $discussion ) {
                 
-                if (count($discussion->Users)== 2 and $discussion->Users->find($user)->id == $user->id ) {
-                   
-                    $discussion['users']=$discussion->Users;
-                    $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion['pivot']->updated_at);
-                   
-                    $data['created_at']=$discussion['created_at'];
-                    $data['updated_at']=$discussion['updated_at'];
-                    $data['id']=$discussion['id'];
-                    $data['users']=$discussion['users'];
-                    $data['visibleMessages']=$discussion['visibleMessages'];
-                    $data['pivot']=$discussion['pivot'];
-                    $data['type']=$discussion['type'];
-                    return response()->json(['Discussion' =>$data]);
+                    abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
                 }
             }
-
-            abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
-
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+            abort(401);
         }
-
-        abort(401);
+        
     }
 }
