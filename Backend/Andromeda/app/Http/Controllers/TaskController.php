@@ -39,7 +39,7 @@ class TaskController extends Controller
 
                 
                 $this->validation();
-                $task=new Task(request(['content','type','status']));
+                $task=new Task(request(['content','status','type']));
                 $task->user_id=$user->id;
                 $task->save();
 
@@ -94,7 +94,7 @@ class TaskController extends Controller
             if ($user->Tasks->where('id',$task->id)->first() != null) {
                 
                 $this->validation();
-                $task->update(request(['content','type','status']));
+                $task->update(request(['content','status','type']));
 
                 abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
             }
