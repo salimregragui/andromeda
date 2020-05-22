@@ -39,6 +39,16 @@ Route::group([
     Route::delete('discussion/quitter-groupe/{discussion}','DiscussionController@quitterGroupe'); //* permet de quitter un groupe
     Route::delete('discussion/{discussion}','DiscussionController@destroy');//* delete specific discussion belongs to currently authenticated user
 
+    //-----------------------------TASK--------------------------------
+
+    Route::get('task/','TaskController@index');//* Display a listing of the tasks.
+    Route::get('task/{task}','TaskController@show');//* Display the specified  task.
+    Route::post('task/','TaskController@store');//* Store a newly created task in storage.
+    Route::put('task/','TaskController@update');//* Update the specified task in storage.
+    Route::delete('task/{task}','TaskController@destroy');//* Remove the specified task from storage.
+
+
+
 
 });
 
