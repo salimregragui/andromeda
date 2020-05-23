@@ -1,0 +1,168 @@
+import React, { Component } from 'react';
+import classes from './Tasks.module.css';
+import { connect } from 'react-redux';
+import * as tasksActions from '../../store/actions/index';
+import Modal from '../../components/UI/Modal/Modal';
+
+class Tasks extends Component {
+
+    state = {
+        tasksLoaded: true,
+        modal: false,
+        newTask: {
+            content: '',
+            status: 'a faire',
+            type: 'Important'
+        }
+    }
+
+    componentDidMount() {
+        document.body.style = 'background: #f1f1f4;';
+        if (!localStorage.getItem('token')) {
+            this.props.history.push('/auth/signin');
+        }
+
+        if (this.props.location.state)
+        {
+            if (this.props.logged && this.props.location.state.from === '/auth/signin')
+            {
+                window.location.reload();
+            }
+        }
+
+        if (!this.props.tasks) {
+            this.setState({tasksLoaded: false});
+        }
+
+    }
+
+    componentDidUpdate() {
+        if(this.props.logged && !this.state.tasksLoaded) {
+            console.log("get tasks !");
+            this.props.onGetTasks();
+            this.setState({tasksLoaded: true});
+        }
+    }
+
+    onNewTaskHandler = () => {
+        this.setState({modal: true});
+        console.log("New task modal");
+    }
+
+    changedNewTaskHandler = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        const changedNewtask = {...this.state.newTask}
+        changedNewtask[name] = value;
+
+        this.setState({newTask: changedNewtask})
+    }
+
+    onNewTaskSubmitHandler = (event) => {
+        event.preventDefault();
+        this.props.onAddTask(this.state.newTask);
+        this.setState({modal: false});
+        this.props.onGetTasks();
+    }
+
+    closeModal = () => {
+        this.setState({modal:false})
+    }
+
+    render() {
+        let tasks = null;
+        let modal = null;
+
+        if (this.props.tasks) {
+            tasks = this.props.tasks.map(task => {
+                return (
+                    <tr key={task.id}>
+                        <td style={{color:'#181818'}}>{task.content}</td>
+                        <td>{task.type}</td>
+                        <td>{task.created_at.substring(0,10)}</td>
+                        <td>X</td>
+                    </tr>
+                );
+            });
+        }
+
+        if (this.state.modal) {
+            modal = <Modal width='60' height='300px'>
+                <div className={classes.newTask}>
+                    <br/>
+                    <h1 className={classes.newTaskTitle}>Nouvelle tache</h1>
+                    <form onSubmit={(event) => {this.onNewTaskSubmitHandler(event)}}>
+                        <input type="text" name="content" value={this.state.newTask.content} onChange={(event) => {this.changedNewTaskHandler(event)}}/><br/>
+                        <select name='type' value={this.state.newTask.type} onChange={(event) => {this.changedNewTaskHandler(event)}}>
+                            <option value="Important">Important</option>
+                            <option value="Moyen">Moyen</option>
+                            <option value="Basique">Basique</option>
+                        </select>
+                        
+                        <br/>
+                        <button type="submit">Ajouter la tache</button>
+                        <button style={{backgroundColor: '#181818'}} onClick={this.closeModal}>Fermer</button>
+                    </form>
+                </div>
+            </Modal>
+        }
+        return (
+            <div className={classes.Tasks}>
+                {modal}
+                <div className={classes.TasksChoices}>
+                    <h1>Taches</h1>
+
+                    <button className={classes.TasksChoice}  style={{backgroundColor:'white'}}>
+                        {this.props.tasks? this.props.tasks.length : 'XX'}<br/>
+                        <span>Toutes les taches</span>
+                    </button>
+                    <button className={classes.TasksChoice}>
+                        XX<br/>
+                        <span>Taches finies</span>
+                    </button>
+                    <button className={classes.TasksChoice}>
+                        XX<br/>
+                        <span>Taches en cours</span>
+                    </button>
+                    <button className={classes.TasksChoice}>
+                        XX<br/>
+                        <span>Taches a faire</span>
+                    </button>
+                    <button className={classes.TasksNew} onClick={this.onNewTaskHandler}>Ajouter Tache</button>
+                </div>
+
+                <div className={classes.TasksBody}>
+                    <table>
+                        <tbody>
+                            <tr style={{color:'#5d5d5d'}}>
+                                <td>Tache</td>
+                                <td>Type</td>
+                                <td>Date</td>
+                                <td></td>
+                            </tr>
+                            {tasks}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        user: state.auth.user,
+        logged: state.auth.logged,
+        tasks: state.data.tasks
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onGetTasks: () => dispatch(tasksActions.tasksAll()),
+        onAddTask: (task) => dispatch(tasksActions.taskAdd(task))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tasks);

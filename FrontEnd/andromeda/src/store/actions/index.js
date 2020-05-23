@@ -10,3 +10,8 @@ export {
     coursesAll,
     coursesProgression
 } from './courses';
+
+export {
+    tasksAll,
+    taskAdd
+} from './data'
