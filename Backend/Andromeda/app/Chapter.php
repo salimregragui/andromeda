@@ -13,4 +13,9 @@ class Chapter extends Model
     {
         return $this->belongsTo(Section::class);
     }
+
+    public function Comments()
+    {
+        return $this->hasMany(Comment::class)->latest();
+    }
 }

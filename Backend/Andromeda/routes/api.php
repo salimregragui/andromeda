@@ -47,7 +47,9 @@ Route::group([
     Route::put('task/','TaskController@update');//* Update the specified task in storage.
     Route::delete('task/{task}','TaskController@destroy');//* Remove the specified task from storage.
 
+    //-----------------------------Comment--------------------------------
 
+    Route::delete('comment/{comment}','CommentController@destroy');
 
 
 });

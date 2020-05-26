@@ -25,6 +25,10 @@ class CourseController extends Controller
                 foreach ($section->Chapters as $chapter) 
                 {
                     $cptChapter++;
+                    foreach ($chapter->Comments as $comment ) 
+                    {
+                        
+                    }
                 }
             }
 
@@ -47,6 +51,11 @@ class CourseController extends Controller
             foreach ($section->Chapters as $chapter) 
             {
                 $cptChapter++;
+                
+                foreach ($chapter->Comments as $comment ) 
+                {
+                    
+                }
             }
         }
 

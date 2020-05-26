@@ -114,4 +114,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return Progression::where(['user_id' => $this->id , 'course_id' => $course->id])->first();
     }
+    public function Comments()
+    {
+        return $this->hasMany(Comment::class)->latest();
+    }
 }
