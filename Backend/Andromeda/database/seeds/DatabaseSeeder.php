@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
         factory(App\Bug::class)->create();
         factory(App\Task::class)->create();
         factory(App\Progression::class)->create();
+        factory(App\Comment::class)->create();
+
         // je lie les utilisateur 1 et 2 a la premiere discussion
         $u=App\User::find(1);
         $u->Discussions()->attach(App\Discussion::find(1));
