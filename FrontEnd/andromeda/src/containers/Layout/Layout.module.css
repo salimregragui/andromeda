@@ -1,9 +1,11 @@
 .Content {
     width: 100%;
+    height: 100%;
 }
 
 .ContentLeftBar {
     width: 82%;
     margin-left: 18%;
     background-color: #f1f1f4;
+    height: 100%;
 }

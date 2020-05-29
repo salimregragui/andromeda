@@ -8,12 +8,15 @@ class Tasks extends Component {
 
     state = {
         tasksLoaded: true,
+        tasksToRender : null,
         modal: false,
+        modalType: 'newTask',
         newTask: {
             content: '',
             status: 'a faire',
             type: 'Important'
-        }
+        },
+        currentCategory: 'All'
     }
 
     componentDidMount() {
@@ -32,6 +35,8 @@ class Tasks extends Component {
 
         if (!this.props.tasks) {
             this.setState({tasksLoaded: false});
+        }else {
+            this.setState({tasksToRender: this.props.tasks})
         }
 
     }
@@ -41,6 +46,10 @@ class Tasks extends Component {
             console.log("get tasks !");
             this.props.onGetTasks();
             this.setState({tasksLoaded: true});
+        }
+
+        if (this.props.tasks && this.state.currentCategory === 'All' && this.state.tasksToRender === null) {
+            this.setState({tasksToRender: this.props.tasks});
         }
     }
 
@@ -66,6 +75,51 @@ class Tasks extends Component {
         this.props.onGetTasks();
     }
 
+    categoriesHandler = (name) => {
+        let categories = document.getElementsByClassName(classes.TasksChoice);
+
+        Array.prototype.forEach.call(categories, category => {
+            category.style.backgroundColor = '#f1f1f4'
+        });
+
+        document.getElementById(name).style.backgroundColor = '#ffffff';
+        
+        if (name !== this.state.currentCategory) {
+            this.setState({currentCategory: name});
+            console.log(this.state.currentCategory);
+            this.getTasksToRender(name);
+        }
+    }
+
+    getTasksToRender = (category) => {
+        let newTasks = null;
+        if (category === 'All') {
+            this.setState({tasksToRender: this.props.tasks});
+            console.log(this.state.tasksToRender);
+        }
+        else if (category === 'Done') {
+            newTasks = this.props.tasks.filter(task => {
+                return task.status === 'fini'
+            });
+            this.setState({tasksToRender: newTasks});
+            console.log(this.state.tasksToRender);
+        }
+        else if (category === 'InProgress') {
+            newTasks = this.props.tasks.filter(task => {
+                return task.status === 'en cours'
+            });
+            this.setState({tasksToRender: newTasks});
+            console.log(this.state.tasksToRender);
+        }
+        else if (category === 'ToBeDone') {
+            newTasks = this.props.tasks.filter(task => {
+                return task.status === 'a faire'
+            });
+            this.setState({tasksToRender: newTasks});
+            console.log(this.state.tasksToRender);
+        }
+    }
+
     closeModal = () => {
         this.setState({modal:false})
     }
@@ -74,8 +128,8 @@ class Tasks extends Component {
         let tasks = null;
         let modal = null;
 
-        if (this.props.tasks) {
-            tasks = this.props.tasks.map(task => {
+        if (this.state.tasksToRender) {
+            tasks = this.state.tasksToRender.map(task => {
                 return (
                     <tr key={task.id}>
                         <td style={{color:'#181818'}}>{task.content}</td>
@@ -113,19 +167,19 @@ class Tasks extends Component {
                 <div className={classes.TasksChoices}>
                     <h1>Taches</h1>
 
-                    <button className={classes.TasksChoice}  style={{backgroundColor:'white'}}>
+                    <button id='All' onClick={() => {this.categoriesHandler('All')}} className={classes.TasksChoice}  style={{backgroundColor:'white'}}>
                         {this.props.tasks? this.props.tasks.length : 'XX'}<br/>
                         <span>Toutes les taches</span>
                     </button>
-                    <button className={classes.TasksChoice}>
+                    <button id='Done' onClick={() => {this.categoriesHandler('Done')}} className={classes.TasksChoice}>
                         XX<br/>
                         <span>Taches finies</span>
                     </button>
-                    <button className={classes.TasksChoice}>
+                    <button id='InProgress' onClick={() => {this.categoriesHandler('InProgress')}} className={classes.TasksChoice}>
                         XX<br/>
                         <span>Taches en cours</span>
                     </button>
-                    <button className={classes.TasksChoice}>
+                    <button id='ToBeDone' onClick={() => {this.categoriesHandler('ToBeDone')}} className={classes.TasksChoice}>
                         XX<br/>
                         <span>Taches a faire</span>
                     </button>

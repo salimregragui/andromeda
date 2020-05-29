@@ -14,7 +14,7 @@ class Layout extends Component {
             leftBar = <LeftBar />
         }
 
-        if (this.props.location.pathname === '/error' || this.props.location.pathname === '/') {
+        if (this.props.location.pathname === '/error' || this.props.location.pathname === '/' || this.props.location.pathname === '/auth/signup' || this.props.location.pathname === '/auth/signin') {
             leftBar = null;
             contentClass = classes.Content
         }

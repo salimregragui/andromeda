@@ -69,6 +69,7 @@
     float: right;
     width: 70%;
     background-color: white;
+    height: 100%;
 }
 
 .TasksBody table {

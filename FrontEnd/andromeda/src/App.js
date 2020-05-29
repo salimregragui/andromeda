@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
+
 import Layout from './containers/Layout/Layout';
 import Landing from './components/Landing/Landing';
 import Authentification from './containers/Authentification/Authentification';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Classes from './containers/Classes/Classes';
 import Tasks from './containers/Tasks/Tasks';
+import Course from './containers/Course/Course';
 import Testing from './containers/Testing/Testing';
+
 import { Switch, Route, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import * as authActions from './store/actions/index';
 import {connect} from 'react-redux';
-import jwt from 'jsonwebtoken';
-import Spinner from './components/UI/Spinner/Spinner';
+
+// import Spinner from './components/UI/Spinner/Spinner';
 import Error from './components/Error/Error';
 
 class App extends Component {
@@ -65,6 +68,7 @@ class App extends Component {
             <Route path="/" exact component= {Landing} />
             <Route path="/auth" component= {Authentification} />
             <Route path="/dashboard" component= {Dashboard} />
+            <Route path="/course" component= {Course} />
             <Route path="/classes" component= {Classes} />
             <Route path="/tasks" component= {Tasks} />
             <Route path="/error" component= {Error} />

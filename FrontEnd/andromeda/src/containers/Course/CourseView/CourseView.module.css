@@ -1,0 +1,65 @@
+.CourseViewLeft {
+    float: left;
+    text-align: left;
+    margin-left: 30px;
+    margin-top: 30px;
+    width: 50%;
+}
+
+.CourseViewLeft h2 {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.CourseViewRight {
+    float: right;
+    width: 40%;
+    text-align: left;
+    margin-top: 30px;
+}
+
+.CourseViewRight h2 {
+    margin-top: 0px;
+    font-size: 16px;
+}
+
+.CourseViewSection {
+    width: 80%;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.CourseViewSection h3 {
+    font-weight: 600;
+    font-size: 14px;
+    margin-left: 20px;
+    margin-bottom: 0px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    cursor: pointer;
+}
+
+.CourseViewSection button {
+    background-color: white;
+    border: none;
+    width: 100%;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: left;
+    padding-left: 20px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    color: #757575;
+}
+
+.CourseViewSection button:hover {
+    color: #3459D6;
+}
+
+.CourseViewSection button:focus {
+    outline: none;
+}
+
+.chaptersHidden {
+    display: none;
+}

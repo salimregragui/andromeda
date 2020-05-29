@@ -3,6 +3,8 @@ import classes from './Landing.module.css';
 import landingImage from '../../assets/images/landing-img.png';
 
 const Landing = () => {
+    document.body.style.backgroundColor = '#ffffff';
+    
     return (
         <React.Fragment>
             <div className={classes.LandingTop}>

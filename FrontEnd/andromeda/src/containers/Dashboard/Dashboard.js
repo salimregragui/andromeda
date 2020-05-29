@@ -7,7 +7,6 @@ import Course from '../../components/Course/Course';
 import CourseSmall from '../../components/Course/CourseSmall/CourseSmall';
 import classes from './Dashboard.module.css';
 import CustomLoading from '../../components/UI/CustomLoading/CustomLoading';
-import Modal from '../../components/UI/Modal/Modal';
 
 class Dashboard extends Component {
     state = {
