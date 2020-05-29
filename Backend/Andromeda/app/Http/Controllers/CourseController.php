@@ -139,4 +139,59 @@ class CourseController extends Controller
 
         }
     }
+
+    public function store()
+    {
+        $this->validation();
+
+        $course = new Course(['name','description','rating']);
+        $course->user_id = auth()->user();
+        $course->save();
+
+        abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+
+    }
+
+    public function update(Course $course)
+    {   
+        $user = auth()->user();
+
+        if ($course->User == $user or $user->role == 'Admin' ) {
+        
+            $this->validation();
+            
+            $course->update(request(['name','description','rating']));
+            abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+
+        }
+
+        abort(401);
+
+    }
+
+    protected function validation()
+    {
+        return request()->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'rating' => 'nullable|numeric|min:1|max:5',
+        ]);
+    }
+    
+    public function destroy (Course $course)
+    {
+
+
+        $user = auth()->user();
+
+        if ($course->User == $user or $user->role == 'Admin' ) {
+            
+            $course->delete();
+            abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+
+        }
+
+        abort(401);
+
+    }
 }

@@ -24,6 +24,9 @@ Route::group([
     Route::get('course','CourseController@index'); //* display all courses
     Route::get('course/progression','CourseController@courseProgressions');//* display all courses followed with progression
     Route::get('course/{course}','CourseController@show');//* display specific course
+    Route::post('course','CourseController@store')->middleware('CheckProfessor');//* store course
+    Route::put('course/{course}','CourseController@update')->middleware('CheckProfessor');//* store course
+    Route::delete('course/{course}','CourseController@destroy')->middleware('CheckProfessor');//* delete specific course belongs to currently authenticated Prpfessor
 
     Route::get('follow/{course}','CourseController@follow_unfollow');//* follow and unfollow course
 
