@@ -19,7 +19,7 @@ const CourseBig = (props) => {
             </p>
 
             <div className={classes.courseNextChapter}>
-                <button className={classes.coursePlayButton}>
+                <button className={classes.coursePlayButton} name={props.name} onClick={props.clickPlay}>
                     <img src={playIcon} alt="play" />
                 </button>
                 <span>Prochain chapitre: Lorem ipsum sit dolor...</span>

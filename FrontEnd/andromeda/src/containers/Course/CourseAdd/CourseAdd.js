@@ -199,7 +199,7 @@ class CourseAdd extends Component {
 
                     <h4>Content</h4>
                     <button type="button" onClick={this.sectionAddHandler}>Ajouter Section</button>
-                    <button type="submit">Sauvegarder le site</button>
+                    <button type="submit">Sauvegarder le cours</button>
                     <br/>
                     {sections}
                 </form>

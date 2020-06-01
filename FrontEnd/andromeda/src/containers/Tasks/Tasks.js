@@ -16,7 +16,11 @@ class Tasks extends Component {
             status: 'a faire',
             type: 'Important'
         },
-        currentCategory: 'All'
+        currentCategory: 'All',
+        totalAll: 0,
+        totalFinished: 0,
+        totalToBeDone: 0,
+        totalToDo: 0
     }
 
     componentDidMount() {
@@ -49,7 +53,26 @@ class Tasks extends Component {
         }
 
         if (this.props.tasks && this.state.currentCategory === 'All' && (this.state.tasksToRender === null || this.state.tasksToRender !== this.props.tasks)) {
-            this.setState({tasksToRender: this.props.tasks});
+            this.setState({tasksToRender: this.props.tasks, totalAll: this.props.tasks.length});
+        }
+
+        if (this.props.tasks && this.state.totalFinished === 0) {
+            let newTasks = null;
+
+            newTasks = this.props.tasks.filter(task => {
+                return task.status === 'fini'
+            });
+            this.setState({totalFinished: newTasks.length});
+            
+            newTasks = this.props.tasks.filter(task => {
+                return task.status === 'en cours'
+            });
+            this.setState({totalToBeDone: newTasks.length});
+            
+            newTasks = this.props.tasks.filter(task => {
+                return task.status === 'a faire'
+            });
+            this.setState({totalToDo: newTasks.length});
         }
     }
 
@@ -101,21 +124,21 @@ class Tasks extends Component {
             newTasks = this.props.tasks.filter(task => {
                 return task.status === 'fini'
             });
-            this.setState({tasksToRender: newTasks});
+            this.setState({tasksToRender: newTasks, totalFinished: newTasks.length});
             console.log(this.state.tasksToRender);
         }
         else if (category === 'InProgress') {
             newTasks = this.props.tasks.filter(task => {
                 return task.status === 'en cours'
             });
-            this.setState({tasksToRender: newTasks});
+            this.setState({tasksToRender: newTasks, totalToBeDone: newTasks.length});
             console.log(this.state.tasksToRender);
         }
         else if (category === 'ToBeDone') {
             newTasks = this.props.tasks.filter(task => {
                 return task.status === 'a faire'
             });
-            this.setState({tasksToRender: newTasks});
+            this.setState({tasksToRender: newTasks, totalToDo: newTasks.length});
             console.log(this.state.tasksToRender);
         }
     }
@@ -168,19 +191,19 @@ class Tasks extends Component {
                     <h1>Taches</h1>
 
                     <button id='All' onClick={() => {this.categoriesHandler('All')}} className={classes.TasksChoice}  style={{backgroundColor:'white'}}>
-                        {this.props.tasks? this.props.tasks.length : 'XX'}<br/>
+                        {this.state.totalAll}<br/>
                         <span>Toutes les taches</span>
                     </button>
                     <button id='Done' onClick={() => {this.categoriesHandler('Done')}} className={classes.TasksChoice}>
-                        XX<br/>
+                        {this.state.totalFinished}<br/>
                         <span>Taches finies</span>
                     </button>
                     <button id='InProgress' onClick={() => {this.categoriesHandler('InProgress')}} className={classes.TasksChoice}>
-                        XX<br/>
+                        {this.state.totalToBeDone}<br/>
                         <span>Taches en cours</span>
                     </button>
                     <button id='ToBeDone' onClick={() => {this.categoriesHandler('ToBeDone')}} className={classes.TasksChoice}>
-                        XX<br/>
+                        {this.state.totalToDo}<br/>
                         <span>Taches a faire</span>
                     </button>
                     <button className={classes.TasksNew} onClick={this.onNewTaskHandler}>Ajouter Tache</button>

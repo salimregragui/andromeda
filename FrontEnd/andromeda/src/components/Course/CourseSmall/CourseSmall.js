@@ -9,10 +9,10 @@ const Course = (props) => {
                 UX
             </div>
             <div className={classes.courseInfos}>
-                {props.name}<br/>
+                {props.name.substring(0,15)}<br/>
                 <span>{props.nbrLessonsRestantes} Lessons restantes</span>
             </div>
-            <button className={classes.coursePlayButton}>
+            <button className={classes.coursePlayButton} name={props.name} onClick={props.clickPlay}>
                 <img src={playIcon} alt="play" />
             </button>
         </div>

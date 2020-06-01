@@ -24,6 +24,13 @@ class Classes extends Component {
             this.setState({progressionLoaded: true});
         }
     }
+
+    redirectToCourseHandler = (event) => {
+        const name = event.target.getAttribute('name');
+
+        this.props.history.push('/course/' + name.split(' ').join('-'));
+    }
+
     render() {
         let progression = null;
 
@@ -34,6 +41,7 @@ class Classes extends Component {
                                key={prog.id}
                                name={prog.name}
                                description={prog.description}
+                               clickPlay={(event) => {this.redirectToCourseHandler(event)}}
                                percentageFinished='20%'
                                courseColor={this.state.colorList[Math.floor(Math.random() * this.state.colorList.length)]}
                                nextChapter={prog.progression.chapter_id}/>

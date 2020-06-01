@@ -57,6 +57,12 @@ class Dashboard extends Component {
 
     }
 
+    redirectToCourseHandler = (event) => {
+        const name = event.target.getAttribute('name');
+
+        this.props.history.push('/course/' + name.split(' ').join('-'));
+    }
+
     render() {
         let spinner = null;
         let courses = null;
@@ -72,6 +78,7 @@ class Dashboard extends Component {
                                name={course.name}
                                nbrLessons={course.numberOfChapter}
                                nbrMinutes="240"
+                               clickPlay={(event) => {this.redirectToCourseHandler(event)}}
                                nbrStudents={course.suivis} />
             ));
         }
@@ -81,7 +88,8 @@ class Dashboard extends Component {
             progression = this.props.progression.map(prog => (
                 <CourseSmall
                                key={prog.id}
-                               name={prog.name.substring(0,15)}
+                               name={prog.name}
+                               clickPlay={(event) => {this.redirectToCourseHandler(event)}}
                                nbrLessonsRestantes={prog.progression.chapter_id}/>
             ));
         }
