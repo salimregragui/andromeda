@@ -12,7 +12,6 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-    // Route::get('notifications', 'AuthController@notifications');
     
     //-------------------------USER---------------------------
     Route::get('user','UserController@index');//* display all Users
@@ -21,6 +20,7 @@ Route::group([
     Route::delete('user/{user}/delete','UserController@destroy');//* delete the specified User
 
     //-------------------------COURSE---------------------------
+
     Route::get('course','CourseController@index'); //* display all courses
     Route::get('course/progression','CourseController@courseProgressions');//* display all courses followed with progression
     Route::get('course/{course}','CourseController@show');//* display specific course
@@ -54,6 +54,28 @@ Route::group([
 
     Route::delete('comment/{comment}','CommentController@destroy');
 
+    //-----------------------------Section---------------------------------
+
+    Route::post('section/{course}','SectionController@store')->middleware('CheckProfessor');//* store section
+    Route::put('section/{section}','SectionController@update')->middleware('CheckProfessor');//* store section
+    Route::delete('section/{section}','SectionController@destroy')->middleware('CheckProfessor');//* delete specific section belongs to currently authenticated Prpfessor
+   
+    //-----------------------------Chapter--------------------------------------
+
+    Route::post('chapter/{section}','ChapterController@store')->middleware('CheckProfessor');//* store chapter
+    Route::put('chapter/{chapter}','ChapterController@update')->middleware('CheckProfessor');//* store chapter
+    Route::delete('chapter/{chapter}','ChapterController@destroy')->middleware('CheckProfessor');//* delete specific chapter belongs to currently authenticated Prpfessor
+     
+    //-----------------------------Summary--------------------------------------
+
+    Route::post('summary/{section}','SummaryController@store')->middleware('CheckProfessor');//* store summary
+    Route::put('summary/{summary}','SummaryController@update')->middleware('CheckProfessor');//* store summary
+    Route::delete('summary/{summary}','SummaryController@destroy')->middleware('CheckProfessor');//* delete specific summary belongs to currently authenticated Prpfessor
+   
+    //-----------------------------Resource--------------------------------------
+   
+    Route::get('resource/','ResourceController@index');
+    Route::get('resource/{resource}','ResourceController@show');
 
 });
 

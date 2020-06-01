@@ -22,7 +22,9 @@ class CourseController extends Controller
             
             foreach ($course->Sections as $section) 
             {
-                foreach ($section->Chapters as $chapter) 
+              $section->Summary;
+
+              foreach ($section->Chapters as $chapter) 
                 {
                     $cptChapter++;
                     foreach ($chapter->Comments as $comment ) 
@@ -41,13 +43,14 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         // Display the specified course with all sections and chapters
-
         $cptChapter=0; //compteur de chapitre dans chaque cours
 
         $course['suivis']=$course->Followed()->count(); // nombre d'user qui suivent ce cours 
         
         foreach ($course->Sections as $section) 
         {
+            $section->Summary;
+
             foreach ($section->Chapters as $chapter) 
             {
                 $cptChapter++;
