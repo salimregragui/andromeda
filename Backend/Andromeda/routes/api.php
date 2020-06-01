@@ -12,7 +12,6 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-    // Route::get('notifications', 'AuthController@notifications');
     
     //-------------------------USER---------------------------
     Route::get('user','UserController@index');//* display all Users
@@ -67,11 +66,16 @@ Route::group([
     Route::put('chapter/{chapter}','ChapterController@update')->middleware('CheckProfessor');//* store chapter
     Route::delete('chapter/{chapter}','ChapterController@destroy')->middleware('CheckProfessor');//* delete specific chapter belongs to currently authenticated Prpfessor
      
-    //-----------------------------Chapter--------------------------------------
+    //-----------------------------Summary--------------------------------------
 
     Route::post('summary/{section}','SummaryController@store')->middleware('CheckProfessor');//* store summary
     Route::put('summary/{summary}','SummaryController@update')->middleware('CheckProfessor');//* store summary
     Route::delete('summary/{summary}','SummaryController@destroy')->middleware('CheckProfessor');//* delete specific summary belongs to currently authenticated Prpfessor
    
+    //-----------------------------Resource--------------------------------------
+   
+    Route::get('resource/','ResourceController@index');
+    Route::get('resource/{resource}','ResourceController@show');
+
 });
 

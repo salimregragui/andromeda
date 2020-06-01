@@ -10,6 +10,7 @@ $factory->define(Resource::class, function (Faker $faker) {
         //
         'course_id' => 1,
         'type' => 'image',
+        'name' => $faker->sentence(),
         'attachment' => 'link.jpg',
     ];
 });
