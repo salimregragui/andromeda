@@ -1,0 +1,100 @@
+.CourseAdd {
+    text-align: left;
+    color: #181818;
+}
+
+.CourseAdd form {
+    margin-left: 50px;
+}
+
+.CourseAdd input {
+    width: 400px;
+    height: 40px;
+    border-radius: 10px;
+    border: #c2c2c2;
+    padding-left: 10px;
+    color: #181818;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.CourseAdd textarea {
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+    border: #c2c2c2;
+    padding-left: 10px;
+    color: #181818;
+    font-weight: 600;
+}
+
+.CourseAdd input:focus, textarea:focus {
+    outline: none;
+}
+
+.CourseAdd button {
+    text-decoration: none;
+    width: 150px;
+    height: 30px;
+    background-color: #181818;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.CourseAdd button:focus {
+    outline: none;
+}
+
+.sectionForm {
+    background-color: white;
+    width: 300px;
+    display: inline-block;
+    margin-right: 30px;
+    border-radius: 5px;
+    vertical-align:top;
+    margin-bottom: 20px;
+}
+
+.sectionForm h4 {
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.sectionForm a {
+    float: right;
+    width: 150px;
+    height: 30px;
+    background-color: #181818;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    margin-top: 10px;
+}
+
+.sectionForm input {
+    background-color: #c2c2c2;
+    width: 260px;
+    height: 30px;
+    margin-left: 15px;
+}
+
+.chapterForm h5 {
+    padding-top: 0px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.hiddenInfos {
+    display: none;
+}

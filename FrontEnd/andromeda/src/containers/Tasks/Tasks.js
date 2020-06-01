@@ -48,7 +48,7 @@ class Tasks extends Component {
             this.setState({tasksLoaded: true});
         }
 
-        if (this.props.tasks && this.state.currentCategory === 'All' && this.state.tasksToRender === null) {
+        if (this.props.tasks && this.state.currentCategory === 'All' && (this.state.tasksToRender === null || this.state.tasksToRender !== this.props.tasks)) {
             this.setState({tasksToRender: this.props.tasks});
         }
     }

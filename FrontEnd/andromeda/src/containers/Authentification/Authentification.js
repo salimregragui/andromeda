@@ -23,6 +23,7 @@ class Authentification extends Component {
     }
 
     componentDidMount() {
+        document.body.style.backgroundColor = '#ffffff';
         if (localStorage.getItem('token')) {
             this.props.history.push('/dashboard');
         }
