@@ -20,7 +20,7 @@ class Tasks extends Component {
     }
 
     componentDidMount() {
-        document.body.style = 'background: #f1f1f4;';
+        document.body.style = 'background: white;';
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
         }
@@ -184,6 +184,7 @@ class Tasks extends Component {
                         <span>Taches a faire</span>
                     </button>
                     <button className={classes.TasksNew} onClick={this.onNewTaskHandler}>Ajouter Tache</button>
+                    <br/><br/><br/>
                 </div>
 
                 <div className={classes.TasksBody}>

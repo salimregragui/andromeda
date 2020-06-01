@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Progression;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
@@ -147,11 +148,15 @@ class CourseController extends Controller
     {
         $this->validation();
 
-        $course = new Course(['name','description','rating']);
-        $course->user_id = auth()->user();
-        $course->save();
+        $course = Course::create([
+            'name' => request('name'),
+            'description' => request('description'),
+            'rating' => request('rating'),
+            'user_id' => auth()->user()->id
+        ]);
 
-        abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+        // abort(204); //Requête traitée avec succès mais pas d’information à renvoyer. 
+        return response()->json(['courseId' => $course->id]);
 
     }
 
@@ -174,11 +179,13 @@ class CourseController extends Controller
 
     protected function validation()
     {
-        return request()->validate([
+        $validator = Validator::make(request()->json()->all(), [
             'name' => 'required',
             'description' => 'required',
-            'rating' => 'nullable|numeric|min:1|max:5',
+            'rating' => 'nullable|numeric|min:0|max:5',
         ]);
+
+        return $validator;
     }
     
     public function destroy (Course $course)

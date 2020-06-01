@@ -116,6 +116,7 @@ class CourseView extends Component {
                     <div className={classes.CourseViewRight}>
                         <h2>Contenu du cours</h2>
                         {sections}
+                        <br/><br/>
                     </div>
                 </React.Fragment> : null}
             </div>

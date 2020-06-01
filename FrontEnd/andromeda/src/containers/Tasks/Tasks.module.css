@@ -4,9 +4,11 @@
 
 .TasksChoices {
     float: left;
-    width: 30%;
+    width: 23%;
     text-align: left;
     color: #181818;
+    background-color: #f1f1f4;
+    position: fixed;
 }
 
 .TasksChoices h1 {

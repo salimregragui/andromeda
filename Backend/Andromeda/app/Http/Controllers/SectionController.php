@@ -12,11 +12,14 @@ class SectionController extends Controller
     {
         $this->validation();
 
-        $section = new Section(['name','number']);
-        $section->course_id = $course->id;
-        $section->save();
+        $section = Section::create([
+            'name' => request('name'),
+            'number' => request('number'),
+            'course_id' => $course->id
+        ]);
 
-        abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+        // abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.  
+        return response()->json(['sectionId' => $section->id]);  
 
     }
 

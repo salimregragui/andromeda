@@ -12,7 +12,7 @@ class ChapterController extends Controller
     {
         $this->validation();
 
-        $yt_url = request()->video;
+        $yt_url = request()->link;
         $url_parsed_arr = parse_url($yt_url);
         if ( ! ($url_parsed_arr['host'] == "www.youtube.com" && $url_parsed_arr['path'] == "/watch" && substr($url_parsed_arr['query'], 0, 2) == "v=" && substr($url_parsed_arr['query'], 2) != "")) {
             
@@ -20,11 +20,15 @@ class ChapterController extends Controller
         
         } 
 
-        $chapter = new Chapter(['name','number','video']);
-        $chapter->section_id = $section->id;
-        $chapter->save();
+        $chapter = Chapter::create([
+            'name' => request('name'),
+            'video' => request('link'),
+            'number' => request('number'),
+            'section_id' => $section->id
+        ]);
 
-        abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+        // abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+        return response()->json(['chapterId' => $chapter->id]);
 
     }
 
@@ -77,7 +81,7 @@ class ChapterController extends Controller
         return request()->validate([
             'name' => 'required',
             'number' => 'required|integer',
-            'video' => 'required|active_url',
+            'link' => 'required|active_url',
         ]);
     }
 }

@@ -118,7 +118,9 @@ class CourseAdd extends Component {
         console.log(this.state);
     }
 
-    courseSaveHandler = () => {
+    courseSaveHandler = (event) => {
+        event.preventDefault();
+
         let courseInfos = {
             name: this.state.courseData.name,
             description: this.state.courseData.description,
@@ -126,14 +128,41 @@ class CourseAdd extends Component {
         }
         axios.post('http://localhost:8000/api/auth/course', courseInfos)
         .then(response => {
-          console.log(response.data);
-          
+          console.log(response.data.courseId);
+          let courseId = response.data.courseId;
+
           this.state.courseData.sections.map((section, sid) => {
-            
+            let sectionInfos = {
+                name: section.name,
+                number: sid
+            }
+            axios.post('http://localhost:8000/api/auth/section/' + courseId, sectionInfos)
+            .then(response => {
+                console.log(response.data);
+                let sectionId = response.data.sectionId;
+                this.state.courseData.sections[sid].chapters.map((chapter, id) => {
+                    let chapterInfos = {
+                        name: chapter.name,
+                        number: id,
+                        link: chapter.link
+                    }
+
+                    axios.post('http://localhost:8000/api/auth/chapter/' + sectionId, chapterInfos)
+                    .then(response => {
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.log(error.response.data);
+                    })
+                });
+            })
+            .catch(error => {
+                console.log(error.response.data);
+            })
           });
         })
         .catch(error => {
-            console.log(error)
+            console.log(error.response.data)
         })
     }
 
@@ -164,7 +193,7 @@ class CourseAdd extends Component {
         return (
             <div className={classes.CourseAdd}>
                 <h1>Ajouter un cours</h1>
-                <form onSubmit={this.courseSaveHandler}>
+                <form onSubmit={(event) => {this.courseSaveHandler(event)}}>
                     <input type="text" placeholder="Nom du cours" value={this.state.courseData.name} onChange={(event) => {this.changedValueHandler(event, null, null, 'name')}} /><br/>
                     <textarea placeholder="Description du cours" value={this.state.courseData.description} onChange={(event) => {this.changedValueHandler(event, null, null, 'description')}}></textarea>
 
