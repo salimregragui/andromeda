@@ -10,26 +10,33 @@ class ChapterController extends Controller
 
     public function store(Section $section)
     {
-        $this->validation();
+       
+        $user = auth()->user();
 
-        $yt_url = request()->link;
-        $url_parsed_arr = parse_url($yt_url);
-        if ( ! ($url_parsed_arr['host'] == "www.youtube.com" && $url_parsed_arr['path'] == "/watch" && substr($url_parsed_arr['query'], 0, 2) == "v=" && substr($url_parsed_arr['query'], 2) != "")) {
+        if ($section->Course->User == $user or $user->role == 'Admin' ) {
             
-            abort(400,'Bad Request .');
-        
-        } 
+            $this->validation();
 
-        $chapter = Chapter::create([
-            'name' => request('name'),
-            'video' => request('link'),
-            'number' => request('number'),
-            'section_id' => $section->id
-        ]);
+            $yt_url = request()->link;
+            $url_parsed_arr = parse_url($yt_url);
+            if ( ! ($url_parsed_arr['host'] == "www.youtube.com" && $url_parsed_arr['path'] == "/watch" && substr($url_parsed_arr['query'], 0, 2) == "v=" && substr($url_parsed_arr['query'], 2) != "")) {
+                
+                abort(400,'Bad Request .');
+            
+            } 
 
-        // abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
-        return response()->json(['chapterId' => $chapter->id]);
+            $chapter = Chapter::create([
+                'name' => request('name'),
+                'video' => request('link'),
+                'number' => request('number'),
+                'section_id' => $section->id
+            ]);
+            
+            return response()->json(['chapterId' => $chapter->id]);
 
+        }
+
+        abort(401);
     }
 
     public function update(Chapter $chapter)

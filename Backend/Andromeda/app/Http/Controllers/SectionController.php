@@ -10,16 +10,23 @@ class SectionController extends Controller
  
     public function store(Course $course)
     {
-        $this->validation();
+         
+        $user = auth()->user();
 
-        $section = Section::create([
-            'name' => request('name'),
-            'number' => request('number'),
-            'course_id' => $course->id
-        ]);
+        if ($course->User == $user or $user->role == 'Admin' ) {
+        
+            $this->validation();
 
-        return response()->json(['sectionId' => $section->id]);  
+            $section = Section::create([
+                'name' => request('name'),
+                'number' => request('number'),
+                'course_id' => $course->id
+            ]);
 
+            return response()->json(['sectionId' => $section->id]);
+        }
+
+        abort(401);
     }
 
     public function update(Section $section)

@@ -50,19 +50,28 @@ class ResourceController extends Controller
  
     public function store(Course $course)
     {
-        $this->validation();
-        $extention=request()->attachment->getClientOriginalExtension();
+      
+        
+        $user = auth()->user();
 
-        $resource = Resource::Create([
-            'name'=> request('name'),
-            'course_id' => $course->id,
-            'attachment' => Str::random(5).''.time().'.'.Str::random(3).''.$extention,
-            'type' => request()->attachment->getClientMimeType() ,
-        ]);
+        if ($course->User == $user or $user->role == 'Admin' ) {
 
-        request()->attachment->move(public_path('storage/resources'),$resource->attachment);
-        abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+            $this->validation();
+            $extention=request()->attachment->getClientOriginalExtension();
+    
+            $resource = Resource::Create([
+                'name'=> request('name'),
+                'course_id' => $course->id,
+                'attachment' => Str::random(5).''.time().'.'.Str::random(3).''.$extention,
+                'type' => request()->attachment->getClientMimeType() ,
+            ]);
+    
+            request()->attachment->move(public_path('storage/resources'),$resource->attachment);
+            abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+    
+        }
 
+        abort(401);
     }
 
     public function show(Resource $resource)
@@ -81,19 +90,27 @@ class ResourceController extends Controller
 
     public function update(Resource $resource)
     {
-        $this->validation();
-        $extention=request()->attachment->getClientOriginalExtension();
-        $file_path=$resource->attachment;
-        unlink($file_path);
+       
+        $user = auth()->user();
 
-        $resource->name= request('name');
-        $resource->attachment= 'storage/resources'.Str::random(5).''.time().'.'.Str::random(3).''.$extention;
-        $resource->type= request()->attachment->getClientMimeType();
-        $resource->save();
+        if ($resource->Course->User == $user or $user->role == 'Admin' ) {
 
-        request()->attachment->move(public_path('storage/resources'),$resource->attachment);
-        abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+            $this->validation();
+            $extention=request()->attachment->getClientOriginalExtension();
+            $file_path=$resource->attachment;
+            unlink($file_path);
 
+            $resource->name= request('name');
+            $resource->attachment= 'storage/resources'.Str::random(5).''.time().'.'.Str::random(3).''.$extention;
+            $resource->type= request()->attachment->getClientMimeType();
+            $resource->save();
+
+            request()->attachment->move(public_path('storage/resources'),$resource->attachment);
+            abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+
+        }
+
+        abort(401);
 
     }
 
