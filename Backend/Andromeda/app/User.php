@@ -85,6 +85,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Result::class);
     }
 
+    public function Result(Quiz $quiz)
+    {
+        return Result::where(['user_id' => $this->id , 'quiz_id' => $quiz->id])->first();
+    }
+    
     public function Subscription()
     {
         return $this->hasOne(Subscription::class);

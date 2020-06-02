@@ -18,7 +18,6 @@ class SectionController extends Controller
             'course_id' => $course->id
         ]);
 
-        // abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.  
         return response()->json(['sectionId' => $section->id]);  
 
     }

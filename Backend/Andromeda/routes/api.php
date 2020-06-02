@@ -77,8 +77,15 @@ Route::group([
     Route::get('resource/','ResourceController@index');
     Route::get('resource/{resource}','ResourceController@show');
     Route::post('resource/{course}','ResourceController@store')->middleware('CheckProfessor');//* store resource
-    Route::put('resource/{resource}','ResourceController@update')->middleware('CheckProfessor');//* store resource
-    Route::delete('resource/{resource}','ResourceController@destroy')->middleware('CheckProfessor');//* store resource
+    Route::put('resource/{resource}','ResourceController@update')->middleware('CheckProfessor');//* update resource
+    Route::delete('resource/{resource}','ResourceController@destroy')->middleware('CheckProfessor');//* delete resource
+
+    //-----------------------------Quiz--------------------------------------
+
+    Route::get('quizzes/{course}','QuizController@index'); //* display all quizzes belongs this course with all questions
+    Route::get('quiz/{section}','QuizController@show'); //* display the quiz belongs to this section with all questions
+    Route::post('quiz/','QuizController@store')->middleware('CheckProfessor');//* store quiz
+    Route::delete('quiz/{quiz}','QuizController@destroy')->middleware('CheckProfessor'); //* delete the quiz 
 
 
 });
