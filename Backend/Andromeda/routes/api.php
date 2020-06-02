@@ -76,6 +76,10 @@ Route::group([
    
     Route::get('resource/','ResourceController@index');
     Route::get('resource/{resource}','ResourceController@show');
+    Route::post('resource/{course}','ResourceController@store')->middleware('CheckProfessor');//* store resource
+    Route::put('resource/{resource}','ResourceController@update')->middleware('CheckProfessor');//* store resource
+    Route::delete('resource/{resource}','ResourceController@destroy')->middleware('CheckProfessor');//* store resource
+
 
 });
 
