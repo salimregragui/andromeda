@@ -18,4 +18,14 @@ class Quiz extends Model
     {
         return $this->hasMany(Question::class);
     }
+    
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
+
+    public function Result(User $user)
+    {
+        return Result::where(['user_id' => $user->id , 'quiz_id' => $this->id])->first();
+    }
 }
