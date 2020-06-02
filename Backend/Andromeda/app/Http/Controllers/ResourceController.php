@@ -57,7 +57,7 @@ class ResourceController extends Controller
             'name'=> request('name'),
             'course_id' => $course->id,
             'attachment' => Str::random(5).''.time().'.'.Str::random(3).''.$extention,
-            'type' => $extention == 'mp4' or $extention == 'ogg' or $extention == 'mov' ? 'video' : 'image' ,
+            'type' => request()->attachment->getClientMimeType() ,
         ]);
 
         request()->attachment->move(public_path('storage/resources'),$resource->attachment);
@@ -88,7 +88,7 @@ class ResourceController extends Controller
 
         $resource->name= request('name');
         $resource->attachment= 'storage/resources'.Str::random(5).''.time().'.'.Str::random(3).''.$extention;
-        $resource->type= $extention == 'mp4' or $extention == 'ogg' or $extention == 'mov' ? 'video' : 'image' ;
+        $resource->type= request()->attachment->getClientMimeType();
         $resource->save();
 
         request()->attachment->move(public_path('storage/resources'),$resource->attachment);
@@ -125,7 +125,7 @@ class ResourceController extends Controller
     {
         return request()->validate([
             'name' => 'required',
-            'attachment' => 'required|mimes:jpg,png,jpeg,bmp,png,svg,gif,mov,ogg,mp4| max:20000',
+            'attachment' => 'required|min:1| max:20000',
         ]);
     }
 }
