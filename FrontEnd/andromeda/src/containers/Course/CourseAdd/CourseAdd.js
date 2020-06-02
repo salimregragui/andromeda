@@ -118,6 +118,25 @@ class CourseAdd extends Component {
         console.log(this.state);
     }
 
+    removeHandler = (type, sectionId, chapterId) => {
+        if (type === 'section') {
+            let courseData = {...this.state.courseData};
+            courseData.sections = courseData.sections.filter((section,sid) => {
+                return sid !== sectionId
+            });
+
+            this.setState({courseData: courseData});
+        }
+        else if (type === 'chapter') {
+            let courseData = {...this.state.courseData};
+            courseData.sections[sectionId].chapters = courseData.sections[sectionId].chapters.filter((chapter,cid) => {
+                return cid !== chapterId
+            });
+
+            this.setState({courseData: courseData});
+        }
+    }
+
     courseSaveHandler = (event) => {
         event.preventDefault();
 
@@ -154,11 +173,13 @@ class CourseAdd extends Component {
                     .catch(error => {
                         console.log(error.response.data);
                     })
+                    return null;
                 });
             })
             .catch(error => {
                 console.log(error.response.data);
             })
+            return null;
           });
         })
         .catch(error => {
@@ -173,19 +194,23 @@ class CourseAdd extends Component {
             sections = this.state.courseData.sections.map((section, sid) => {
                 return <div key={sid} className={classes.sectionForm}>
                             <h4 onClick={() => {this.displaySectionsHandler(sid)}}>Section {sid + 1}</h4>
+                            <button type="button" onClick={() => {this.removeHandler('section', sid, null)}}>X</button>
                             <div className={!this.state.courseData.sectionsDisplay[sid] ? classes.hiddenInfos : null}>
                                 <input type="text" value={this.state.courseData.sections[sid].name} onChange={(event) => {this.changedValueHandler(event, sid, null, 'name')}} placeholder="Nom de la section" />
                                 
                                 {section.chapters.map((chapter, id) => {
                                     return <div key={chapter + '-' + id} className={classes.chapterForm}>
                                                 <h5 onClick={() => {this.displayChaptersHandler(sid, id)}}>Chapitre {id + 1}</h5>
+                                                <button type="button" onClick={() => {this.removeHandler('chapter', sid, id)}}>X</button>
                                                 <div className={!this.state.courseData.chaptersDisplay[sid][id] ? classes.hiddenInfos : null}>
                                                     <input type="text" value={this.state.courseData.sections[sid].chapters[id].name} onChange={(event) => {this.changedValueHandler(event, sid, id, 'name')}} placeholder="Nom du chapitre" />
                                                     <input type="text" value={this.state.courseData.sections[sid].chapters[id].link} onChange={(event) => {this.changedValueHandler(event, sid, id, 'link')}} placeholder="Video du chapitre" />
                                                 </div>
                                             </div>
                                 })}
-                                <a href="" onClick={(event) => {this.chapterAddHandler(event, sid)}}>Ajouter Chapitre</a>
+                                <div style={{float:'right', width:'100%'}}>
+                                <a href="/" onClick={(event) => {this.chapterAddHandler(event, sid)}}>Ajouter Chapitre</a>
+                                </div>
                             </div>
                         </div>
             });

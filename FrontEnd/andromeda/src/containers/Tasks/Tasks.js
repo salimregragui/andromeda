@@ -45,7 +45,7 @@ class Tasks extends Component {
 
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState) {
         if(this.props.logged && !this.state.tasksLoaded) {
             console.log("get tasks !");
             this.props.onGetTasks();
@@ -56,7 +56,7 @@ class Tasks extends Component {
             this.setState({tasksToRender: this.props.tasks, totalAll: this.props.tasks.length});
         }
 
-        if (this.props.tasks && this.state.totalFinished === 0) {
+        if (this.props.tasks && (this.state.totalFinished === 0 || prevState.totalAll < this.state.totalAll)) {
             let newTasks = null;
 
             newTasks = this.props.tasks.filter(task => {

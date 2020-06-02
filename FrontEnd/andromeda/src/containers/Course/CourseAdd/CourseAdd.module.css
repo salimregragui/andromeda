@@ -64,6 +64,7 @@
 .sectionForm h4 {
     margin-left: 15px;
     cursor: pointer;
+    float: left;
 }
 
 .sectionForm a {
@@ -89,10 +90,61 @@
     margin-left: 15px;
 }
 
+.sectionForm button {
+    background-color: #181818;
+    border: 2px solid #181818;
+    width: 20px;
+    height: 20px;
+    color: white;
+    float: right;
+    margin-top: 20px;
+    border-radius: 50px;
+    font-size: 10px;
+    line-height: 16px;
+    padding-left: 5px;
+    transition: 0.2s;
+}
+
+.sectionForm button:hover {
+    background-color: white;
+    color: #181818;
+
+    transition: 0.2s;
+}
+
+.chapterForm{
+    float: left;
+    width: 100%;
+}
+
 .chapterForm h5 {
     padding-top: 0px;
     margin-left: 15px;
     cursor: pointer;
+    float: left;
+}
+
+.chapterForm button {
+    background-color: white;
+    border: 2px solid #181818;
+    width: 20px;
+    height: 20px;
+    color: #181818;
+    float: right;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 16px;
+    padding-left: 5px;
+
+    transition: 0.2s;
+}
+
+.chapterForm button:hover {
+    background-color: #181818;
+    color: white;
+
+    transition: 0.2s;
 }
 
 .hiddenInfos {

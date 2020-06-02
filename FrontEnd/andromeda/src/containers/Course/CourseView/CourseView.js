@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classes from './CourseView.module.css';
 import { connect } from 'react-redux';
-import * as coursesActions from '../../../store/actions/index';
+// import * as coursesActions from '../../../store/actions/index';
 import ReactPlayer from 'react-player';
 import ReactMarkdown from 'react-markdown';
 
