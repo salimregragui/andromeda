@@ -32,3 +32,24 @@ export const taskAdd = (task) => {
         })
     }
 }
+
+export const resourcesAllSuccess = (resources) => {
+    return {
+        type: actionTypes.RESOURCES_ALL_SUCCESS,
+        resources: resources
+    }
+}
+
+
+export const resourcesAll = () => {
+    return dispatch => {
+        axios.get('http://localhost:8000/api/auth/resource')
+        .then(response => {
+            console.log(response);
+            dispatch(resourcesAllSuccess(response.data.CoursesResources));
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+}

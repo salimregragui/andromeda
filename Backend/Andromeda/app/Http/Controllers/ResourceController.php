@@ -5,6 +5,7 @@ use Illuminate\Support\Str;
 use App\Course;
 use App\Resource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ResourceController extends Controller
 {
@@ -32,8 +33,8 @@ class ResourceController extends Controller
                 $data['Resources']=$course->Resources;
     
                 foreach ($course->Resources as $resource) {
-
-                    $resource->attachment=asset('storage/resources'.$resource->attachment);
+                    $url = Storage::url('resources/'.$resource->attachment);
+                    $resource->attachment= $url;
                 }
     
                 array_push($alldata,$data);

@@ -1,7 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    tasks: null
+    tasks: null,
+    resources: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 tasks: action.tasks
+            }
+        case actionTypes.RESOURCES_ALL_SUCCESS:
+            return {
+                ...state,
+                resources: action.resources
             }
         default:
             return state;

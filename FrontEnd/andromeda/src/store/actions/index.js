@@ -13,5 +13,6 @@ export {
 
 export {
     tasksAll,
-    taskAdd
+    taskAdd,
+    resourcesAll
 } from './data'

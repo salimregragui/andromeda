@@ -6,8 +6,10 @@ const Modal = (props) => {
         <div className={classes.Modal}>
             <div className={classes.ModalContent} style={
                         {width:props.width + '%',
-                         height:props.height,
-                         marginLeft:((100 - parseFloat(props.width)) / 2) + '%'
+                         height:props.fullscreen ? '100%': props.height,
+                         marginLeft:((100 - parseFloat(props.width)) / 2) + '%',
+                         marginTop: props.fullscreen ? '0px' : '10%',
+                         borderRadius: props.fullscreen ? '0px' : '10px'
                         }
             }>
                 {props.children}

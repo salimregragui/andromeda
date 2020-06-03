@@ -1,0 +1,92 @@
+.Resources {
+    text-align: left;
+    margin-left: 50px;
+}
+
+.Resources h1 {
+    margin-bottom: 10px;
+}
+
+.CourseName {
+    width: 620px;
+    height: 60px;
+    color: #181818;
+    line-height: 60px;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 10px;
+    padding-left: 20px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.ResourceCourse {
+    width: 600px;
+    height: 40px;
+    color: #181818;
+    line-height: 40px;
+    font-weight: 600;
+    font-size: 14px;
+    background-color: white;
+    border-radius: 10px;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.ResourceCourseInfo {
+    float: left;
+}
+
+.ResourceCourseInfo span {
+    margin-right: 20px;
+    color: #858585;
+}
+
+.ResourceCourseAddInfo {
+    float: right;
+    margin-right: 10px;
+    color: #858585;
+}
+
+.ResourceCourseAddInfo span {
+    margin-right: 15px;
+}
+
+.ResourceCourseAddInfo button {
+    border: 2px solid #181818;
+    color: #181818;
+    background-color: white;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 10px;
+    transition: 0.2s;
+}
+
+.ResourceCourseAddInfo button:focus {
+    outline: none;
+}
+
+.ResourceCourseAddInfo button:hover {
+    background-color: #181818;
+    color: white;
+
+    transition: 0.2s;
+}
+
+.hiddenInfos {
+    display: none;
+}
+
+.CloseModal {
+    float: right;
+    background-color: #181818;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
