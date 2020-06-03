@@ -110,6 +110,7 @@ class CourseController extends Controller
 
     public function follow_unfollow(Course $course)
     {
+        
         try {
             
             $user = auth()->userOrFail();
@@ -119,7 +120,12 @@ class CourseController extends Controller
                 $progressionNew= new Progression();
                 $progressionNew->user_id=$user->id;
                 $progressionNew->course_id=$course->id;
-                $progressionNew->chapter_id=$course->Sections[0]->Chapters[0]->id;//* il sont par ordre asc see model
+                if ($course->Sections->isEmpty()) {
+                    $progressionNew->chapter_id=null;
+                }
+                else{
+                    $progressionNew->chapter_id=$course->Sections[0]->Chapters[0]->id;//* il sont par ordre asc see model
+                }
                 $progressionNew->save();
 
                 $user->Followed()->attach($course);
@@ -154,8 +160,8 @@ class CourseController extends Controller
             'rating' => request('rating'),
             'user_id' => auth()->user()->id
         ]);
-
-        // abort(204); //Requête traitée avec succès mais pas d’information à renvoyer. 
+        $this->follow_unfollow($course);// the prof when he create a course he automaticly fillow the course
+        
         return response()->json(['courseId' => $course->id]);
 
     }
@@ -169,6 +175,7 @@ class CourseController extends Controller
             $this->validation();
             
             $course->update(request(['name','description','rating']));
+            $course->save();
             abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
 
         }

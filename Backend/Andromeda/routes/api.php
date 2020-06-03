@@ -51,7 +51,9 @@ Route::group([
     Route::delete('task/{task}','TaskController@destroy');//* Remove the specified task from storage.
 
     //-----------------------------Comment--------------------------------
-
+   
+    Route::post('comment/{chapter}','CommentController@store')->middleware('CheckProfessor');
+    Route::put('comment/{comment}','CommentController@update')->middleware('CheckProfessor');
     Route::delete('comment/{comment}','CommentController@destroy');
 
     //-----------------------------Section---------------------------------
@@ -84,8 +86,14 @@ Route::group([
 
     Route::get('quizzes/{course}','QuizController@index'); //* display all quizzes belongs this course with all questions
     Route::get('quiz/{section}','QuizController@show'); //* display the quiz belongs to this section with all questions
-    Route::post('quiz/','QuizController@store')->middleware('CheckProfessor');//* store quiz
+    Route::post('quiz/{section}','QuizController@store')->middleware('CheckProfessor');//* store quiz
     Route::delete('quiz/{quiz}','QuizController@destroy')->middleware('CheckProfessor'); //* delete the quiz 
+
+    //-----------------------------Question--------------------------------------
+
+    Route::post('question/{quiz}','QuestionController@store')->middleware('CheckProfessor');
+    Route::put('question/{question}','QuestionController@update')->middleware('CheckProfessor');
+    Route::delete('question/{question}','QuestionController@destroy')->middleware('CheckProfessor');
 
 
 });

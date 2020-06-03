@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Quiz;
 use App\Section;
-use Illuminate\Http\Request;
 
 class QuizController extends Controller
 {
@@ -34,17 +33,22 @@ class QuizController extends Controller
         
     }
 
-    public function store(Request $request)
+    public function store(Section $section)
     {
-        $this->validation();
+        $user = auth()->user();
 
-        $quiz = Quiz::create([
-        'section_id' => request('section_id'),
+        if ($section->Course->User == $user or $user->role == 'Admin' ) {
            
-        ]);
+            $quiz = Quiz::create([
+                'section_id' => $section,
+                   
+                ]);
+        
+                return response()->json(['quiz_id' => $quiz->id]);          
 
-        return response()->json(['quiz_id' => $quiz->id]);  
+        }
 
+        abort(401);
     }
 
     public function show(Section $section)
@@ -77,10 +81,5 @@ class QuizController extends Controller
 
         abort(401);
     }
-    protected function validation()
-    {
-        return request()->validate([
-            'section_id' => 'required|exists:sections,id',
-        ]);
-    }
+
 }
