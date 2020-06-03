@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Chapter;
 use App\Section;
+use App\Http\Controllers\NotificationController;
 
 class ChapterController extends Controller
 {
@@ -32,6 +33,19 @@ class ChapterController extends Controller
                 'section_id' => $section->id
             ]);
             
+            foreach ($chapter->Section->Course->Followed as $user) {
+                $notification=new NotificationController;
+
+                $content=[
+                    'text' => 'Un nouvau chapitre a ete ajouter a la section '.$section->name.' du cours'.' '.$section->Course->name ,
+                    'chapter_id' => $chapter->id,
+                    'section_id' => $section->id,
+                    'course_id' => $section->Course->id
+                ];
+
+                $type='Nouvau chapitre ';
+                $notification->sendNotification($user,json_encode($content),$type);
+            }
             return response()->json(['chapterId' => $chapter->id]);
 
         }
@@ -46,7 +60,7 @@ class ChapterController extends Controller
         if ($chapter->Section->Course->User == $user or $user->role == 'Admin' ) {
         
             $this->validation();
-
+            $ancienne_video=$chapter->video;
             $yt_url = request()->video;
             $url_parsed_arr = parse_url($yt_url);
             if ( ! ($url_parsed_arr['host'] == "www.youtube.com" && $url_parsed_arr['path'] == "/watch" && substr($url_parsed_arr['query'], 0, 2) == "v=" && substr($url_parsed_arr['query'], 2) != "")) {
@@ -56,6 +70,23 @@ class ChapterController extends Controller
             } 
     
             $chapter->update(request(['name','number','video']));
+
+            if ($chapter->video != $ancienne_video) {
+                foreach ($chapter->Section->Course->Followed as $user) {
+                    $notification=new NotificationController;
+    
+                    $content=[
+                        'text' => 'Le chapitre ' .$chapter->name.' de la  section '.$chapter->Section->name.' du cours'.' '.$chapter->Section->Course->name.' a ete modifier' ,
+                        'chapter_id' => $chapter->id,
+                        'section_id' => $chapter->Section->id,
+                        'course_id' => $chapter->Section->Course->id
+                    ];
+    
+                    $type='Update chapitre ';
+                    $notification->sendNotification($user,json_encode($content),$type);
+                }
+            }
+            $chapter->save();
             abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
 
         }

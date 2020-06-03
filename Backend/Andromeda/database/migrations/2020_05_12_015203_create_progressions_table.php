@@ -17,7 +17,7 @@ class CreateProgressionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('chapter_id');
+            $table->unsignedBigInteger('chapter_id')->nullable();
             $table->integer('note')->nullable();
             $table->unique(['user_id','course_id']); // il ne peut y avoire qu'une seule progression dans chaque cours suivi par un user
             
