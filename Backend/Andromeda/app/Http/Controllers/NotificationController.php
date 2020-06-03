@@ -11,6 +11,20 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class NotificationController extends Controller
 {
     //
+   
+
+    public function sendNotification(User $user , $content,$type)
+    {
+        $notification= Notification::create([
+            'user_id' => $user->id,
+            'content' => $content,
+            'type' => $type,
+            'seen' => 0,
+        ]);
+        
+        return response()->json(['Notification' => $notification]);
+    }
+
     public function index()
     {
         try {
@@ -54,5 +68,6 @@ class NotificationController extends Controller
 
         abort(401);
     }
+
 
 }

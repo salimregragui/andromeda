@@ -29,7 +29,7 @@ class Dashboard extends Component {
 
     getData = () => {
         this.setState({loading: true});
-        axios.get('http://localhost:8000/api/auth/quizzes/1', this.props.user)
+        axios.post('http://localhost:8000/api/auth/comment/1', this.props.user)
         .then(response => {
           console.log(response.data);
           this.setState({data:response.data});  

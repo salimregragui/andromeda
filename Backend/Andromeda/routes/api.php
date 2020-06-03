@@ -51,7 +51,9 @@ Route::group([
     Route::delete('task/{task}','TaskController@destroy');//* Remove the specified task from storage.
 
     //-----------------------------Comment--------------------------------
-
+   
+    Route::post('comment/{chapter}','CommentController@store')->middleware('CheckProfessor');
+    Route::put('comment/{comment}','CommentController@update')->middleware('CheckProfessor');
     Route::delete('comment/{comment}','CommentController@destroy');
 
     //-----------------------------Section---------------------------------
