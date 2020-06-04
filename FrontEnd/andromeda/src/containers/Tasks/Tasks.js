@@ -57,9 +57,12 @@ class Tasks extends Component {
         }
 
         if (this.props.tasks && (this.state.totalAll === 0 || prevState.totalAll < this.state.totalAll)) {
-            if (this.props.tasks.length) {
+            if (this.props.tasks.length >= 1) {
                 let newTasks = null;
-    
+                
+                newTasks = [...this.props.tasks];
+                this.setState({totalAll: newTasks.length});
+                
                 newTasks = this.props.tasks.filter(task => {
                     return task.status === 'fini'
                 });
