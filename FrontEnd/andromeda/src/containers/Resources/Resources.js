@@ -10,12 +10,15 @@ class Resources extends Component {
     state = {
         loading: false,
         resourcesLoaded: true,
+        dataEntered: false,
         displayedResources: [],
         showModal: false,
+        resourcesToDisplay: [],
         displayedResource: {
             path: '',
             type: '',
-        }
+        },
+        searchBar: ''
     }
 
     componentDidMount() {
@@ -33,24 +36,34 @@ class Resources extends Component {
         }
 
         if (!this.props.resources) {
-            this.setState({resourcesLoaded: false});
+            this.setState({resourcesLoaded: false, loading: true});
+        }
+
+        if (this.props.resources && !this.state.dataEntered) {
+            console.log("yeaah");
+            this.setState({resourcesLoaded: false, loading: true});
         }
     }
 
     componentDidUpdate() {
-        if(this.props.logged && !this.state.resourcesLoaded) {
+        if (this.props.logged && !this.state.resourcesLoaded) {
             console.log("get resources !");
             this.props.onGetResources();
             this.setState({resourcesLoaded: true});
         }
 
-        if (this.props.resources && this.state.displayedResources.length < 1) {
+        if (this.props.resources && !this.state.dataEntered) {
             let displayedResources = [...this.state.displayedResources];
+            let resourcesToDisplay = [...this.props.resources];
+            resourcesToDisplay = resourcesToDisplay.filter(res => {
+                return res.Resources.length > 0
+            });
+
             for (let i = 0; i < this.props.resources.length; i++) {
                 displayedResources[i] = true;
             }
 
-            this.setState({displayedResources: displayedResources});
+            this.setState({dataEntered: true, displayedResources: displayedResources, resourcesToDisplay: resourcesToDisplay, loading: false});
         }
     }
 
@@ -59,10 +72,6 @@ class Resources extends Component {
         displayedResources[id] = !displayedResources[id];
 
         this.setState({displayedResources: displayedResources});
-    }
-
-    onError = (e) => {
-        console.log(e, 'error in file-viewer');
     }
 
     resourceDisplayHandler = (res) => {
@@ -79,6 +88,32 @@ class Resources extends Component {
         this.setState({showModal: false});
     }
 
+    changeSearchHandler = (event) => {
+        this.setState({searchBar: event.target.value});
+
+        this.searchClickHandler(event.target.value);
+    }
+
+    searchClickHandler = (val) => {
+        if (this.props.resources) {
+            let newResources = Array.from(this.props.resources);
+
+            newResources = newResources.filter(res => {
+                return res.Resources.length > 0
+            });
+        
+            if (val) {   
+                newResources = newResources.filter(resource => {
+                    return resource.Resources.some(res => {
+                        return res.name.includes(val);
+                    })
+                })
+            }
+    
+            this.setState({resourcesToDisplay: newResources});
+        }
+    }
+
     render() {
         let spinner = null;
         let resources = null;
@@ -88,8 +123,8 @@ class Resources extends Component {
             spinner = <Spinner />
         }
 
-        if (this.props.resources && this.state.displayedResources.length >= 1) {
-            resources = this.props.resources.map((resource, id) => {
+        if (this.state.resourcesToDisplay && this.state.displayedResources.length >= 1) {
+            resources = this.state.resourcesToDisplay.map((resource, id) => {
                 return <React.Fragment key={resource.id}>
                     <div className={classes.CourseName} onClick={() => {this.displayedResourcesHandler(id)}}>
                         Cours : {resource.name}
@@ -97,20 +132,27 @@ class Resources extends Component {
 
                     <div className={`${classes.ResourcesCourse} ${!this.state.displayedResources[id] ? classes.hiddenInfos : null}`}>
                         {resource.Resources.map((res, id) => {
-                            return <div key={res.id} className={classes.ResourceCourse}>
-                                <div className={classes.ResourceCourseInfo}>
-                                    <span>{res.type}</span>
-                                    Resource number {id + 1}
+                            if (res.name.includes(this.state.searchBar)) {
+                                return <div key={res.id} className={classes.ResourceCourse}>
+                                    <div className={classes.ResourceCourseInfo}>
+                                        <span>{res.type}</span>
+                                        {res.name.substring(0, 50)}
+                                    </div>
+                                    <div className={classes.ResourceCourseAddInfo}>
+                                        <span>{res.created_at.substring(0, 10)}</span>
+                                        <button onClick={() => {this.resourceDisplayHandler(res)}}>Voir</button>
+                                    </div>
                                 </div>
-                                <div className={classes.ResourceCourseAddInfo}>
-                                    <span>{res.created_at.substring(0, 10)}</span>
-                                    <button onClick={() => {this.resourceDisplayHandler(res)}}>Voir</button>
-                                </div>
-                            </div>
+                            }
+                            else {
+                                return null;
+                            }
                         })}
                     </div>
                 </React.Fragment>
             });
+        }else {
+            resources = <p>Ok ok</p>
         }
 
         if (this.state.showModal) {
@@ -126,9 +168,14 @@ class Resources extends Component {
                 {spinner}
                 {modal}
                 <br/>
-                <h1>Toutes vos ressources</h1>
+                <div className={classes.leftResources}>
+                    <h1>Toutes vos ressources</h1>
+                    {resources} 
+                </div>
 
-                {resources} 
+                <div className={classes.rightResources}>
+                    <input type="text" value={this.state.searchBar} placeholder="Cherchez une ressource par nom" onChange={(event) => {this.changeSearchHandler(event)}} />
+                </div>
             </div>
         )
     }

@@ -46,7 +46,7 @@ class Tasks extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(this.props.logged && !this.state.tasksLoaded) {
+        if(this.props.logged && !this.state.tasksLoaded && !this.props.tasks) {
             console.log("get tasks !");
             this.props.onGetTasks();
             this.setState({tasksLoaded: true});
@@ -56,23 +56,25 @@ class Tasks extends Component {
             this.setState({tasksToRender: this.props.tasks, totalAll: this.props.tasks.length});
         }
 
-        if (this.props.tasks && (this.state.totalFinished === 0 || prevState.totalAll < this.state.totalAll)) {
-            let newTasks = null;
-
-            newTasks = this.props.tasks.filter(task => {
-                return task.status === 'fini'
-            });
-            this.setState({totalFinished: newTasks.length});
-            
-            newTasks = this.props.tasks.filter(task => {
-                return task.status === 'en cours'
-            });
-            this.setState({totalToBeDone: newTasks.length});
-            
-            newTasks = this.props.tasks.filter(task => {
-                return task.status === 'a faire'
-            });
-            this.setState({totalToDo: newTasks.length});
+        if (this.props.tasks && (this.state.totalAll === 0 || prevState.totalAll < this.state.totalAll)) {
+            if (this.props.tasks.length) {
+                let newTasks = null;
+    
+                newTasks = this.props.tasks.filter(task => {
+                    return task.status === 'fini'
+                });
+                this.setState({totalFinished: newTasks.length});
+                
+                newTasks = this.props.tasks.filter(task => {
+                    return task.status === 'en cours'
+                });
+                this.setState({totalToBeDone: newTasks.length});
+                
+                newTasks = this.props.tasks.filter(task => {
+                    return task.status === 'a faire'
+                });
+                this.setState({totalToDo: newTasks.length});
+            }
         }
     }
 
@@ -116,30 +118,33 @@ class Tasks extends Component {
 
     getTasksToRender = (category) => {
         let newTasks = null;
-        if (category === 'All') {
-            this.setState({tasksToRender: this.props.tasks});
-            console.log(this.state.tasksToRender);
-        }
-        else if (category === 'Done') {
-            newTasks = this.props.tasks.filter(task => {
-                return task.status === 'fini'
-            });
-            this.setState({tasksToRender: newTasks, totalFinished: newTasks.length});
-            console.log(this.state.tasksToRender);
-        }
-        else if (category === 'InProgress') {
-            newTasks = this.props.tasks.filter(task => {
-                return task.status === 'en cours'
-            });
-            this.setState({tasksToRender: newTasks, totalToBeDone: newTasks.length});
-            console.log(this.state.tasksToRender);
-        }
-        else if (category === 'ToBeDone') {
-            newTasks = this.props.tasks.filter(task => {
-                return task.status === 'a faire'
-            });
-            this.setState({tasksToRender: newTasks, totalToDo: newTasks.length});
-            console.log(this.state.tasksToRender);
+        
+        if (this.props.tasks) {
+            if (category === 'All') {
+                this.setState({tasksToRender: this.props.tasks});
+                console.log(this.state.tasksToRender);
+            }
+            else if (category === 'Done') {
+                newTasks = this.props.tasks.filter(task => {
+                    return task.status === 'fini'
+                });
+                this.setState({tasksToRender: newTasks, totalFinished: newTasks.length});
+                console.log(this.state.tasksToRender);
+            }
+            else if (category === 'InProgress') {
+                newTasks = this.props.tasks.filter(task => {
+                    return task.status === 'en cours'
+                });
+                this.setState({tasksToRender: newTasks, totalToBeDone: newTasks.length});
+                console.log(this.state.tasksToRender);
+            }
+            else if (category === 'ToBeDone') {
+                newTasks = this.props.tasks.filter(task => {
+                    return task.status === 'a faire'
+                });
+                this.setState({tasksToRender: newTasks, totalToDo: newTasks.length});
+                console.log(this.state.tasksToRender);
+            }
         }
     }
 

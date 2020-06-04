@@ -90,3 +90,28 @@
     border: none;
     cursor: pointer;
 }
+
+.leftResources {
+    float: left;
+}
+
+.rightResources {
+    float: right;
+}
+
+.rightResources input {
+    margin-right: 30px;
+    width: 300px;
+    height: 40px;
+    font-weight: 600;
+    font-size: 14px;
+    padding-left: 15px;
+    border: none;
+    border-radius: 10px;
+    color: #181818;
+    margin-top: 30px;
+}
+
+.rightResources input:focus {
+    outline: none;
+}

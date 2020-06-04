@@ -19,7 +19,7 @@ class Classes extends Component {
     }
 
     componentDidUpdate() {
-        if (this.props.logged && !this.state.progressionLoaded) {
+        if (this.props.logged && !this.state.progressionLoaded && !this.props.progression) {
             this.props.onGetProgression();
             this.setState({progressionLoaded: true});
         }
@@ -28,7 +28,9 @@ class Classes extends Component {
     redirectToCourseHandler = (event) => {
         const name = event.target.getAttribute('name');
 
-        this.props.history.push('/course/' + name.split(' ').join('-'));
+        if (name) {
+            this.props.history.push('/course/' + name.split(' ').join('-'));
+        }
     }
 
     render() {
