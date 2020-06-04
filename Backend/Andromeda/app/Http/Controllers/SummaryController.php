@@ -29,6 +29,7 @@ class SummaryController extends Controller
             $this->validation();
             
             $summary->update(request(['content']));
+            $summary->save();
             abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
 
         }

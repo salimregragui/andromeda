@@ -55,7 +55,7 @@ class ResourceController extends Controller
         
         $user = auth()->user();
 
-        if ($course->User == $user or $user->role == 'Admin' ) {
+        if (($course->User == $user or $user->role == 'Admin' ) and request()->hasFile('attachment') ) {
 
             $this->validation();
             $extention=request()->attachment->getClientOriginalExtension();
@@ -68,6 +68,20 @@ class ResourceController extends Controller
             ]);
     
             request()->attachment->move(public_path('storage/resources'),$resource->attachment);
+            
+            $notification=new NotificationController;
+            $content=[
+                'text' => 'Une nouvelle ressource a ete ajouter au cours'.' '.$course->name ,
+                'course_id' => $course->id,
+                'resource_id' => $resource->id,
+            ];
+            $type='Nouvelle ressource ';
+            foreach ($course->Followed as $user) {
+
+                $notification->sendNotification($user,json_encode($content),$type);
+
+            }
+            
             abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
     
         }
@@ -78,9 +92,8 @@ class ResourceController extends Controller
     public function show(Resource $resource)
     {
         try {
-            $user = auth()->userOrFail();
-            
-           $resource->attachment=asset('storage/resources'.$resource->attachment);
+            $user = auth()->userOrFail();          
+            $resource->attachment= asset(Storage::url('resources/'.$resource->attachment)); 
             return response()->json(['Resource' => $resource]);
 
 
@@ -94,19 +107,39 @@ class ResourceController extends Controller
        
         $user = auth()->user();
 
-        if ($resource->Course->User == $user or $user->role == 'Admin' ) {
+        if (($resource->Course->User == $user or $user->role == 'Admin' ) and request()->hasFile('attachment') ) {
 
             $this->validation();
             $extention=request()->attachment->getClientOriginalExtension();
             $file_path=$resource->attachment;
             unlink($file_path);
 
+            $ancien_lien=$resource->attachment;
+
             $resource->name= request('name');
-            $resource->attachment= 'storage/resources'.Str::random(5).''.time().'.'.Str::random(3).''.$extention;
+            $resource->attachment= Str::random(5).''.time().'.'.Str::random(3).''.$extention;
             $resource->type= request()->attachment->getClientMimeType();
             $resource->save();
 
-            request()->attachment->move(public_path('storage/resources'),$resource->attachment);
+            if ($resource->attachment != $ancien_lien ) { // je verifie que la resource a bien ete modifier pour envoiyer les notifications au utilisateur 
+                          
+           $notification=new NotificationController;
+           $content=[
+               'text' => 'LA ressource '.$resource->name.' a ete mise a jour au cours'.' '.$resource->Course->name ,
+               'course_id' => $resource->Course->id,
+               'resource_id' => $resource->id,
+           ];
+           $type='Update ressource ';
+           
+           foreach ($resource->Course->Followed as $user) {
+
+               $notification->sendNotification($user,json_encode($content),$type);
+
+           }
+           
+            }
+            request()->attachment->move(public_path('storage/resources/'),$resource->attachment);
+            
             abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
 
         }
@@ -127,7 +160,7 @@ class ResourceController extends Controller
 
         if ($resource->Course->User == $user or $user->role == 'Admin' ) {
 
-            $file_path='storage/resources'.$resource->attachment;
+            $file_path='storage/resources/'.$resource->attachment;
             if (file_exists($file_path)) {
                 $resource->delete();
                 unlink($file_path);

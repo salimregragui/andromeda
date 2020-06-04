@@ -46,7 +46,8 @@ class CommentController extends Controller
             if ($comment->User == $user){
 
                 $this->validation();
-                $comment->content = request('content');                
+                $comment->content = request('content');  
+                $comment->save();              
                 return response()->json(['Comment' => $comment]);
 
             }

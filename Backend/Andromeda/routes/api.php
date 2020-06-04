@@ -17,6 +17,8 @@ Route::group([
     Route::get('user','UserController@index');//* display all Users
     Route::get('user/{user}','UserController@show');//* Display the specified User
     Route::post('user/{user}/update','UserController@update');//* update the specified User
+    Route::post('user/{user}/banned','UserController@banned');//* bannir un user
+    Route::post('user/{user}/profile-photo','UserController@profile_photo');//* update and add profile image
     Route::delete('user/{user}/delete','UserController@destroy');//* delete the specified User
 
     //-------------------------COURSE---------------------------
@@ -33,6 +35,7 @@ Route::group([
     //-------------------------NOTIFICATION---------------------------
     Route::get('notification','NotificationController@index'); //* display all notification belongs to currently authenticated user
     Route::get('notification/{notification}','NotificationController@show');//* display specific notification belongs to currently authenticated user
+    Route::put('notification/{notification}','NotificationController@seen');//* make the specific notification belongs to currently authenticated user seen
     Route::delete('notification/{notification}','NotificationController@destroy');//* delete specific notification belongs to currently authenticated user
 
     //-------------------------DISCUSSION--------------------------------
@@ -41,6 +44,10 @@ Route::group([
     Route::get('discussion/user/{user}','DiscussionController@startDiscussion');
     Route::delete('discussion/quitter-groupe/{discussion}','DiscussionController@quitterGroupe'); //* permet de quitter un groupe
     Route::delete('discussion/{discussion}','DiscussionController@destroy');//* delete specific discussion belongs to currently authenticated user
+
+    //-----------------------------Message--------------------------------
+    Route::post('message/send/{type}','MessageController@send');//* send message type=groupe or prive
+    Route::delete('message/{message}','MessageController@destroy');
 
     //-----------------------------TASK--------------------------------
 

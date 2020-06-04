@@ -70,6 +70,7 @@ class ChapterController extends Controller
             } 
     
             $chapter->update(request(['name','number','video']));
+            $chapter->save();
 
             if ($chapter->video != $ancienne_video) {
                 foreach ($chapter->Section->Course->Followed as $user) {
@@ -86,7 +87,6 @@ class ChapterController extends Controller
                     $notification->sendNotification($user,json_encode($content),$type);
                 }
             }
-            $chapter->save();
             abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
 
         }

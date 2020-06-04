@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -28,7 +29,6 @@ class UserController extends Controller
 
         $user->update([
             'name' => $request['name'],
-            'email' => $request['email'],
             'role' => $request['role'],
             'status' => $request['status'],
             'password' => Hash::make($request['password']),
@@ -54,4 +54,45 @@ class UserController extends Controller
         ]);
         
     }
+
+    public function banned(User $user)
+    {
+        if ($user->role != 'Admin') {
+            $user->status ='Banned';
+            abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+        }
+        else {
+            abort(401);
+        }
+        
+    }
+
+    public function profile_photo(User $user)
+    {
+        try {
+            $user = auth()->userOrFail();
+            $this->validate_image();
+            $file_path='storage/resources/'.$user->image;
+            $user->image=Str::random(5).''.time().'.'.Str::random(3).''.request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('storage/resources/'),$user->intl_get_error_message);
+            
+            if (file_exists($file_path)) {
+                unlink($file_path);
+                abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+            }
+
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+            abort(401);
+        }
+        abort(401);
+        
+    }
+
+    protected function validate_image()
+    {
+        return request()->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
+        ]);
+    }
+
 }

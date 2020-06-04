@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notification;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\User;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class NotificationController extends Controller
 {
@@ -69,5 +66,26 @@ class NotificationController extends Controller
         abort(401);
     }
 
+    public function seen(Notification $notification)
+    {
+       
+        try {
+            $user = auth()->userOrFail();
+            if ($notification->User == auth()->user() ) { 
+        
+                $notification->seen=1;
+                 $notification->save();   
+                abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
+                
+            }
+
+            abort(401);
+
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+            abort(401);
+        }
+        abort(401);
+        
+    }
 
 }

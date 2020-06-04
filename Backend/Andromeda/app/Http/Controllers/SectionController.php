@@ -22,20 +22,20 @@ class SectionController extends Controller
                 'number' => request('number'),
                 'course_id' => $course->id
             ]);
-
+          
+            $notification=new NotificationController;
+            $content=[
+                'text' => 'Une nouvelle section a ete ajouter au cours'.' '.$course->name ,
+                'section_id' => $section->id,
+                'course_id' => $course->id
+            ];
+            $type='Nouvelle section ';
             foreach ($course->Followed as $user) {
-                $notification=new NotificationController;
 
-                $content=[
-                    'text' => 'Une nouvelle section a ete ajouter au cours'.' '.$course->name ,
-                    'section_id' => $section->id,
-                    'course_id' => $course->id
-                ];
-
-                $type='Nouvelle section ';
                 $notification->sendNotification($user,json_encode($content),$type);
-            
+
             }
+
             return response()->json(['sectionId' => $section->id]);
         }
 

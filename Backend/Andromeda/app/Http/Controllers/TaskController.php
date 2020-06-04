@@ -95,7 +95,7 @@ class TaskController extends Controller
                 
                 $this->validation();
                 $task->update(request(['content','status','type']));
-
+                $task->save();
                 abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
             }
 
