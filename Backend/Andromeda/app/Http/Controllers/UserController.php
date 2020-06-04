@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -72,14 +72,15 @@ class UserController extends Controller
         try {
             $user = auth()->userOrFail();
             $this->validate_image();
-            $file_path='storage/resources/'.$user->image;
-            $user->image=Str::random(5).''.time().'.'.Str::random(3).''.request()->image->getClientOriginalExtension();
-            request()->image->move(public_path('storage/resources/'),$user->intl_get_error_message);
-            
-            if (file_exists($file_path)) {
-                unlink($file_path);
-                abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+            $file_path='storage/images/'.$user->image;
+           
+            if (file_exists($file_path) and $user->image != null) {
+                unlink($file_path);    
             }
+            $user->image=Str::random(5).''.time().'.'.Str::random(3).''.request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('storage/images/'),$user->image);
+            $user->save();
+            return  asset(Storage::url('images/'.$user->image));
 
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
             abort(401);
