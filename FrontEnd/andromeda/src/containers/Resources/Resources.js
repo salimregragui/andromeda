@@ -105,7 +105,7 @@ class Resources extends Component {
             if (val) {   
                 newResources = newResources.filter(resource => {
                     return resource.Resources.some(res => {
-                        return res.name.includes(val);
+                        return res.name.toLowerCase().includes(val.toLowerCase());
                     })
                 })
             }
@@ -132,7 +132,7 @@ class Resources extends Component {
 
                     <div className={`${classes.ResourcesCourse} ${!this.state.displayedResources[id] ? classes.hiddenInfos : null}`}>
                         {resource.Resources.map((res, id) => {
-                            if (res.name.includes(this.state.searchBar)) {
+                            if (res.name.toLowerCase().includes(this.state.searchBar.toLowerCase())) {
                                 return <div key={res.id} className={classes.ResourceCourse}>
                                     <div className={classes.ResourceCourseInfo}>
                                         <span>{res.type}</span>
