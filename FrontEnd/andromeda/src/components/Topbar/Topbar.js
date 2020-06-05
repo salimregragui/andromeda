@@ -1,7 +1,8 @@
 import React from 'react';
 import classes from './Topbar.module.css';
 import NavigationItems from '../NavigationItems/NavigationItems';
-import Logo from '../../assets/images/logo-name.svg';
+// import Logo from '../../assets/images/logo-name.svg';
+import SearchBar from '../../containers/SearchBar/SearchBar';
 
 const Topbar = () => {
     return (
@@ -10,6 +11,8 @@ const Topbar = () => {
                 <span>Andromeda</span>
             </div>
 
+            <SearchBar />
+            
             <nav>
                 <NavigationItems />
             </nav>
