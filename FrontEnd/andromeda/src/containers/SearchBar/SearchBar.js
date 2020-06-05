@@ -6,19 +6,26 @@ class SearchBar extends Component {
     state = {
         search: '',
         data: null,
-        loading: false
+        loading: false,
+        typingTimeout: 0
     }
 
     changeSearchHandler = (event) => {
-        if (!this.state.loading || this.state.search.length > event.target.value.length) {
-            this.setState({search : event.target.value});
-
-            if(event.target.value) {
-                this.getAutoCompleteData(event.target.value);
-            }else {
-                this.setState({data: null});
-            }
-        }
+        if (this.state.typingTimeout) {
+            clearTimeout(this.state.typingTimeout);
+         }
+     
+         this.setState({
+            search: event.target.value,
+            typingTimeout: setTimeout(() => {
+                console.log(this.state);
+                if (this.state.search !== '') {
+                    this.getAutoCompleteData(this.state.search);
+                }else {
+                    this.setState({data: null});
+                }
+              }, 500)
+         });
     }
 
     getAutoCompleteData = (str) => {
