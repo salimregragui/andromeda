@@ -102,6 +102,7 @@ Route::group([
     Route::put('question/{question}','QuestionController@update')->middleware('CheckProfessor');
     Route::delete('question/{question}','QuestionController@destroy')->middleware('CheckProfessor');
 
-
+    //-----------------------------Search--------------------------------------
+    Route::get('search/autocomplete/{query}','SearchController@autocomplete');
 });
 
