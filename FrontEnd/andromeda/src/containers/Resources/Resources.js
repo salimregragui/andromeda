@@ -124,7 +124,7 @@ class Resources extends Component {
         }
 
         if (this.state.resourcesToDisplay && this.state.displayedResources.length >= 1) {
-            resources = this.state.resourcesToDisplay.map((resource, id) => {
+            resources = this.state.resourcesToDisplay.length >= 1 ? this.state.resourcesToDisplay.map((resource, id) => {
                 return <React.Fragment key={resource.id}>
                     <div className={classes.CourseName} onClick={() => {this.displayedResourcesHandler(id)}}>
                         Cours : {resource.name}
@@ -133,10 +133,18 @@ class Resources extends Component {
                     <div className={`${classes.ResourcesCourse} ${!this.state.displayedResources[id] ? classes.hiddenInfos : null}`}>
                         {resource.Resources.map((res, id) => {
                             if (res.name.toLowerCase().includes(this.state.searchBar.toLowerCase())) {
+                                let shownName = res.name;
+                                let splitName = null;
+                                let searched = null;
+                                if (this.state.searchBar) {
+                                    shownName = shownName.replace(this.state.searchBar, '|||' + this.state.searchBar + '|||');
+                                    splitName = shownName.split('|||');
+                                    searched = splitName[1];
+                                }
                                 return <div key={res.id} className={classes.ResourceCourse}>
                                     <div className={classes.ResourceCourseInfo}>
                                         <span>{res.type}</span>
-                                        {res.name.substring(0, 50)}
+                                        <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
                                     </div>
                                     <div className={classes.ResourceCourseAddInfo}>
                                         <span>{res.created_at.substring(0, 10)}</span>
@@ -150,7 +158,7 @@ class Resources extends Component {
                         })}
                     </div>
                 </React.Fragment>
-            });
+            }) : <div className={classes.CourseName}>Aucune ressource ne contient le terme cherché</div>;
         }else {
             resources = <p>Ok ok</p>
         }

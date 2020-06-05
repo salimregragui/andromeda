@@ -115,3 +115,7 @@
 .rightResources input:focus {
     outline: none;
 }
+
+.searchedElement {
+    color: #3459D6;
+}

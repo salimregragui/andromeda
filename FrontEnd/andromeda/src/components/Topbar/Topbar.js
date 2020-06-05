@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './Topbar.module.css';
 import NavigationItems from '../NavigationItems/NavigationItems';
+import Logo from '../../assets/images/logo-name.svg';
 
 const Topbar = () => {
     return (
