@@ -69,3 +69,31 @@
 
     transition: 0.2s;
 }
+
+.Logout {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    padding-left: 15%;
+}
+
+.Logout a {
+    width: 70%;
+    height: 40px;
+    background-color: #c2c2c2;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    padding-left: 0;
+    line-height: 40px;
+
+    transition: 0.2s;
+}
+
+.Logout a:hover {
+    background-color: #8a8a8a;
+    color: white;
+    border-left: none;
+
+    transition: 0.2s;
+}

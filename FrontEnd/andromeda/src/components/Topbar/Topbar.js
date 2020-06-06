@@ -1,10 +1,14 @@
 import React from 'react';
 import classes from './Topbar.module.css';
-import NavigationItems from '../NavigationItems/NavigationItems';
 // import Logo from '../../assets/images/logo-name.svg';
 import SearchBar from '../../containers/SearchBar/SearchBar';
+import profilePic from '../../assets/images/profile.jpg';
+import { withRouter } from 'react-router-dom';
 
-const Topbar = () => {
+const Topbar = (props) => {
+    let goToProfile = () => {
+        props.history.push('/profile');
+    }
     return (
         <header className={classes.Topbar}>
             <div className={classes.Logo}>
@@ -14,10 +18,13 @@ const Topbar = () => {
             <SearchBar />
             
             <nav>
-                <NavigationItems />
+                <div className={classes.Profile} onClick={goToProfile}>
+                    <span>Salim Regragui</span>
+                    <div className={classes.ProfileImg} style={{backgroundImage: "url(" + profilePic + ")"}}></div>
+                </div>
             </nav>
         </header>
     )
 }
 
-export default Topbar;
+export default withRouter(Topbar);

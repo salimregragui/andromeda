@@ -40,6 +40,10 @@ const LeftBar = () => {
                 activeClassName={classes.active}
                 exact
             ><img src={discussionIcon} alt="discussion"/> Discussions</NavLink>
+            
+            <div className={classes.Logout}>
+                <NavLink to="/auth/logout" exact>Deconnexion</NavLink>
+            </div>
         </div>
     )
 }

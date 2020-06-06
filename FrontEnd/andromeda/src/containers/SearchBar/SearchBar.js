@@ -7,25 +7,34 @@ class SearchBar extends Component {
         search: '',
         data: null,
         loading: false,
-        typingTimeout: 0
+        typingTimeout: 0,
+        showingResults: false
     }
 
     changeSearchHandler = (event) => {
         if (this.state.typingTimeout) {
             clearTimeout(this.state.typingTimeout);
          }
-     
-         this.setState({
-            search: event.target.value,
-            typingTimeout: setTimeout(() => {
-                console.log(this.state);
-                if (this.state.search !== '') {
-                    this.getAutoCompleteData(this.state.search);
-                }else {
-                    this.setState({data: null});
-                }
-              }, 500)
-         });
+        
+         if (event.target.value.trim() !== '') {
+             this.setState({
+                search: event.target.value,
+                showingResults: true,
+                typingTimeout: setTimeout(() => {
+                    if (this.state.search !== '') {
+                        this.getAutoCompleteData(this.state.search.trim());
+                    }else {
+                        this.setState({data: null, showingResults: false});
+                    }
+                  }, 500)
+             });
+         }else {
+             this.setState({
+                 search: '',
+                 data: null,
+                 showingResults: false
+             })
+         }
     }
 
     getAutoCompleteData = (str) => {
@@ -49,6 +58,10 @@ class SearchBar extends Component {
         }
     }
 
+    hideResultsHandler = () => {
+        this.setState({showingResults: false, search: '', data: null});
+    }
+
     render() {
         let searchResults = null;
 
@@ -57,7 +70,6 @@ class SearchBar extends Component {
         }
 
         if (this.state.data && !this.state.loading) {
-            console.log(this.state.data);
             if (this.state.data.Chapters.length >= 1) {
                 searchResults = [searchResults, <div className={classes.searchBlock}>
                     <span>Chapitres</span>
@@ -181,14 +193,20 @@ class SearchBar extends Component {
             if (searchResults) {
                 searchResults = searchResults.flat(4);
                 searchResults.shift();
-                console.log(searchResults);
+            } else {
+                searchResults = 'Aucun resultat trouvé.';
             }
         }
+
         return (
             <div className={classes.Search}>
-                <input placeholder="Cherchez dans les cours, ressources, utilisateurs, ..." type="text" value={this.state.search} onChange={this.changeSearchHandler} />
-                <div className={`${classes.SearchResults} ${this.state.data || this.state.loading || this.state.search ? null : classes.hiddenSearch}`}>
-                    {searchResults}
+                <input placeholder="Cherchez dans les cours, ressources, utilisateurs, ..." type="text" value={this.state.search} onChange={this.changeSearchHandler} onBlur={this.hideResultsHandler} />
+                <div className={`${classes.SearchResults} ${this.state.showingResults ? null : classes.hiddenSearch}`}>
+                    {searchResults && searchResults !== 'Loading...' && searchResults !== 'Aucun resultat trouvé.' ? searchResults.map((sr, id) => {
+                        return <React.Fragment key={id}>
+                            {sr}
+                        </React.Fragment>
+                    }) : <strong>{searchResults}</strong>}
                     <br/>
                 </div>
             </div>

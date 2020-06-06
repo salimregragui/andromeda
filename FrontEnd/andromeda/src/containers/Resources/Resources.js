@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import * as coursesActions from '../../store/actions/index';
@@ -166,7 +165,7 @@ class Resources extends Component {
         if (this.state.showModal) {
             modal = <Modal width='80' height='500px' fullscreen>
                  <button className={classes.CloseModal} onClick={this.closeModalHandler}>Fermer</button>
-                 <iframe className={this.state.displayedResource.type} width="100%" height="97%"
+                 <iframe title="Content" className={this.state.displayedResource.type} width="100%" height="97%"
                  frameborder="0" src={this.state.displayedResource.path}></iframe>
             </Modal>
         }
