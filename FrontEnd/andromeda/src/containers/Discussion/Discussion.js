@@ -5,11 +5,15 @@ import { connect } from 'react-redux';
 import * as coursesActions from '../../store/actions/index';
 import classes from './Discussion.module.css';
 import profileImage from '../../assets/images/profile.jpg';
+import axios from 'axios';
 
 class Discussion extends Component {
     state = {
         loading: false,
-        discussionsLoaded: true
+        discussionsLoaded: true,
+        currentDiscussion: null,
+        message: '',
+        updateDiscussions : null
     }
 
     componentDidMount() {
@@ -35,16 +39,87 @@ class Discussion extends Component {
         if(this.props.logged && !this.state.discussionsLoaded) {
             console.log("get discussions !");
             this.props.onGetDiscussions();
-            this.setState({discussionsLoaded: true, loading: false});
+            this.setState({discussionsLoaded: true, loading: false, updateDiscussions : setTimeout(() => {
+                this.props.onGetDiscussions();
+            }, 3000)});
         }
+    }
+
+    setCurrentDiscussionHandler = (discussion) => {
+        this.setState({currentDiscussion: discussion});
+    }
+
+    changeMessageHandler = (event) => {
+        this.setState({message: event.target.value});
+    }
+
+    sendMessage = () => {
+        let message = {
+            'user_id': this.state.currentDiscussion.users[0].id,
+            'text': this.state.message,
+            'discussion_id': this.state.currentDiscussion.id
+        }
+        axios.post('http://localhost:8000/api/auth/message/send/groupe', message)
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     render() {
         let spinner = null;
+        let discussions = null;
 
-        // if (this.state.loading) {
-        //     spinner = <Spinner />;
-        // }
+        if (this.state.loading) {
+            spinner = <Spinner />;
+        }
+
+        if (this.props.discussions) {
+            discussions = this.props.discussions.map(discussion => {
+                if (this.state.currentDiscussion) {
+                    if (discussion.users[0].name === this.state.currentDiscussion.users[0].name) {
+                        return <div key={discussion.id} className={classes.selectedDiscussion}>
+                        <div className={classes.selectedDiscussionImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
+                        <div className={classes.selectedDiscussionInfos}>
+                            <br/><br/>
+                            <span>{discussion.users[0].name}</span>
+                            <br/><br/><br/>
+                            {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
+                            <em>12 minutes</em>
+                            <br/><br/>
+                        </div>
+                    </div>
+                    } else {
+                        return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion)}} className={classes.aDiscussion}>
+                            <div className={classes.aDiscussionImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
+                            <div className={classes.aDiscussionInfos}>
+                                <br/><br/>
+                                <span>{discussion.users[0].name}</span>
+                                <br/><br/><br/>
+                                {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
+                                <em>12 minutes</em>
+                                <br/><br/>
+                            </div>
+                        </div>
+                    }
+                }
+                else {
+                    return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion)}} className={classes.aDiscussion}>
+                    <div className={classes.aDiscussionImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
+                    <div className={classes.aDiscussionInfos}>
+                        <br/><br/>
+                        <span>{discussion.users[0].name}</span>
+                        <br/><br/><br/>
+                        {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
+                        <em>12 minutes</em>
+                        <br/><br/>
+                    </div>
+                </div>
+                }
+            });
+        }
         return (
             <div>
                 {spinner}
@@ -53,140 +128,39 @@ class Discussion extends Component {
                     <input type="text" placeholder="Trouver un contact" />
                     <h3>Ma Chat List :</h3>
                     <div className={classes.AllDiscussions}>
-                        <div className={classes.aDiscussion}>
-                            <img src={profileImage} width="40px" height="40px" />
-                            <div className={classes.aDiscussionInfos}>
-                                <br/>
-                                <span>Jane Doe</span>
-                                <br/><br/><br/>
-                                Lorem ipsum sit dolores um...
-                                <em>12 minutes</em>
-                                <br/><br/>
-                            </div>
-                        </div>
-                        <div className={classes.aDiscussion}>
-                            <img src={profileImage} width="40px" height="40px" />
-                            <div className={classes.aDiscussionInfos}>
-                                <br/>
-                                <span>Jane Doe</span>
-                                <br/><br/><br/>
-                                Lorem ipsum sit dolores um...
-                                <em>12 minutes</em>
-                                <br/><br/>
-                            </div>
-                        </div>
-                        <div className={classes.aDiscussion}>
-                            <img src={profileImage} width="40px" height="40px" />
-                            <div className={classes.aDiscussionInfos}>
-                                <br/>
-                                <span>Jane Doe</span>
-                                <br/><br/><br/>
-                                Lorem ipsum sit dolores um...
-                                <em>12 minutes</em>
-                                <br/><br/>
-                            </div>
-                        </div>
-                        <div className={classes.selectedDiscussion}>
-                            <img src={profileImage} width="40px" height="40px" />
-                            <div className={classes.selectedDiscussionInfos}>
-                                <br/>
-                                <span>Mohammed Said</span>
-                                <br/><br/><br/>
-                                Lorem ipsum sit dolores um...
-                                <em>12 minutes</em>
-                                <br/><br/>
-                            </div>
-                        </div>
-                        <div className={classes.aDiscussion}>
-                            <img src={profileImage} width="40px" height="40px" />
-                            <div className={classes.aDiscussionInfos}>
-                                <br/>
-                                <span>Jane Doe</span>
-                                <br/><br/><br/>
-                                Lorem ipsum sit dolores um...
-                                <em>12 minutes</em>
-                                <br/><br/>
-                            </div>
-                        </div>
-                        <div className={classes.aDiscussion}>
-                            <img src={profileImage} width="40px" height="40px" />
-                            <div className={classes.aDiscussionInfos}>
-                                <br/>
-                                <span>Jane Doe</span>
-                                <br/><br/><br/>
-                                Lorem ipsum sit dolores um...
-                                <em>12 minutes</em>
-                                <br/><br/>
-                            </div>
-                        </div>
-                        <div className={classes.aDiscussion}>
-                            <img src={profileImage} width="40px" height="40px" />
-                            <div className={classes.aDiscussionInfos}>
-                                <br/>
-                                <span>Jane Doe</span>
-                                <br/><br/><br/>
-                                Lorem ipsum sit dolores um...
-                                <em>12 minutes</em>
-                                <br/><br/>
-                            </div>
-                        </div>
+                        {discussions}
                     </div>
                 </div>
 
                 <div className={classes.DiscussionsRight}>
-                    <div className={classes.DiscussionInfos}>
-                        <img src={profileImage} width="50px" height="50px" />
+                    {this.state.currentDiscussion ? <React.Fragment><div className={classes.DiscussionInfos}>
+                    <div className={classes.DiscussionInfosImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
                         <br/>
-                        <span>Mohammed Said</span>
+                        <span>{this.state.currentDiscussion.users[0].name}</span>
                         <br/><br/>
                     </div>
 
                     <div className={classes.mainDiscussion}>
-                        <div className={classes.receivedMessage}>
-                            Lorem ipsum sit dolores has picuram na porita naste mok tabes.
-                            <span>Il y a 5 mins</span>
-                            <br/><br/>
-                        </div>
-                        <div className={classes.receivedMessage}>
-                            Lorem ipsum sit dolores has picuram na porita naste mok tabes la clata no ramo 
-                            a politam no pero cascado ra mitar.
-                            <span>Il y a 5 mins</span>
-                            <br/><br/>
-                        </div>
-                        <div className={classes.sentMessage}>
-                            Lorem ipsum sit dolores has picuram na porita naste mok tabes.
-                            Consequatur sint aut ratione architecto facere. Iusto dolores rerum qui iusto es
-                            <span>Il y a 5 mins</span>
-                            <br/><br/>
-                        </div>
-                        <div className={classes.receivedMessage}>
-                            Lorem ipsum sit dolores has picuram na porita naste mok tabes.
-                            <span>Il y a 5 mins</span>
-                            <br/><br/>
-                        </div>
-                        <div className={classes.receivedMessage}>
-                            Lorem ipsum sit dolores has picuram na porita naste mok tabes.
-                            <span>Il y a 5 mins</span>
-                            <br/><br/>
-                        </div>
-                        <div className={classes.receivedMessage}>
-                            Lorem ipsum sit dolores has picuram na porita naste mok tabes la clata no ramo 
-                            a politam no pero cascado ra mitar.
-                            <span>Il y a 5 mins</span>
-                            <br/><br/>
-                        </div>
-                        <div className={classes.sentMessage}>
-                            Lorem ipsum sit dolores has picuram na porita naste mok tabes.
-                            Consequatur sint aut ratione architecto facere. Iusto dolores rerum qui iusto es
-                            <span>Il y a 5 mins</span>
-                            <br/><br/>
-                        </div>
-                        <div className={classes.receivedMessage}>
-                            Lorem ipsum sit dolores has picuram na porita naste mok tabes.
-                            <span>Il y a 5 mins</span>
-                            <br/><br/>
-                        </div>
+                        {this.state.currentDiscussion.visibleMessages.map(message => {
+                            if (message.user_id === this.props.user.id) {
+                                return <div key={message.id} className={classes.sentMessage}>
+                                    {message.text}
+                                    <span>Il y a 5 mins</span>
+                                    <br/><br/>
+                                </div>
+                            } else {
+                                return <div key={message.id} className={classes.receivedMessage}>
+                                    {message.text}
+                                    <span>Il y a 5 mins</span>
+                                    <br/><br/>
+                                </div>
+                            }
+                        })}
                     </div>
+                    <div className={classes.inputMessage}>
+                        <input type="text" id="messageInput" placeholder="Envoyer un message" value={this.state.message} onChange={(event) => {this.changeMessageHandler(event)}}/>
+                        <button onClick={this.sendMessage}>S</button>
+                    </div></React.Fragment> : <p><strong>Selectionnez une discussion sur votre gauche.</strong></p>}
                 </div>
             </div>
         )

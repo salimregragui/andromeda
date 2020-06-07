@@ -32,22 +32,22 @@ class MessageController extends Controller
 
                $discussion_id=$new_discussion->id;
                //* attach this user whith the discusion
-               $user2= User::find(request(['user_id']))->firstOrFail();
+               $user2= User::find(request(['user_id']));
                $user2->Discussions->attach($new_discussion->id);
                $user->Discussions->attach($new_discussion->id);
             }
             //todo create message and attach the message whit discussion 
+            $attachment = null;
+            
             if (request()->hasFile('attachment')) {
                 $attachment=Str::random(5).''.time().'.'.Str::random(3).'.'.request()->attachment->getClientOriginalExtension();
                 request()->attachment->move(public_path('storage/messages/'),$attachment);
             }
-            else {
-                $attachment=null;
-            }
+
             $message= Message::create([
-                'discussion_id'=> $discussion_id,
-                'user_id' => $user,
-                'text' => request()->text,
+                'discussion_id'=> $discussion_id['discussion_id'],
+                'user_id' => $user->id,
+                'text' => request('text'),
                 'attachment' => $attachment ,
             ]);
             return response()->json(['Message' => $message]);
