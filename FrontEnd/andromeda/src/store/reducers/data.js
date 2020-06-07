@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     tasks: null,
-    resources: null
+    resources: null,
+    discussions: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,6 +17,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 resources: action.resources
+            }
+        case actionTypes.DISCUSSIONS_ALL_SUCCESS:
+            return {
+                ...state,
+                discussions: action.discussions
             }
         default:
             return state;

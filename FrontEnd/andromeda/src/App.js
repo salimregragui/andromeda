@@ -10,6 +10,7 @@ import Tasks from './containers/Tasks/Tasks';
 import Course from './containers/Course/Course';
 import Testing from './containers/Testing/Testing';
 import Resources from './containers/Resources/Resources';
+import Discussion from './containers/Discussion/Discussion';
 
 import { Switch, Route, withRouter } from 'react-router-dom';
 import axios from 'axios';
@@ -73,6 +74,7 @@ class App extends Component {
             <Route path="/classes" component= {Classes} />
             <Route path="/tasks" component= {Tasks} />
             <Route path="/ressources" component= {Resources} />
+            <Route path="/discussions" component= {Discussion} />
             <Route path="/error" component= {Error} />
             <Route path="/test" component= {Testing} />
           </Switch>

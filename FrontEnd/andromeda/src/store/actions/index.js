@@ -14,5 +14,6 @@ export {
 export {
     tasksAll,
     taskAdd,
-    resourcesAll
+    resourcesAll,
+    discussionsAll
 } from './data'

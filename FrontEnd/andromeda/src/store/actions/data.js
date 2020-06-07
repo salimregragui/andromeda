@@ -53,3 +53,24 @@ export const resourcesAll = () => {
         })
     }
 }
+
+export const discussionsAllSuccess = (discussions) => {
+    return {
+        type: actionTypes.DISCUSSIONS_ALL_SUCCESS,
+        discussions: discussions
+    }
+}
+
+
+export const discussionsAll = () => {
+    return dispatch => {
+        axios.get('http://localhost:8000/api/auth/discussion')
+        .then(response => {
+            console.log(response);
+            dispatch(discussionsAllSuccess(response.data.Discussions));
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+}

@@ -1,0 +1,186 @@
+.DiscussionsLeft {
+    float: left;
+    width: 30%;
+    text-align: left;
+    margin-left: 30px;
+}
+
+.DiscussionsLeft h3 {
+    color: #181818;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.AllDiscussions {
+    width: 100%;
+    height: 440px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.DiscussionsRight {
+    float: right;
+    margin-right: 50px;
+    background-color: white;
+    width: 60%;
+    height: 530px;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.aDiscussion {
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.aDiscussion img{
+    padding-left: 10px;
+    float: left;
+    padding-right: 10px;
+    border-radius: 50%;
+}
+
+.aDiscussionInfos {
+    padding-left: 20px;
+    line-height: 14px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #c2c2c2;
+}
+
+.aDiscussionInfos em {
+    float: right;
+    margin-right: 10px;
+}
+
+.aDiscussionInfos span{
+    font-weight: 600;
+    font-size: 14px;
+    color: #181818;
+}
+
+.DiscussionsLeft input {
+    margin-top: 20px;
+    width: 94%;
+    height: 30px;
+    border: none;
+    color: #181818;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.DiscussionsLeft input:focus {
+    outline: none;
+}
+
+.selectedDiscussion {
+    width: 100%;
+    background-color: #3459D6;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.selectedDiscussion img{
+    padding-left: 10px;
+    float: left;
+    padding-right: 10px;
+    border-radius: 50%;
+}
+
+.selectedDiscussionInfos {
+    padding-left: 20px;
+    line-height: 14px;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+}
+
+.selectedDiscussionInfos em {
+    float: right;
+    margin-right: 10px;
+}
+
+.selectedDiscussionInfos span{
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+}
+
+.DiscussionInfos {
+    text-align: left;
+    padding-left: 20px;
+    line-height: 18px;
+    margin-top: 10px;
+    border-bottom: 1px solid #f1f1f4;
+}
+
+.DiscussionInfos img {
+    float: left;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.DiscussionInfos span {
+    font-weight: 600;
+    font-size: 14px;
+    color: #181818;
+}
+
+.mainDiscussion {
+    margin-top: 20px;
+}
+
+.receivedMessage {
+    float: left;
+    width: 45%;
+    height: auto;
+    margin-bottom: 10px;
+    background-color: #e6e6e6;
+    color: #181818;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    margin-left: 20px;
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.receivedMessage span {
+    color: #a7a7a7;
+    float: right;
+    margin-top: 10px;
+    font-size: 10px;
+}
+.sentMessage {
+    float: right;
+    width: 45%;
+    height: auto;
+    margin-bottom: 10px;
+    background-color: #3459D6;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    margin-right: 20px;
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.sentMessage span {
+    color: white;
+    float: right;
+    margin-top: 10px;
+    font-size: 10px;
+}
