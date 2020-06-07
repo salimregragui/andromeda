@@ -15,8 +15,10 @@ class CreateCoursesTable extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->text('description');
+            $table->string('image');
+            $table->boolean('valide')->default(0);
             $table->unsignedBigInteger('user_id');
             
             $table->float('rating')->nullable();

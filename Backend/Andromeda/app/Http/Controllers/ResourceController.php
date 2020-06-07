@@ -111,8 +111,10 @@ class ResourceController extends Controller
 
             $this->validation();
             $extention=request()->attachment->getClientOriginalExtension();
-            $file_path=$resource->attachment;
-            unlink($file_path);
+            $file_path='storage/resources/'.$resource->attachment;
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
 
             $ancien_lien=$resource->attachment;
 
