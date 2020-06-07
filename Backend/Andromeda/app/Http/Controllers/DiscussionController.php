@@ -70,7 +70,11 @@ class DiscussionController extends Controller
    
                 $discussion['users']=$discussion->Users;
                 $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion->users->find($user)->pivot->updated_at);
-                   
+                foreach ($discussion['visibleMessages'] as $message) {
+                    if ($message->attachment !=null ) {
+                        $message->attachment=asset(Storage::url('messages/'.$message->attachment));
+                    }
+                }
                 $data['created_at']=$discussion['created_at'];
                 $data['updated_at']=$discussion['updated_at'];
                 $data['id']=$discussion['id'];

@@ -63,7 +63,7 @@ class ResourceController extends Controller
             $resource = Resource::Create([
                 'name'=> request('name'),
                 'course_id' => $course->id,
-                'attachment' => Str::random(5).''.time().'.'.Str::random(3).''.$extention,
+                'attachment' => Str::random(5).''.time().'.'.Str::random(3).'.'.$extention,
                 'type' => request()->attachment->getClientMimeType() ,
             ]);
     
@@ -119,7 +119,7 @@ class ResourceController extends Controller
             $ancien_lien=$resource->attachment;
 
             $resource->name= request('name');
-            $resource->attachment= Str::random(5).''.time().'.'.Str::random(3).''.$extention;
+            $resource->attachment=  Str::random(5).''.time().'.'.Str::random(3).'.'.$extention;
             $resource->type= request()->attachment->getClientMimeType();
             $resource->save();
 

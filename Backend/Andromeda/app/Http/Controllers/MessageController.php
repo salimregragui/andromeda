@@ -38,7 +38,7 @@ class MessageController extends Controller
             }
             //todo create message and attach the message whit discussion 
             if (request()->hasFile('attachment')) {
-                $attachment=Str::random(5).''.time().'.'.Str::random(3).''.request()->attachment->getClientOriginalExtension();
+                $attachment=Str::random(5).''.time().'.'.Str::random(3).'.'.request()->attachment->getClientOriginalExtension();
                 request()->attachment->move(public_path('storage/messages/'),$attachment);
             }
             else {
