@@ -12,7 +12,7 @@ const Course = (props) => {
                 <span>{props.nbrLessonsRestantes} Lessons restantes</span>
             </div>
             <button className={classes.coursePlayButton} name={props.name} onClick={props.clickPlay}>
-                <img src={playIcon} alt="play" />
+                <img src={playIcon} alt="play" name={props.name} />
             </button>
         </div>
     )
