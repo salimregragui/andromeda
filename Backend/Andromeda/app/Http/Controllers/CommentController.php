@@ -78,7 +78,7 @@ class CommentController extends Controller
     protected function validation()
     {
         return request()->validate([
-            'content' => 'required|string|max:1000',
+            'content' => 'required|string|min:1|max:1000',
         ]);
     }
 }

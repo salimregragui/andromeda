@@ -29,7 +29,11 @@ class Dashboard extends Component {
 
     getData = () => {
         this.setState({loading: true});
+<<<<<<< HEAD
         axios.get('http://localhost:8000/api/auth/discussion', this.props.user)
+=======
+        axios.get('http://localhost:8000/api/auth/discussion/', this.props.user)
+>>>>>>> 7c403235661d0a4ab5b167b5654d93dcc1a65f2d
         .then(response => {
           console.log(response.data);
           this.setState({data:response.data});  
