@@ -12,6 +12,7 @@ class Discussion extends Component {
         loading: false,
         discussionsLoaded: true,
         currentDiscussion: null,
+        currentDiscussionId: null,
         message: '',
         updateDiscussions : null
     }
@@ -39,14 +40,20 @@ class Discussion extends Component {
         if(this.props.logged && !this.state.discussionsLoaded) {
             console.log("get discussions !");
             this.props.onGetDiscussions();
-            this.setState({discussionsLoaded: true, loading: false, updateDiscussions : setTimeout(() => {
+            this.setState({discussionsLoaded: true, loading: false, updateDiscussions : setInterval(() => {
                 this.props.onGetDiscussions();
-            }, 3000)});
+
+                if (this.state.currentDiscussion) {
+                    if (this.props.discussions[this.state.currentDiscussionId].visibleMessages !== this.state.currentDiscussion.visibleMessages) {
+                        this.setState({currentDiscussion: this.props.discussions[this.state.currentDiscussionId]});
+                    }
+                }
+            }, 2000)});
         }
     }
 
-    setCurrentDiscussionHandler = (discussion) => {
-        this.setState({currentDiscussion: discussion});
+    setCurrentDiscussionHandler = (discussion, discussionId) => {
+        this.setState({currentDiscussion: discussion, currentDiscussionId: discussionId});
     }
 
     changeMessageHandler = (event) => {
@@ -66,6 +73,16 @@ class Discussion extends Component {
         .catch(error => {
             console.log(error);
         })
+
+        let currentDiscussion = {...this.state.currentDiscussion};
+        currentDiscussion.visibleMessages.push({
+            'user_id': this.props.user.id,
+            'text': this.state.message,
+            'discussion_id': this.state.currentDiscussion.id,
+            "attachment": null,
+            "read": 0
+        })
+        this.setState({message: '', currentDiscussion: currentDiscussion});
     }
 
     render() {
@@ -77,7 +94,7 @@ class Discussion extends Component {
         }
 
         if (this.props.discussions) {
-            discussions = this.props.discussions.map(discussion => {
+            discussions = this.props.discussions.map((discussion, id) => {
                 if (this.state.currentDiscussion) {
                     if (discussion.users[0].name === this.state.currentDiscussion.users[0].name) {
                         return <div key={discussion.id} className={classes.selectedDiscussion}>
@@ -92,7 +109,7 @@ class Discussion extends Component {
                         </div>
                     </div>
                     } else {
-                        return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion)}} className={classes.aDiscussion}>
+                        return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
                             <div className={classes.aDiscussionImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
                             <div className={classes.aDiscussionInfos}>
                                 <br/><br/>
@@ -106,7 +123,7 @@ class Discussion extends Component {
                     }
                 }
                 else {
-                    return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion)}} className={classes.aDiscussion}>
+                    return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
                     <div className={classes.aDiscussionImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
                     <div className={classes.aDiscussionInfos}>
                         <br/><br/>
