@@ -23,7 +23,8 @@ class DiscussionController extends Controller
             $discussions =[];
             foreach ($user->Discussions as $discussion)
             {
-                $discussion['users']=$discussion->users;
+                $discussion['users']=$discussion->Users->where('id','!=',$user->id);
+
                 $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion['pivot']->updated_at);
                
                 foreach ($discussion['visibleMessages'] as $message) {
@@ -68,7 +69,7 @@ class DiscussionController extends Controller
 
             if ($user->Discussions->where('id',$discussion->id)->first() != null) { //* check if the user are attache at this disscussion
    
-                $discussion['users']=$discussion->Users;
+                $discussion['users']=$discussion->Users->where('id','!=',$user->id);
                 $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion->users->find($user)->pivot->updated_at);
                 foreach ($discussion['visibleMessages'] as $message) {
                     if ($message->attachment !=null ) {
