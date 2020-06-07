@@ -221,8 +221,8 @@ class CourseController extends Controller
         $user = auth()->user();
 
         if ($course->User == $user or $user->role == 'Admin' ) {
-            
-            $file_path='storage/resources/'.$course->image;
+            $file_path='storage/images/'.$course->image;
+
             if (file_exists($file_path)) {
                 unlink($file_path);
             }
