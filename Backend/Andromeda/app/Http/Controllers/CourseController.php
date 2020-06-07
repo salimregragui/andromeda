@@ -4,21 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Progression;
-use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
     
-    public function index()
+    private function show_courses($type)
     {
         // Display all  courses with all sections and chapters order by popular 
-        $courses=Course::all();
+   
+        $courses=Course::all()->where('valide',$type);
+        
         
         foreach ($courses as $course) 
         {
             $cptChapter=0; //compteur de chapitre dans chaque cours
-
+            $course->image=asset(Storage::url('images/'.$course->image));
             $course['suivis']=$course->Followed()->count(); // nombre d'user qui suivent ce cours 
             
             foreach ($course->Sections as $section) 
@@ -79,22 +82,25 @@ class CourseController extends Controller
                 $data =[] ;
                 foreach ($user->followed as $course) 
                 {
-                    $cptChapter=0; //compteur de chapitre dans chaque cours
-    
-                    $course['suivis']=$course->Followed()->count(); // nombre d'user qui suivent ce cours 
-                  
-                    $course['progression']=$user->progression($course);//la progression 
-    
-                    foreach ($course->Sections as $section) 
-                    {
-                        foreach ($section->Chapters as $chapter) 
-                        {
-                            $cptChapter++;
-                        }
-                    }
+                   if($course->valide == 1)
+                   {
+                        $cptChapter=0; //compteur de chapitre dans chaque cours
         
-                    $course['numberOfChapter']=$cptChapter; // nombre de chapitre dans se cours 
-                    array_push($data,$course);
+                        $course['suivis']=$course->Followed()->count(); // nombre d'user qui suivent ce cours 
+                    
+                        $course['progression']=$user->progression($course);//la progression 
+        
+                        foreach ($course->Sections as $section) 
+                        {
+                            foreach ($section->Chapters as $chapter) 
+                            {
+                                $cptChapter++;
+                            }
+                        }
+            
+                        $course['numberOfChapter']=$cptChapter; // nombre de chapitre dans se cours 
+                        array_push($data,$course);
+                   }
                 }
     
                 return response()->json(['Courses' => $data]);
@@ -153,16 +159,25 @@ class CourseController extends Controller
     public function store()
     {
         $this->validation();
+        if (request()->hasFile('image')) {
 
-        $course = Course::create([
-            'name' => request('name'),
-            'description' => request('description'),
-            'rating' => request('rating'),
-            'user_id' => auth()->user()->id
-        ]);
-        $this->follow_unfollow($course);// the prof when he create a course he automaticly fillow the course
+            $course = Course::create([
+                'name' => request('name'),
+                'description' => request('description'),
+                'rating' => request('rating'),
+                'user_id' => auth()->user()->id,
+                'image' => Str::random(5).''.time().'.'.Str::random(3).''.request()->image->getClientOriginalExtension(),
+
+            ]);
+            request()->image->move(public_path('storage/images/'),$course->image);
+            $course->save();
+
+            $this->follow_unfollow($course);// the prof when he create a course he automaticly fillow the course
+            
+            return response()->json(['courseId' => $course->id]);
+        }
         
-        return response()->json(['courseId' => $course->id]);
+        abort(400);
 
     }
 
@@ -173,8 +188,13 @@ class CourseController extends Controller
         if ($course->User == $user or $user->role == 'Admin' ) {
         
             $this->validation();
-            
+            $extention=request()->image->getClientOriginalExtension();
+            $file_path='storage/resources/'.$course->image;
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
             $course->update(request(['name','description','rating']));
+            $course->image=Str::random(5).''.time().'.'.Str::random(3).''.$extention;
             $course->save();
             abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
 
@@ -190,6 +210,7 @@ class CourseController extends Controller
             'name' => 'required',
             'description' => 'required',
             'rating' => 'nullable|numeric|min:0|max:5',
+            'image' => 'required|image|mimes:jpeg,png,jpg,svg,gif|max:2048',
         ]);
 
         return $validator;
@@ -203,12 +224,27 @@ class CourseController extends Controller
 
         if ($course->User == $user or $user->role == 'Admin' ) {
             
+            $file_path='storage/resources/'.$course->image;
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
             $course->delete();
             abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
 
         }
 
         abort(401);
+
+    }
+
+    public function index()
+    {
+        return $this->show_courses(1);
+    }
+
+    public function invalideCourses()
+    {
+        return $this->show_courses(0);
 
     }
 }

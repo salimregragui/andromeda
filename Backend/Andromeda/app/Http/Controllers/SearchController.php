@@ -41,7 +41,7 @@ class SearchController extends Controller
             // continue
         }
        
-        $data['Users']=User::where('name','like',$query.'%')->get();
+        $data['Users']=User::where('name','like','%'.$query.'%')->get();
         return $data;
     }
 }

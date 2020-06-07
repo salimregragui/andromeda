@@ -11,5 +11,6 @@ $factory->define(Course::class, function (Faker $faker) {
         'user_id' => factory(App\User::class)->create(),
         'name'=> $faker->sentence(),
         'description' => $faker->paragraph(),
+        'image' => 'js.jpg',
     ];
 });
