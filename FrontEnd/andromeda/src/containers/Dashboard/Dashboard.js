@@ -76,6 +76,7 @@ class Dashboard extends Component {
             courses = this.props.courses.map(course => (
                 <Course key={course.id}
                                name={course.name}
+                               image={course.image}
                                nbrLessons={course.numberOfChapter}
                                nbrMinutes="240"
                                clickPlay={(event) => {this.redirectToCourseHandler(event)}}
@@ -89,6 +90,7 @@ class Dashboard extends Component {
                 <CourseSmall
                                key={prog.id}
                                name={prog.name}
+                               image={prog.image}
                                clickPlay={(event) => {this.redirectToCourseHandler(event)}}
                                nbrLessonsRestantes={prog.progression.chapter_id}/>
             ));

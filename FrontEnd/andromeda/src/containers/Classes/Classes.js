@@ -42,6 +42,7 @@ class Classes extends Component {
                 <CourseBig
                                key={prog.id}
                                name={prog.name}
+                               image={prog.image}
                                description={prog.description}
                                clickPlay={(event) => {this.redirectToCourseHandler(event)}}
                                percentageFinished='20%'

@@ -87,7 +87,7 @@ class CourseController extends Controller
                         $cptChapter=0; //compteur de chapitre dans chaque cours
         
                         $course['suivis']=$course->Followed()->count(); // nombre d'user qui suivent ce cours 
-                    
+                        $course['image'] = asset(Storage::url('images/'.$course->image));
                         $course['progression']=$user->progression($course);//la progression 
         
                         foreach ($course->Sections as $section) 
@@ -136,9 +136,6 @@ class CourseController extends Controller
 
                 $user->Followed()->attach($course);
 
-                abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
-
-
             }
             else {
 
@@ -166,7 +163,7 @@ class CourseController extends Controller
                 'description' => request('description'),
                 'rating' => request('rating'),
                 'user_id' => auth()->user()->id,
-                'image' => Str::random(5).''.time().'.'.Str::random(3).''.request()->image->getClientOriginalExtension(),
+                'image' => Str::random(5).''.time().'.'.Str::random(3).'.'.request()->image->getClientOriginalExtension(),
 
             ]);
             request()->image->move(public_path('storage/images/'),$course->image);

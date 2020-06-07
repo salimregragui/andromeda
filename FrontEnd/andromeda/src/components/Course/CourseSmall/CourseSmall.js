@@ -5,8 +5,7 @@ import playIcon from '../../../assets/images/play-icon.svg';
 const Course = (props) => {
     return (
         <div className={classes.Course}>
-            <div className={classes.CourseLogo}>
-                UX
+            <div className={classes.CourseLogo} style={{backgroundImage: "url('" + props.image + "')"}}>
             </div>
             <div className={classes.courseInfos}>
                 {props.name.substring(0,15)}<br/>

@@ -114,8 +114,6 @@ class CourseAdd extends Component {
 
             this.setState({courseData: courseData});
         }
-
-        console.log(this.state);
     }
 
     removeHandler = (type, sectionId, chapterId) => {
@@ -139,15 +137,19 @@ class CourseAdd extends Component {
 
     courseSaveHandler = (event) => {
         event.preventDefault();
+        let courseInfos = new FormData();
+        courseInfos.append('name', this.state.courseData.name);
+        courseInfos.append('description', this.state.courseData.description);
+        courseInfos.append('rating', 0);
+        courseInfos.append('image', document.getElementById('imageCourse').files[0]);
 
-        let courseInfos = {
-            name: this.state.courseData.name,
-            description: this.state.courseData.description,
-            rating: 0
-        }
-        axios.post('http://localhost:8000/api/auth/course', courseInfos)
+        const config = {
+            headers:{'Content-Type' : 'multipart/form-data'}
+        };
+
+        axios.post('http://localhost:8000/api/auth/course', courseInfos, config)
         .then(response => {
-          console.log(response.data.courseId);
+          console.log(response.data);
           let courseId = response.data.courseId;
 
           this.state.courseData.sections.map((section, sid) => {
@@ -221,6 +223,9 @@ class CourseAdd extends Component {
                 <form onSubmit={(event) => {this.courseSaveHandler(event)}}>
                     <input type="text" placeholder="Nom du cours" value={this.state.courseData.name} onChange={(event) => {this.changedValueHandler(event, null, null, 'name')}} /><br/>
                     <textarea placeholder="Description du cours" value={this.state.courseData.description} onChange={(event) => {this.changedValueHandler(event, null, null, 'description')}}></textarea>
+                    <br/>
+                    <label>Image du cours:</label><br/>
+                    <input type="file" id="imageCourse" name="imageCourse" />
 
                     <h4>Content</h4>
                     <button type="button" onClick={this.sectionAddHandler}>Ajouter Section</button>
