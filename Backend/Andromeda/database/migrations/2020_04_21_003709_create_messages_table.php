@@ -18,7 +18,7 @@ class CreateMessagesTable extends Migration
             $table->unsignedBigInteger('discussion_id');
             $table->unsignedBigInteger('user_id');
             $table->text('text')->nullable();
-            $table->string('attachment');
+            $table->string('attachment')->nullable();
             $table->boolean('read')->default(0);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('discussion_id')->references('id')->on('discussions')->onDelete('cascade');

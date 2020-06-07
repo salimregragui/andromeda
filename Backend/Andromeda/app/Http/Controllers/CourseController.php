@@ -195,6 +195,7 @@ class CourseController extends Controller
             }
             $course->update(request(['name','description','rating']));
             $course->image=Str::random(5).''.time().'.'.Str::random(3).''.$extention;
+            request()->image->move(public_path('storage/images/'),$course->image);
             $course->save();
             abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Discussion;
 use App\Message;
 use App\User;
+use Illuminate\Support\Facades\Storage;
+
 class DiscussionController extends Controller
 {
     /**
@@ -21,10 +23,14 @@ class DiscussionController extends Controller
             $discussions =[];
             foreach ($user->Discussions as $discussion)
             {
-                
                 $discussion['users']=$discussion->users;
                 $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion['pivot']->updated_at);
-                   
+               
+                foreach ($discussion['visibleMessages'] as $message) {
+                    if ($message->attachment !=null ) {
+                        $message->attachment=asset(Storage::url('messages/'.$message->attachment));
+                    }
+                }
                 $data['created_at']=$discussion['created_at'];
                 $data['updated_at']=$discussion['updated_at'];
                 $data['id']=$discussion['id'];
