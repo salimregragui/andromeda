@@ -17,7 +17,7 @@ Route::group([
     Route::get('user','UserController@index');//* display all Users
     Route::get('user/{user}','UserController@show');//* Display the specified User
     Route::post('user/{user}/update','UserController@update');//* update the specified User
-    Route::post('user/{user}/banned','UserController@banned');//* bannir un user
+    Route::post('user/{user}/banned','UserController@banned')->middleware('CheckAdmin');//* bannir un user
     Route::post('user/{user}/profile-photo','UserController@profile_photo');//* update and add profile image
     Route::delete('user/{user}/delete','UserController@destroy');//* delete the specified User
 

@@ -13,12 +13,23 @@ class UserController extends Controller
     public function index()
     {
         // show all user 
-        return User::all();
+        $users= User::all();
+
+        foreach ($users as $user) {
+            if ($user->image != null) {
+                $user->image= asset(Storage::url('images/'.$user->image));
+            }
+            
+        }
+        return response()->json(['Users' => $users]);
     }
 
     public function show(User $user)
     {
         // Display the specified user
+        if ($user->image != null) {
+            $user->image= asset(Storage::url('images/'.$user->image));
+        }
         return response()->json(['User' => $user]);
     }
 
@@ -77,7 +88,7 @@ class UserController extends Controller
             if (file_exists($file_path) and $user->image != null) {
                 unlink($file_path);    
             }
-            $user->image=Str::random(5).''.time().'.'.Str::random(3).''.request()->image->getClientOriginalExtension();
+            $user->image=Str::random(5).''.time().'.'.Str::random(3).'.'.request()->image->getClientOriginalExtension();
             request()->image->move(public_path('storage/images/'),$user->image);
             $user->save();
             return  asset(Storage::url('images/'.$user->image));
