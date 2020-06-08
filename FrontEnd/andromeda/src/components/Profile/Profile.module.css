@@ -1,0 +1,63 @@
+.Profile {
+    width: 100%;
+}
+.userImage {
+    width: 200px;
+    height: 200px;
+    background-position: center;
+    background-size:100% auto;
+    background-repeat: no-repeat;
+    margin-left: 30px;
+    margin-top: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.userInfos {
+    width: 25%;
+    float: left;
+    text-align: left;
+    font-weight: 700;
+}
+
+.userInfosText {
+    width: 100%;
+    margin-top: 20px;
+    margin-left: 30px;
+    color: #181818;
+}
+
+.userInfosText button {
+    margin-top: 10px;
+    width: 200px;
+    height: 30px;
+    background-color: #3459D6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.userData {
+    float: right;
+    width: 75%;
+    margin-top: 30px;
+    text-align: left;
+    color: #181818;
+}
+
+.userDataBox {
+    width: 70%;
+    height: 40px;
+    line-height: 40px;
+    background-color: white;
+    border-radius: 5px;
+    padding-left: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.userDataBox span {
+    font-weight: 400;
+}
