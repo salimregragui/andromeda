@@ -1,6 +1,5 @@
 import React from 'react'
 import classes from './Profile.module.css';
-import Course from '../Course/Course';
 
 const Profile = (props) => {
     return (
@@ -23,14 +22,13 @@ const Profile = (props) => {
                 </div>
 
                 {props.progression.map(prog => (
-                    <Course
-                                key={prog.id}
-                                name={prog.name}
-                                image={prog.image}
-                                nbrMinutes="240"
-                                clickPlay={(event) => {}}
-                                nbrLessonsRestantes={prog.progression.chapter_id}/>
-                    ))}
+                    <div className={classes.courseFollowed}>
+                        <div className={classes.courseFollowedImg} style={{backgroundImage: "url('" + prog.image + "')"}}></div>
+                        <div className={classes.courseFollowedData}>
+                            {prog.name}
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     )
