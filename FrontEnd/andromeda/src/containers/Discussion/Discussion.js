@@ -62,7 +62,7 @@ class Discussion extends Component {
 
     sendMessage = () => {
         let message = {
-            'user_id': this.state.currentDiscussion.users[0].id,
+            'user_id': this.state.currentDiscussion.users.id,
             'text': this.state.message,
             'discussion_id': this.state.currentDiscussion.id
         }
@@ -96,12 +96,12 @@ class Discussion extends Component {
         if (this.props.discussions) {
             discussions = this.props.discussions.map((discussion, id) => {
                 if (this.state.currentDiscussion) {
-                    if (discussion.users[0].name === this.state.currentDiscussion.users[0].name) {
+                    if (discussion.users.name === this.state.currentDiscussion.users.name) {
                         return <div key={discussion.id} className={classes.selectedDiscussion}>
                         <div className={classes.selectedDiscussionImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
                         <div className={classes.selectedDiscussionInfos}>
                             <br/><br/>
-                            <span>{discussion.users[0].name}</span>
+                            <span>{discussion.users.name}</span>
                             <br/><br/><br/>
                             {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
                             <em>12 minutes</em>
@@ -113,7 +113,7 @@ class Discussion extends Component {
                             <div className={classes.aDiscussionImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
                             <div className={classes.aDiscussionInfos}>
                                 <br/><br/>
-                                <span>{discussion.users[0].name}</span>
+                                <span>{discussion.users.name}</span>
                                 <br/><br/><br/>
                                 {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
                                 <em>12 minutes</em>
@@ -127,7 +127,7 @@ class Discussion extends Component {
                     <div className={classes.aDiscussionImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
                     <div className={classes.aDiscussionInfos}>
                         <br/><br/>
-                        <span>{discussion.users[0].name}</span>
+                        <span>{discussion.users.name}</span>
                         <br/><br/><br/>
                         {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
                         <em>12 minutes</em>
@@ -153,23 +153,29 @@ class Discussion extends Component {
                     {this.state.currentDiscussion ? <React.Fragment><div className={classes.DiscussionInfos}>
                     <div className={classes.DiscussionInfosImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
                         <br/>
-                        <span>{this.state.currentDiscussion.users[0].name}</span>
+                        <span>{this.state.currentDiscussion.users.name}</span>
                         <br/><br/>
                     </div>
 
                     <div className={classes.mainDiscussion}>
                         {this.state.currentDiscussion.visibleMessages.map(message => {
                             if (message.user_id === this.props.user.id) {
-                                return <div key={message.id} className={classes.sentMessage}>
-                                    {message.text}
-                                    <span>Il y a 5 mins</span>
-                                    <br/><br/>
+                                return <div key={message.id} className={classes.sentMessageHolder}>
+                                    <div className={classes.sentMessage}>
+                                        {message.text}
+                                        <br/>
+                                        <span>Il y a 5 mins</span>
+                                        <br/><br/>
+                                    </div>
                                 </div>
                             } else {
-                                return <div key={message.id} className={classes.receivedMessage}>
-                                    {message.text}
-                                    <span>Il y a 5 mins</span>
-                                    <br/><br/>
+                                return <div key={message.id} className={classes.receivedMessageHolder}>
+                                    <div className={classes.receivedMessage}>
+                                        {message.text}
+                                        <br/>
+                                        <span>Il y a 5 mins</span>
+                                        <br/><br/>
+                                    </div>
                                 </div>
                             }
                         })}

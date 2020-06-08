@@ -23,7 +23,7 @@ class DiscussionController extends Controller
             $discussions =[];
             foreach ($user->Discussions as $discussion)
             {
-                $discussion['users']=$discussion->Users->where('id','!=',$user->id);
+                $discussion['users']=$discussion->Users->where('id','!=',$user->id)->first();
 
                 $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion['pivot']->updated_at);
                
