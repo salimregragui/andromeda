@@ -12,7 +12,7 @@ const Profile = (props) => {
             </div>
 
             {props.progression.map(prog => (
-                <div className={classes.courseFollowed}>
+                <div key={prog.id} className={classes.courseFollowed}>
                     <div className={classes.courseFollowedImg} style={{backgroundImage: "url('" + prog.image + "')"}}></div>
                     <div className={classes.courseFollowedData}>
                         {prog.name}
