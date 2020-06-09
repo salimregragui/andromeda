@@ -29,7 +29,7 @@ class Dashboard extends Component {
 
     getData = () => {
         this.setState({loading: true});
-        axios.get('http://localhost:8000/api/auth/user', this.props.user)
+        axios.get('http://localhost:8000/api/auth/search/autocomplete/a', this.props.user)
         .then(response => {
           console.log(response.data);
           this.setState({data:response.data});  
