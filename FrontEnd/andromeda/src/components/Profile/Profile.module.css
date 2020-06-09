@@ -87,4 +87,43 @@
 
 .courseFollowedData {
     padding-top: 8px;
+    position: relative;
+}
+
+.userData a {
+    display: inline-block;
+    margin-top: 30px;
+    background-color: #181818;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.courseFollowedData a {
+    height: 30px;
+    width: 40px;
+    padding: 0px;
+    margin-top: 0px;
+    line-height: 32px;
+    top: 10px;
+    right: 10px;
+    position: absolute;
+    text-align: center;
+    font-size: 12px;
+    background-color: white;
+    border: 2px solid #181818;
+    color: #181818;
+
+    transition: 0.2s;
+}
+
+.courseFollowedData a:hover {
+    background-color: #181818;
+    color: white;
+
+    transition: 0.2s;
 }

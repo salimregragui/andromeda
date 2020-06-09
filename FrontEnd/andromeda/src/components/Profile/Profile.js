@@ -1,5 +1,6 @@
 import React from 'react'
 import classes from './Profile.module.css';
+import {NavLink} from 'react-router-dom';
 
 const Profile = (props) => {
     return (
@@ -13,8 +14,13 @@ const Profile = (props) => {
             </div>
 
             <div className={classes.userData}>
+                {props.user.role === 'Professor' ? <NavLink to="/course/add">Ajouter Un cours</NavLink> : null}
                 <div className={classes.userDataBox}>
                     Type de Compte : <span>Premium</span>
+                </div>
+
+                <div className={classes.userDataBox}>
+                    Status : <span> {props.user.role}</span>
                 </div>
                 
                 <div className={classes.userDataBox}>
@@ -26,6 +32,7 @@ const Profile = (props) => {
                         <div className={classes.courseFollowedImg} style={{backgroundImage: "url('" + prog.image + "')"}}></div>
                         <div className={classes.courseFollowedData}>
                             {prog.name}
+                            {prog.user_id === props.user.id ? <NavLink to="/course/add">Edit</NavLink> : null}
                         </div>
                     </div>
                 ))}
