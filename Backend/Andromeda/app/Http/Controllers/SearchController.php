@@ -22,12 +22,12 @@ class SearchController extends Controller
        
         foreach ($data['Chapters'] as $chapter) {
             
-            $chapter['course_id']=$chapter->Section->Course->id;
+            $chapter['course_id']=$chapter->Section->Course->name;
             unset($chapter->Section);
         }
         foreach ($data['Sections'] as $section) {
             
-            $section['course_id']=$section->Course->id;
+            $section['course_id']=$section->Course->name;
             unset($section->Course);
         }
         
