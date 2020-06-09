@@ -15,28 +15,39 @@ class SearchController extends Controller
     {
         
         $data =array();
-        
-        $data['Courses']=Course::where('name','like','%'.$query.'%')->get();
+/*
+          $data['Courses']=Course::where('name','like','%'.$query.'%')->get();
         $data['Sections']=Section::where('name','like','%'.$query.'%')->get();
         $data['Chapters']=Chapter::where('name','like','%'.$query.'%')->get();
        
         foreach ($data['Chapters'] as $chapter) {
             
-            $chapter['course_id']=$chapter->Section->Course->id;
+            $chapter['course_id']=$chapter->Section->Course->name;
             unset($chapter->Section);
         }
         foreach ($data['Sections'] as $section) {
             
-            $section['course_id']=$section->Course->id;
+            $section['course_id']=$section->Course->name;
             unset($section->Course);
         }
-        
-        $data['Resources']=Resource::where('name','like','%'.$query.'%')->get();
+*/
+        $data['Courses']=Course::where([['name','like','%'.$query.'%'],['valide',1]])->get();
+        $data['Sections']=Section::select('sections.id','sections.number','sections.name as section_name','courses.name as course_name')->leftJoin('courses', 'sections.course_id', '=', 'courses.id')->where([['sections.name','like','%'.$query.'%'],['courses.valide',1]])->get();
+        $data['Chapters']=Chapter::select('chapters.name as chapter_name','chapters.number','sections.id as section_id','sections.number as sections_number','sections.name as section_name','courses.name as course_name')->leftJoin('sections', 'chapters.section_id', '=', 'sections.id')->leftJoin('courses', 'sections.course_id', '=', 'courses.id')->where('chapters.name','like','%'.$query.'%')->get();
+       
+        // $data['Resources']=Resource::where('name','like','%'.$query.'%')->get();
         try {
+            $user=auth()->userOrFail();
             $data['Tasks']=Task::where([
                 ['content','like','%'.$query.'%'],
-                ['user_id',auth()->userOrFail()->id]
+                ['user_id',$user->id]
                 ])->get();
+
+            $data['Resources']=Resource::select('resources.name as resource_name','courses.name as course_name','resources.id as resource_id')->leftJoin('course_user','resources.course_id','=','course_user.course_id')->where('course_user.user_id',$user->id)->leftJoin('courses','course_user.course_id','courses.id')->where([['valide',1],['resources.name','like','%'.$query.'%']])->get();
+                
+            $data['Users']=User::where('name','like','%'.$query.'%')->where('id','!=',$user->id)->get();//? search all user except this connect user
+            return $data;
+
         } catch (\Throwable $th) {
             // continue
         }
