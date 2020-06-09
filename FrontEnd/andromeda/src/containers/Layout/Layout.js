@@ -20,7 +20,7 @@ class Layout extends Component {
         }
         return (
             <React.Fragment>
-                {this.props.location.pathname !== '/auth/signin' && this.props.location.pathname !== '/auth/signup' ? <Topbar /> : null}
+                {this.props.location.pathname !== '/auth/signin' && this.props.location.pathname !== '/auth/signup' ? <Topbar user={this.props.user} /> : null}
                 {leftBar}
                 <main className={contentClass}>
                     {this.props.children}
@@ -33,6 +33,7 @@ class Layout extends Component {
 const mapStateToProps = state => {
     return {
         logged: state.auth.logged,
+        user: state.auth.user,
         loading: state.auth.loading
     };
 };

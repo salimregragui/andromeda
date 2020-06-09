@@ -4,7 +4,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import * as coursesActions from '../../store/actions/index';
 import classes from './Discussion.module.css';
-import profileImage from '../../assets/images/profile.jpg';
 import axios from 'axios';
 
 class Discussion extends Component {
@@ -98,7 +97,7 @@ class Discussion extends Component {
                 if (this.state.currentDiscussion) {
                     if (discussion.users.name === this.state.currentDiscussion.users.name) {
                         return <div key={discussion.id} className={classes.selectedDiscussion}>
-                        <div className={classes.selectedDiscussionImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
+                        <div className={classes.selectedDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                         <div className={classes.selectedDiscussionInfos}>
                             <br/><br/>
                             <span>{discussion.users.name}</span>
@@ -110,7 +109,7 @@ class Discussion extends Component {
                     </div>
                     } else {
                         return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
-                            <div className={classes.aDiscussionImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
+                            <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                             <div className={classes.aDiscussionInfos}>
                                 <br/><br/>
                                 <span>{discussion.users.name}</span>
@@ -124,7 +123,7 @@ class Discussion extends Component {
                 }
                 else {
                     return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
-                    <div className={classes.aDiscussionImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
+                    <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                     <div className={classes.aDiscussionInfos}>
                         <br/><br/>
                         <span>{discussion.users.name}</span>
@@ -151,7 +150,7 @@ class Discussion extends Component {
 
                 <div className={classes.DiscussionsRight}>
                     {this.state.currentDiscussion ? <React.Fragment><div className={classes.DiscussionInfos}>
-                    <div className={classes.DiscussionInfosImg} style={{backgroundImage: "url('" + profileImage + "')"}}></div>
+                    <div className={classes.DiscussionInfosImg} style={{backgroundImage: this.state.currentDiscussion.users.image ? "url('" + this.state.currentDiscussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                         <br/>
                         <span>{this.state.currentDiscussion.users.name}</span>
                         <br/><br/>
