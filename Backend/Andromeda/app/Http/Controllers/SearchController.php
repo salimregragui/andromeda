@@ -43,7 +43,7 @@ class SearchController extends Controller
                 ['user_id',$user->id]
                 ])->get();
 
-            $data['Resources']=Resource::select('resources.name as resource_name','courses.name as course_name')->leftJoin('course_user','resources.course_id','=','course_user.course_id')->where('course_user.user_id',$user->id)->leftJoin('courses','course_user.course_id','courses.id')->where([['valide',1],['resources.name','like','%'.$query.'%']])->get();
+            $data['Resources']=Resource::select('resources.name as resource_name','courses.name as course_name','resources.id as resource_id')->leftJoin('course_user','resources.course_id','=','course_user.course_id')->where('course_user.user_id',$user->id)->leftJoin('courses','course_user.course_id','courses.id')->where([['valide',1],['resources.name','like','%'.$query.'%']])->get();
                 
             $data['Users']=User::where('name','like','%'.$query.'%')->where('id','!=',$user->id)->get();//? search all user except this connect user
             return $data;
