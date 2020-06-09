@@ -74,7 +74,7 @@ class SearchBar extends Component {
                 searchResults = [searchResults, <div className={classes.searchBlock}>
                     <span>Chapitres</span>
                     {this.state.data.Chapters.map(chapter => {
-                       let shownName = chapter.name;
+                       let shownName = chapter.chapter_name;
                        let splitName = null;
                        let searched = null;
 
@@ -94,7 +94,7 @@ class SearchBar extends Component {
                 searchResults = [searchResults, <div className={classes.searchBlock}>
                     <span>Sections</span>
                     {this.state.data.Sections.map(section => {
-                       let shownName = section.name;
+                       let shownName = section.section_name;
                        let splitName = null;
                        let searched = null;
 
@@ -134,7 +134,7 @@ class SearchBar extends Component {
                 searchResults = [searchResults, <div className={classes.searchBlock}>
                     <span>Ressources</span>
                     {this.state.data.Resources.map(resource => {
-                        let shownName = resource.name;
+                        let shownName = resource.resource_name;
                         let splitName = null;
                         let searched = null;
  
