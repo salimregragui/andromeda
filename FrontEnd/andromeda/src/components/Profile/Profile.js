@@ -3,6 +3,25 @@ import classes from './Profile.module.css';
 import {NavLink} from 'react-router-dom';
 
 const Profile = (props) => {
+    let courses = null;
+
+    if (props.progression) {
+        courses = <React.Fragment>
+            <div className={classes.userDataBox}>
+                Cours suivis : <span>{props.progression.length}</span>
+            </div>
+
+            {props.progression.map(prog => (
+                <div className={classes.courseFollowed}>
+                    <div className={classes.courseFollowedImg} style={{backgroundImage: "url('" + prog.image + "')"}}></div>
+                    <div className={classes.courseFollowedData}>
+                        {prog.name}
+                        {prog.user_id === props.user.id ? <NavLink to="/course/add">Edit</NavLink> : null}
+                    </div>
+                </div>
+            ))}
+        </React.Fragment>
+    }
     return (
         <div className={classes.Profile}>
             <div className={classes.userInfos}>
@@ -23,19 +42,7 @@ const Profile = (props) => {
                     Status : <span> {props.user.role}</span>
                 </div>
                 
-                <div className={classes.userDataBox}>
-                    Cours suivis : <span>{props.progression.length}</span>
-                </div>
-
-                {props.progression.map(prog => (
-                    <div className={classes.courseFollowed}>
-                        <div className={classes.courseFollowedImg} style={{backgroundImage: "url('" + prog.image + "')"}}></div>
-                        <div className={classes.courseFollowedData}>
-                            {prog.name}
-                            {prog.user_id === props.user.id ? <NavLink to="/course/add">Edit</NavLink> : null}
-                        </div>
-                    </div>
-                ))}
+                {courses}
             </div>
         </div>
     )

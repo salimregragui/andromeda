@@ -28,7 +28,7 @@ class Profile extends Component {
     render() {
         let routes = null;
 
-        if (this.props.user && this.props.progression) {
+        if (this.props.user) {
             routes = <Switch>
                 <Route path="/profile/" exact render={() => <ProfileLogged user={this.props.user} progression={this.props.progression} />} />
                 <Route path="/profile/:userName" component={ProfileUser} />
