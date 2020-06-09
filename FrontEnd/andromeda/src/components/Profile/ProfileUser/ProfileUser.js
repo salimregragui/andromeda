@@ -20,9 +20,9 @@ const ProfileUser = (props) => {
 
                 {props.user.progressions.map(prog => (
                     <div key={prog.id} className={classes.courseFollowed}>
-                        <div className={classes.courseFollowedImg} style={{backgroundImage: "url('" + prog.course_image + "')"}}></div>
+                        <div className={classes.courseFollowedImg} style={{backgroundImage: "url('" + prog.course.image + "')"}}></div>
                         <div className={classes.courseFollowedData}>
-                            {prog.course_name}
+                            {prog.course.name}
                         </div>
                     </div>
                 ))}

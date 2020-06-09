@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './SearchBar.module.css';
 import axios from 'axios';
+import {withRouter} from 'react-router-dom';
 
 class SearchBar extends Component {
     state = {
@@ -53,9 +54,24 @@ class SearchBar extends Component {
     }
 
     goToDataHandler = (type, name) => {
+        console.log("ok!");
         if (type === 'course' || type === 'chapter' || type === 'section') {
             this.props.history.push('/course/' + name.split(' ').join('-'));
         }
+
+        if (type === 'user') {
+            this.props.history.push('/profile/' + name.split(' ').join('-'));
+        }
+
+        if (type === 'resource') {
+            this.props.history.push('/ressources');
+        }
+
+        if (type === 'task') {
+            this.props.history.push('/tasks');
+        }
+
+        this.setState({search:'', data:null, showingResults: false});
     }
 
     hideResultsHandler = () => {
@@ -73,7 +89,7 @@ class SearchBar extends Component {
             if (this.state.data.Chapters.length >= 1) {
                 searchResults = [searchResults, <div className={classes.searchBlock}>
                     <span>Chapitres</span>
-                    {this.state.data.Chapters.map(chapter => {
+                    {this.state.data.Chapters.map((chapter, cid) => {
                        let shownName = chapter.chapter_name;
                        let splitName = null;
                        let searched = null;
@@ -83,7 +99,8 @@ class SearchBar extends Component {
                             splitName = shownName.split('|||');
                             searched = splitName[1];
                         }
-                       return <div key={chapter.id} className={classes.searchElement}>
+
+                       return <div key={'chapter-' + cid} className={classes.searchElement} onClick={() => {this.goToDataHandler('chapter', chapter.course_name)}}>
                            <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
                         </div>
                     })}
@@ -103,7 +120,7 @@ class SearchBar extends Component {
                             splitName = shownName.split('|||');
                             searched = splitName[1];
                         }
-                       return <div key={section.id} className={classes.searchElement}>
+                       return <div key={section.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('section', section.course_name)}}>
                            <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
                         </div>
                     })}
@@ -123,7 +140,7 @@ class SearchBar extends Component {
                              splitName = shownName.split('|||');
                              searched = splitName[1];
                          }
-                       return <div key={course.id} className={classes.searchElement}>
+                       return <div key={course.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('course', course.name)}}>
                            <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
                         </div>
                     })}
@@ -143,7 +160,7 @@ class SearchBar extends Component {
                              splitName = shownName.split('|||');
                              searched = splitName[1];
                          }
-                       return <div key={resource.id} className={classes.searchElement}>
+                       return <div key={resource.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('resource', resource.resource_name)}}>
                            <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
                         </div>
                     })}
@@ -163,7 +180,7 @@ class SearchBar extends Component {
                             splitName = shownName.split('|||');
                             searched = splitName[1];
                         }
-                      return <div key={task.id} className={classes.searchElement}>
+                      return <div key={task.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('task', task.content)}}>
                           <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
                        </div>
                     })}
@@ -183,7 +200,7 @@ class SearchBar extends Component {
                             splitName = shownName.split('|||');
                             searched = splitName[1];
                         }
-                      return <div key={user.id} className={classes.searchElement}>
+                      return <div key={user.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('user', user.name)}}>
                           <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
                        </div>
                     })}
@@ -191,7 +208,7 @@ class SearchBar extends Component {
             }
 
             if (searchResults) {
-                searchResults = searchResults.flat(4);
+                searchResults = searchResults.flat(5);
                 searchResults.shift();
             } else {
                 searchResults = 'Aucun resultat trouvé.';
@@ -200,7 +217,7 @@ class SearchBar extends Component {
 
         return (
             <div className={classes.Search}>
-                <input placeholder="Cherchez dans les cours, ressources, utilisateurs, ..." type="text" value={this.state.search} onChange={this.changeSearchHandler} onBlur={this.hideResultsHandler} />
+                <input placeholder="Cherchez dans les cours, ressources, utilisateurs, ..." type="text" value={this.state.search} onChange={this.changeSearchHandler} />
                 <div className={`${classes.SearchResults} ${this.state.showingResults ? null : classes.hiddenSearch}`}>
                     {searchResults && searchResults !== 'Loading...' && searchResults !== 'Aucun resultat trouvé.' ? searchResults.map((sr, id) => {
                         return <React.Fragment key={id}>
@@ -214,4 +231,4 @@ class SearchBar extends Component {
     }
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);
