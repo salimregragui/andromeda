@@ -23,21 +23,23 @@ class ResourceController extends Controller
             foreach ($user->Followed as $course) {
                 
               
-                $data['id']=$course->id;
-                $data['name']=$course->name;
-                $data['description']=$course->description;
-                $data['user_id']=$course->user_id;
-                $data['rating']=$course->rating;
-                $data['created_at']=$course->created_at;
-                $data['updated_at']=$course->updated_at;
-                $data['Resources']=$course->Resources;
-    
-                foreach ($course->Resources as $resource) {
-                    $url = Storage::url('resources/'.$resource->attachment);
-                    $resource->attachment= $url;
+                if ($course->valide ==1) {
+                    $data['id']=$course->id;
+                    $data['name']=$course->name;
+                    $data['description']=$course->description;
+                    $data['user_id']=$course->user_id;
+                    $data['rating']=$course->rating;
+                    $data['created_at']=$course->created_at;
+                    $data['updated_at']=$course->updated_at;
+                    $data['Resources']=$course->Resources;
+        
+                    foreach ($course->Resources as $resource) {
+                        $url = Storage::url('resources/'.$resource->attachment);
+                        $resource->attachment= $url;
+                    }
+        
+                    array_push($alldata,$data);
                 }
-    
-                array_push($alldata,$data);
 
             }
             return response()->json(['CoursesResources' => $alldata]);

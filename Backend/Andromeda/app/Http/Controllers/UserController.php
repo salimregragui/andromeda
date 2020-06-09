@@ -24,12 +24,14 @@ class UserController extends Controller
         return response()->json(['Users' => $users]);
     }
 
-    public function show(User $user)
+    public function show($name)
     {
         // Display the specified user
+        $user =User::where('name',$name)->firstOrFail();
         if ($user->image != null) {
             $user->image= asset(Storage::url('images/'.$user->image));
         }
+        $user->Progressions;
         return response()->json(['User' => $user]);
     }
 

@@ -69,19 +69,21 @@ class DiscussionController extends Controller
 
             if ($user->Discussions->where('id',$discussion->id)->first() != null) { //* check if the user are attache at this disscussion
    
-                $discussion['users']=$discussion->Users->where('id','!=',$user->id);
-                $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion->users->find($user)->pivot->updated_at);
+                $discussion['users']=$discussion->Users->where('id','!=',$user->id)->first();
+                $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion->users->find($user->id)->discussions->find($discussion->id)->pivot->updated_at);                                
+                
                 foreach ($discussion['visibleMessages'] as $message) {
                     if ($message->attachment !=null ) {
                         $message->attachment=asset(Storage::url('messages/'.$message->attachment));
                     }
                 }
+
                 $data['created_at']=$discussion['created_at'];
                 $data['updated_at']=$discussion['updated_at'];
                 $data['id']=$discussion['id'];
                 $data['users']=$discussion['users'];
                 $data['visibleMessages']=$discussion['visibleMessages'];
-                $data['pivot']=$discussion->users->find($user)->pivot;
+                $data['pivot']=$discussion->users->find($user->id)->pivot;
                 $data['type']=$discussion['type'];
                 return response()->json(['Discussion' =>$data]);
                
