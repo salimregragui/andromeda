@@ -31,7 +31,10 @@ class UserController extends Controller
         if ($user->image != null) {
             $user->image= asset(Storage::url('images/'.$user->image));
         }
-        $user->Progressions;
+        foreach ($user->Progressions as $progression) {
+            $progression['course']=$progression->Course();
+            $progression['course']->image=asset(Storage::url('images/'.$progression->Course()->image));
+        }
         return response()->json(['User' => $user]);
     }
 
