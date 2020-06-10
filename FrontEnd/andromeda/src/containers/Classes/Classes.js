@@ -33,19 +33,37 @@ class Classes extends Component {
         }
     }
 
+    calculatePercentageFinished = (progressionId) => {
+        let totalChaptersFinished = 0;
+        this.props.progression[progressionId].sections.map(section => {
+            section.chapters.map(chapter => {
+                if (chapter.id <= this.props.progression[progressionId].progression.chapter_id) {
+                    totalChaptersFinished++;
+                }
+
+                return null;
+            });
+
+            return null;
+        });
+        console.log("total finished : " + totalChaptersFinished + "number of chapters : " + this.props.progression[progressionId].numberOfChapter);
+        console.log(Math.floor((totalChaptersFinished / this.props.progression[progressionId].numberOfChapter) * 100));
+        return Math.floor((totalChaptersFinished / this.props.progression[progressionId].numberOfChapter) * 100);
+    }
+
     render() {
         let progression = null;
 
         if (this.props.progression) {
             console.log(this.props.progression)
-            progression = this.props.progression.map(prog => (
+            progression = this.props.progression.map((prog, id) => (
                 <CourseBig
                                key={prog.id}
                                name={prog.name}
                                image={prog.image}
                                description={prog.description}
                                clickPlay={(event) => {this.redirectToCourseHandler(event)}}
-                               percentageFinished='20%'
+                               percentageFinished={this.calculatePercentageFinished(id)}
                                courseColor={this.state.colorList[Math.floor(Math.random() * this.state.colorList.length)]}
                                nextChapter={prog.progression.chapter_id}/>
             ));

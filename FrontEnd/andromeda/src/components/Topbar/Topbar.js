@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Topbar.module.css';
 // import Logo from '../../assets/images/logo-name.svg';
 import SearchBar from '../../containers/SearchBar/SearchBar';
-import { withRouter, NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import NavigationItems from '../NavigationItems/NavigationItems';
 
 const Topbar = (props) => {

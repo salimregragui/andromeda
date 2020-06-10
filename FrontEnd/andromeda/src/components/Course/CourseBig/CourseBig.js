@@ -10,7 +10,7 @@ const CourseBig = (props) => {
             <div className={classes.courseInfos}>
                 {props.name}<br/>
                 <div className={classes.courseInfosBar}>
-                    <span style={{backgroundColor:props.courseColor}}></span>
+                    <span style={{backgroundColor:props.courseColor, width: props.percentageFinished + '%'}}></span>
                 </div>
             </div>
             <p className={classes.courseDescription}>

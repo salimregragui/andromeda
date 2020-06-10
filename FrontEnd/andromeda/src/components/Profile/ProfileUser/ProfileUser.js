@@ -1,7 +1,6 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom';
 import classes from './ProfileUser.module.css';
-import {NavLink} from 'react-router-dom';
 
 const ProfileUser = (props) => {
     if (props.match.params.userName && !props.user) {

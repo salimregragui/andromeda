@@ -87,7 +87,7 @@ class SearchBar extends Component {
 
         if (this.state.data && !this.state.loading) {
             if (this.state.data.Chapters.length >= 1) {
-                searchResults = [searchResults, <div className={classes.searchBlock}>
+                searchResults = [searchResults, <div key="chapters" className={classes.searchBlock}>
                     <span>Chapitres</span>
                     {this.state.data.Chapters.map((chapter, cid) => {
                        let shownName = chapter.chapter_name;
@@ -108,7 +108,7 @@ class SearchBar extends Component {
             }
 
             if (this.state.data.Sections.length >= 1) {
-                searchResults = [searchResults, <div className={classes.searchBlock}>
+                searchResults = [searchResults, <div key="sections" className={classes.searchBlock}>
                     <span>Sections</span>
                     {this.state.data.Sections.map(section => {
                        let shownName = section.section_name;
@@ -128,7 +128,7 @@ class SearchBar extends Component {
             }
 
             if (this.state.data.Courses.length >= 1) {
-                searchResults = [searchResults, <div className={classes.searchBlock}>
+                searchResults = [searchResults, <div key="courses" className={classes.searchBlock}>
                     <span>Cours</span>
                     {this.state.data.Courses.map(course => {
                         let shownName = course.name;
@@ -148,7 +148,7 @@ class SearchBar extends Component {
             }
 
             if (this.state.data.Resources.length >= 1) {
-                searchResults = [searchResults, <div className={classes.searchBlock}>
+                searchResults = [searchResults, <div key="resources" className={classes.searchBlock}>
                     <span>Ressources</span>
                     {this.state.data.Resources.map(resource => {
                         let shownName = resource.resource_name;
@@ -160,7 +160,7 @@ class SearchBar extends Component {
                              splitName = shownName.split('|||');
                              searched = splitName[1];
                          }
-                       return <div key={resource.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('resource', resource.resource_name)}}>
+                       return <div key={'resource-' + resource.resource_id} className={classes.searchElement} onClick={() => {this.goToDataHandler('resource', resource.resource_name)}}>
                            <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
                         </div>
                     })}
@@ -168,7 +168,7 @@ class SearchBar extends Component {
             }
 
             if (this.state.data.Tasks.length >= 1) {
-                searchResults = [searchResults, <div className={classes.searchBlock}>
+                searchResults = [searchResults, <div key="tasks" className={classes.searchBlock}>
                     <span>Taches</span>
                     {this.state.data.Tasks.map(task => {
                        let shownName = task.content;
