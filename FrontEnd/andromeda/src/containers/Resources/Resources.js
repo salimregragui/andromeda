@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as coursesActions from '../../store/actions/index';
 import classes from './Resources.module.css';
 import Modal from '../../components/UI/Modal/Modal';
+import * as timeago from 'timeago.js';
 
 class Resources extends Component {
     state = {
@@ -146,7 +147,7 @@ class Resources extends Component {
                                         <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
                                     </div>
                                     <div className={classes.ResourceCourseAddInfo}>
-                                        <span>{res.created_at.substring(0, 10)}</span>
+                                        <span>{timeago.format(res.created_at.substring(0, 10))}</span>
                                         <button onClick={() => {this.resourceDisplayHandler(res)}}>Voir</button>
                                     </div>
                                 </div>

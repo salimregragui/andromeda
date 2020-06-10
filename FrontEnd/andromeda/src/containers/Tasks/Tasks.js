@@ -3,6 +3,7 @@ import classes from './Tasks.module.css';
 import { connect } from 'react-redux';
 import * as tasksActions from '../../store/actions/index';
 import Modal from '../../components/UI/Modal/Modal';
+import * as timeago from 'timeago.js';
 
 class Tasks extends Component {
 
@@ -165,7 +166,7 @@ class Tasks extends Component {
                     <tr key={task.id}>
                         <td style={{color:'#181818'}}>{task.content}</td>
                         <td>{task.type}</td>
-                        <td>{task.created_at.substring(0,10)}</td>
+                        <td>{timeago.format(task.created_at.substring(0,10))}</td>
                         <td>X</td>
                     </tr>
                 );
