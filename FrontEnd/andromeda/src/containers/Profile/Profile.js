@@ -45,7 +45,7 @@ class Profile extends Component {
 
         if (this.props.user) {
             routes = <Switch>
-                <Route path="/profile/" exact render={() => <ProfileLogged user={this.props.user} progression={this.props.progression} />} />
+                <Route path="/profile/" exact render={() => <ProfileLogged user={this.props.user} progression={this.props.progression} onImageChange ={(token, user) => {this.props.onGetUser(token, user)}}/>} />
                 <Route path="/profile/:userName" render={() =><ProfileUser user={this.state.selectedUser} getUser={(name) => {this.getSelectedUserHandler(name)}} />} />
             </Switch>
         }
@@ -67,7 +67,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onGetProgression: () => dispatch(coursesActions.coursesProgression())
+        onGetProgression: () => dispatch(coursesActions.coursesProgression()),
+        onGetUser: (token, user) => dispatch(coursesActions.authSuccess(token, user))
     }
 }
 

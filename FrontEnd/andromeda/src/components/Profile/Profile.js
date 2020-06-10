@@ -42,6 +42,19 @@ const Profile = (props) => {
         .then (response => {
             console.log(response.data);
             document.getElementById('userImage').style.backgroundImage = "url('" + response.data.image + "')";
+            axios.post('http://localhost:8000/api/auth/me')
+            .then(response => {
+                props.onImageChange(localStorage.getItem('token'), response.data);
+            })
+            .catch(error => {
+                localStorage.removeItem('token');
+                this.props.history.push({
+                pathname: '/error',
+                state: {
+                    error: error
+                }
+                });
+            })
         })
         .catch(error => {
             console.log(error);
