@@ -2,6 +2,7 @@ import React, {useRef} from 'react'
 import classes from './Profile.module.css';
 import {NavLink} from 'react-router-dom';
 import axios from 'axios';
+import * as timeago from 'timeago.js';
 
 const Profile = (props) => {
     let courses = null;
@@ -67,7 +68,8 @@ const Profile = (props) => {
                 
                 <input style={{display:'none'}} id="uploadFile" type="file" name="image" ref={fileInput} onChange={(event) => {handleFileChange(event)}}/>
                 <div className={classes.userInfosText}>
-                    {props.user.name}<br/>
+                    {props.user.name}<br/><br/>
+                    <span>Compte crée : {timeago.format(props.user.created_at.substring(0,10))}</span>
                     <button>Edit Profile</button>
                 </div>
             </div>

@@ -27,6 +27,12 @@
     color: #181818;
 }
 
+.userInfosText span {
+    font-weight: 600;
+    font-size: 14px;
+    color: #929292;
+}
+
 .userInfosText button {
     margin-top: 10px;
     width: 200px;

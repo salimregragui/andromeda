@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as coursesActions from '../../store/actions/index';
 import classes from './Discussion.module.css';
 import axios from 'axios';
+import * as timeago from 'timeago.js';
 
 class Discussion extends Component {
     state = {
@@ -108,7 +109,7 @@ class Discussion extends Component {
                             <span>{discussion.users.name}</span>
                             <br/><br/><br/>
                             {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
-                            <em>12 minutes</em>
+                            <em>{timeago.format(discussion.visibleMessages[discussion.visibleMessages.length - 1].created_at)}</em>
                             <br/><br/>
                         </div>
                     </div>
@@ -120,7 +121,7 @@ class Discussion extends Component {
                                 <span>{discussion.users.name}</span>
                                 <br/><br/><br/>
                                 {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
-                                <em>12 minutes</em>
+                                <em>{timeago.format(discussion.visibleMessages[discussion.visibleMessages.length - 1].created_at)}</em>
                                 <br/><br/>
                             </div>
                         </div>
@@ -134,7 +135,7 @@ class Discussion extends Component {
                         <span>{discussion.users.name}</span>
                         <br/><br/><br/>
                         {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
-                        <em>12 minutes</em>
+                        <em>{timeago.format(discussion.visibleMessages[discussion.visibleMessages.length - 1].created_at)}</em>
                         <br/><br/>
                     </div>
                 </div>
@@ -168,7 +169,7 @@ class Discussion extends Component {
                                     <div className={classes.sentMessage}>
                                         {message.text}
                                         <br/>
-                                        <span>Il y a 5 mins</span>
+                                        <span>{timeago.format(message.created_at)}</span>
                                         <br/><br/>
                                     </div>
                                 </div>
@@ -177,7 +178,7 @@ class Discussion extends Component {
                                     <div className={classes.receivedMessage}>
                                         {message.text}
                                         <br/>
-                                        <span>Il y a 5 mins</span>
+                                        <span>{timeago.format(message.created_at)}</span>
                                         <br/><br/>
                                     </div>
                                 </div>

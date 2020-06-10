@@ -1,6 +1,7 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom';
 import classes from './ProfileUser.module.css';
+import * as timeago from 'timeago.js';
 
 const ProfileUser = (props) => {
     if (props.match.params.userName && !props.user) {
@@ -32,7 +33,8 @@ const ProfileUser = (props) => {
                 <div className={classes.userInfos}>
                     <div className={classes.userImage} style={{backgroundImage:props.user.image ? "url('http://localhost:8000/storage/images/" + props.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                     <div className={classes.userInfosText}>
-                        {props.user.name}<br/>
+                        {props.user.name}<br/><br/>
+                        <span>Compte crée : {timeago.format(props.user.created_at.substring(0,10))}</span>
                         <button>Commencer discussion</button>
                     </div>
                 </div>

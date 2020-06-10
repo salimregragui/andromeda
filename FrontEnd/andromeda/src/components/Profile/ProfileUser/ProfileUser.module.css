@@ -39,6 +39,12 @@
     cursor: pointer;
 }
 
+.userInfosText span {
+    font-weight: 600;
+    font-size: 14px;
+    color: #929292;
+}
+
 .userData {
     float: right;
     width: 75%;
