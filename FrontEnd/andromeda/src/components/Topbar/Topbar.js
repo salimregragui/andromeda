@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Topbar.module.css';
-// import Logo from '../../assets/images/logo-name.svg';
+import NotificationsIcon from '../../assets/images/notifications-icon.svg';
 import SearchBar from '../../containers/SearchBar/SearchBar';
 import { withRouter } from 'react-router-dom';
 import NavigationItems from '../NavigationItems/NavigationItems';
@@ -33,6 +33,10 @@ const Topbar = (props) => {
 
             <SearchBar />
             
+            <div className={classes.Notifications}>
+                <div className={classes.NotificationsAvailable}></div>
+                <img src={NotificationsIcon} alt="notifications" />
+            </div>
             <nav>
                 {navigation}
             </nav>

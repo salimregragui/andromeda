@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="13" height="16.259" viewBox="0 0 13 16.259">
+  <g id="Icon_ionic-ios-notifications" data-name="Icon ionic-ios-notifications" transform="translate(-3.756 -2.183)">
+    <path id="Path_1" data-name="Path 1" d="M10,17.813a1.841,1.841,0,0,0,1.879-2.07H8.113A1.842,1.842,0,0,0,10,17.813Z" transform="translate(0.251 0.63)" fill="#b3bacc"/>
+    <path id="Path_2" data-name="Path 2" d="M16.591,14.327c-.626-.832-1.857-1.32-1.857-5.045,0-3.824-1.674-5.361-3.235-5.73-.146-.037-.252-.086-.252-.242V3.192a.992.992,0,1,0-1.983,0v.119c0,.152-.106.2-.252.242-1.565.373-3.235,1.906-3.235,5.73,0,3.725-1.231,4.209-1.857,5.045a.814.814,0,0,0,.646,1.3H15.949A.814.814,0,0,0,16.591,14.327Z" transform="translate(0 0)" fill="#b3bacc"/>
+  </g>
+</svg>

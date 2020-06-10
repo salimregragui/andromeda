@@ -54,3 +54,31 @@
     background-repeat: no-repeat;
     float: right;
 }
+
+.Notifications {
+    width: 28px;
+    height: 28px;
+    background-color: white;
+    border: 2px solid #B3BACC;
+    border-radius: 50%;
+    float: left;
+    line-height: 33px;
+    margin-top: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.Notifications img {
+    padding-left: 2px;
+}
+
+.NotificationsAvailable {
+    width: 10px;
+    height: 10px;
+    background-color: #e74c3c;
+    top: -1px;
+    right: -3px;
+    border-radius: 50%;
+    position: absolute;
+}
