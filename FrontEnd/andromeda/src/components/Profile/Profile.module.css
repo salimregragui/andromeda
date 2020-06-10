@@ -22,15 +22,19 @@
 
 .userInfosText {
     width: 100%;
-    margin-top: 20px;
     margin-left: 30px;
     color: #181818;
 }
 
 .userInfosText span {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 12px;
     color: #929292;
+}
+
+.userInfosText em {
+    font-weight: 400;
+    font-size: 12px;
 }
 
 .userInfosText button {

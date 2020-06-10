@@ -166,7 +166,7 @@ class Tasks extends Component {
                     <tr key={task.id}>
                         <td style={{color:'#181818'}}>{task.content}</td>
                         <td>{task.type}</td>
-                        <td>{timeago.format(task.created_at.substring(0,10))}</td>
+                        <td>{timeago.format(task.created_at)}</td>
                         <td>X</td>
                     </tr>
                 );

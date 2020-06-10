@@ -68,8 +68,9 @@ const Profile = (props) => {
                 
                 <input style={{display:'none'}} id="uploadFile" type="file" name="image" ref={fileInput} onChange={(event) => {handleFileChange(event)}}/>
                 <div className={classes.userInfosText}>
-                    {props.user.name}<br/><br/>
-                    <span>Compte crée : {timeago.format(props.user.created_at.substring(0,10))}</span>
+                    <em>Cliquer sur votre photo pour l'éditer.</em><br/><br/>
+                    {props.user.name}<br/>
+                    <span>Compte crée : {timeago.format(props.user.created_at)}</span>
                     <button>Edit Profile</button>
                 </div>
             </div>

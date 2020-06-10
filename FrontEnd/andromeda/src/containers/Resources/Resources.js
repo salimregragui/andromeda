@@ -147,7 +147,7 @@ class Resources extends Component {
                                         <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
                                     </div>
                                     <div className={classes.ResourceCourseAddInfo}>
-                                        <span>{timeago.format(res.created_at.substring(0, 10))}</span>
+                                        <span>{timeago.format(res.created_at)}</span>
                                         <button onClick={() => {this.resourceDisplayHandler(res)}}>Voir</button>
                                     </div>
                                 </div>

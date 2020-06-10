@@ -34,7 +34,7 @@ const ProfileUser = (props) => {
                     <div className={classes.userImage} style={{backgroundImage:props.user.image ? "url('http://localhost:8000/storage/images/" + props.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                     <div className={classes.userInfosText}>
                         {props.user.name}<br/><br/>
-                        <span>Compte crée : {timeago.format(props.user.created_at.substring(0,10))}</span>
+                        <span>Compte crée : {timeago.format(props.user.created_at)}</span>
                         <button>Commencer discussion</button>
                     </div>
                 </div>
