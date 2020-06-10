@@ -96,7 +96,7 @@ class UserController extends Controller
             $user->image=Str::random(5).''.time().'.'.Str::random(3).'.'.request()->image->getClientOriginalExtension();
             request()->image->move(public_path('storage/images/'),$user->image);
             $user->save();
-            return  asset(Storage::url('images/'.$user->image));
+            return  response()->json(['image' => asset(Storage::url('images/'.$user->image))]);
 
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
             abort(401);

@@ -12,9 +12,10 @@ class Discussion extends Component {
         discussionsLoaded: true,
         currentDiscussion: null,
         currentDiscussionId: null,
-        message: '',
-        updateDiscussions : null
+        message: ''
     }
+
+    updateDiscussions = null;
 
     componentDidMount() {
         document.body.style = 'background: #f1f1f4;';
@@ -39,7 +40,8 @@ class Discussion extends Component {
         if(this.props.logged && !this.state.discussionsLoaded) {
             console.log("get discussions !");
             this.props.onGetDiscussions();
-            this.setState({discussionsLoaded: true, loading: false, updateDiscussions : setInterval(() => {
+            this.setState({discussionsLoaded: true, loading: false});
+            this.updateDiscussions = setInterval(() => {
                 this.props.onGetDiscussions();
 
                 if (this.state.currentDiscussion) {
@@ -47,8 +49,12 @@ class Discussion extends Component {
                         this.setState({currentDiscussion: this.props.discussions[this.state.currentDiscussionId]});
                     }
                 }
-            }, 2000)});
+            }, 2000);
         }
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.updateDiscussions);
     }
 
     setCurrentDiscussionHandler = (discussion, discussionId) => {
@@ -97,7 +103,7 @@ class Discussion extends Component {
                 if (this.state.currentDiscussion) {
                     if (discussion.users.name === this.state.currentDiscussion.users.name) {
                         return <div key={discussion.id} className={classes.selectedDiscussion}>
-                        <div className={classes.selectedDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                        <div className={classes.selectedDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('http://localhost:8000/storage/images/" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                         <div className={classes.selectedDiscussionInfos}>
                             <br/><br/>
                             <span>{discussion.users.name}</span>
@@ -109,7 +115,7 @@ class Discussion extends Component {
                     </div>
                     } else {
                         return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
-                            <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                            <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('http://localhost:8000/storage/images/" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                             <div className={classes.aDiscussionInfos}>
                                 <br/><br/>
                                 <span>{discussion.users.name}</span>
@@ -123,7 +129,7 @@ class Discussion extends Component {
                 }
                 else {
                     return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
-                    <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                    <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('http://localhost:8000/storage/images/" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                     <div className={classes.aDiscussionInfos}>
                         <br/><br/>
                         <span>{discussion.users.name}</span>
@@ -150,7 +156,7 @@ class Discussion extends Component {
 
                 <div className={classes.DiscussionsRight}>
                     {this.state.currentDiscussion ? <React.Fragment><div className={classes.DiscussionInfos}>
-                    <div className={classes.DiscussionInfosImg} style={{backgroundImage: this.state.currentDiscussion.users.image ? "url('" + this.state.currentDiscussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                    <div className={classes.DiscussionInfosImg} style={{backgroundImage: this.state.currentDiscussion.users.image ? "url('http://localhost:8000/storage/images/" + this.state.currentDiscussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                         <br/>
                         <span>{this.state.currentDiscussion.users.name}</span>
                         <br/><br/>

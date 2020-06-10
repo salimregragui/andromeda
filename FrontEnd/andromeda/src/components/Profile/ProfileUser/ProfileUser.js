@@ -31,7 +31,7 @@ const ProfileUser = (props) => {
         userData = <React.Fragment>
             <div className={classes.Profile}>
                 <div className={classes.userInfos}>
-                    <div className={classes.userImage} style={{backgroundImage:props.user.image ? "url('" + props.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                    <div className={classes.userImage} style={{backgroundImage:props.user.image ? "url('http://localhost:8000/storage/images/" + props.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                     <div className={classes.userInfosText}>
                         {props.user.name}<br/>
                         <button>Commencer discussion</button>

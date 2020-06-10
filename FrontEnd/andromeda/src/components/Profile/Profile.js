@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import classes from './Profile.module.css';
 import {NavLink} from 'react-router-dom';
+import axios from 'axios';
 
 const Profile = (props) => {
     let courses = null;
@@ -22,10 +23,36 @@ const Profile = (props) => {
             ))}
         </React.Fragment>
     }
+
+    const fileInput = useRef(null)
+
+    const handleClick = () => {
+        fileInput.current.click()
+    }
+
+    const handleFileChange = event => {
+        let image = new FormData();
+        image.append('image', document.getElementById('uploadFile').files[0]);
+
+        const config = {
+            headers:{'Content-Type' : 'multipart/form-data'}
+        };
+
+        axios.post('http://localhost:8000/api/auth/user/'+ props.user.id +'/profile-photo', image, config)
+        .then (response => {
+            console.log(response.data);
+            document.getElementById('userImage').style.backgroundImage = "url('" + response.data.image + "')";
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
     return (
         <div className={classes.Profile}>
             <div className={classes.userInfos}>
-                <div className={classes.userImage} style={{backgroundImage:props.user.image ? "url('" + props.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                <div id="userImage" onClick={() => handleClick()} className={classes.userImage} style={{backgroundImage:props.user.image ? "url('http://localhost:8000/storage/images/" + props.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                
+                <input style={{display:'none'}} id="uploadFile" type="file" name="image" ref={fileInput} onChange={(event) => {handleFileChange(event)}}/>
                 <div className={classes.userInfosText}>
                     {props.user.name}<br/>
                     <button>Edit Profile</button>
