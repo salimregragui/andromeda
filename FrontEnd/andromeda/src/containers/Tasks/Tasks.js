@@ -137,6 +137,14 @@ class Tasks extends Component {
         this.props.onGetTasks();
     }
 
+    onDeleteTaskHandler = () => {
+        let task = this.state.selectedTask;
+        this.props.onDeleteTask(task);
+
+        this.setState({modal: false, selectedTask: null});
+        this.props.onGetTasks();
+    }
+
     categoriesHandler = (name) => {
         let categories = document.getElementsByClassName(classes.TasksChoice);
 
@@ -248,6 +256,7 @@ class Tasks extends Component {
                             
                             <br/>
                             <button style={{backgroundColor: '#181818'}} onClick={this.closeModal}>Fermer</button>
+                            <button style={{backgroundColor: '#e74c3c'}} onClick={this.onDeleteTaskHandler}>Supprimer la tache</button>
                             <button type="submit">Editer la tache</button>
                         </form>
                     </div>
@@ -311,7 +320,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onGetTasks: () => dispatch(tasksActions.tasksAll()),
         onAddTask: (task) => dispatch(tasksActions.taskAdd(task)),
-        onEditTask: (task) => dispatch(tasksActions.taskEdit(task))
+        onEditTask: (task) => dispatch(tasksActions.taskEdit(task)),
+        onDeleteTask: (task) => dispatch(tasksActions.taskDelete(task))
     }
 }
 

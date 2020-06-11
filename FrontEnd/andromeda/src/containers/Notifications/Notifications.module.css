@@ -12,17 +12,6 @@
     line-height: 33px;
     cursor: pointer;
     position: relative;
-
-    transition: 0.2s;
-}
-
-.Notifications:hover {
-    width: 26px;
-    height: 26px;
-    line-height: 31px;
-    margin-top: 1px;
-
-    transition: 0.2s;
 }
 
 .Notifications img {

@@ -72,6 +72,31 @@ export const taskEdit = (task) => {
     }
 }
 
+export const taskDelete = (task) => {
+    let taskId = task.id;
+    return dispatch => {
+        axios.delete('http://localhost:8000/api/auth/task/'+ taskId)
+        .then(response => {
+            console.log(response);
+            dispatch(addNotification({
+                'type':'success',
+                'content':'Tache \''+ task.content +'\' supprimée avec succès !',
+                'seen': false,
+                'displayed': false
+            }));
+        })
+        .catch(error => {
+            console.log(error);
+            dispatch(addNotification({
+                'type':'error',
+                'content':'La tache \''+ task.content +'\' n\'a pas pu être supprimée !',
+                'seen': false,
+                'displayed': false
+            }));
+        })
+    }
+}
+
 export const resourcesAllSuccess = (resources) => {
     return {
         type: actionTypes.RESOURCES_ALL_SUCCESS,
