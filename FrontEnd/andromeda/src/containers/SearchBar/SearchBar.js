@@ -101,7 +101,7 @@ class SearchBar extends Component {
                         }
 
                        return <div key={'chapter-' + cid} className={classes.searchElement} onClick={() => {this.goToDataHandler('chapter', chapter.course_name)}}>
-                           <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
+                           <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                         </div>
                     })}
                 </div>]
@@ -121,7 +121,7 @@ class SearchBar extends Component {
                             searched = splitName[1];
                         }
                        return <div key={section.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('section', section.course_name)}}>
-                           <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
+                           <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                         </div>
                     })}
                 </div>]
@@ -141,7 +141,7 @@ class SearchBar extends Component {
                              searched = splitName[1];
                          }
                        return <div key={course.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('course', course.name)}}>
-                           <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
+                           <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                         </div>
                     })}
                 </div>]
@@ -161,7 +161,7 @@ class SearchBar extends Component {
                              searched = splitName[1];
                          }
                        return <div key={'resource-' + resource.resource_id} className={classes.searchElement} onClick={() => {this.goToDataHandler('resource', resource.resource_name)}}>
-                           <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
+                           <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                         </div>
                     })}
                 </div>]
@@ -181,7 +181,7 @@ class SearchBar extends Component {
                             searched = splitName[1];
                         }
                       return <div key={task.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('task', task.content)}}>
-                          <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
+                          <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                        </div>
                     })}
                 </div>]
@@ -201,7 +201,7 @@ class SearchBar extends Component {
                             searched = splitName[1];
                         }
                       return <div key={user.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('user', user.name)}}>
-                          <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
+                          <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                        </div>
                     })}
                 </div>]

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {motion} from 'framer-motion';
 import {NavLink} from 'react-router-dom';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
@@ -63,6 +64,26 @@ class Dashboard extends Component {
         this.props.history.push('/course/' + name.split(' ').join('-'));
     }
 
+    pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%"
+        },
+        in: {
+            opacity: 1,
+            x: 0
+        },
+        out: {
+            opacity: 0,
+            x: "100%"
+        }
+    }
+
+    pageTransition = {
+        type: "tween",
+        duration: 0.4
+    }
+
     render() {
         let spinner = null;
         let courses = null;
@@ -96,7 +117,7 @@ class Dashboard extends Component {
             ));
         }
         return (
-            <div>
+            <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition}>
                 {spinner}
                 <br/>
                 {this.props.user ? <div className={classes.DashboardGreeting}>
@@ -129,7 +150,7 @@ class Dashboard extends Component {
 
                     {progression}
                 </div>
-            </div>
+            </motion.div>
         )
     }
 }

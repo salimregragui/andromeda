@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {AnimatePresence} from 'framer-motion';
 import './App.css';
 
 import Layout from './containers/Layout/Layout';
@@ -65,23 +66,24 @@ class App extends Component {
       spinner = null
     }
     return (
-      <div className="App">
+      <div className="App" style={{overflowX:"hidden"}}>
         {spinner}
         <Layout>
-          <Switch>
-            <Route path="/" exact component= {Landing} />
-            <Route path="/auth" component= {Authentification} />
-            <Route path="/dashboard" component= {Dashboard} />
-            <Route path="/course" component= {Course} />
-            <Route path="/classes" component= {Classes} />
-            <Route path="/tasks" component= {Tasks} />
-            <Route path="/ressources" component= {Resources} />
-            <Route path="/discussions" component= {Discussion} />
-            <Route path="/profile" component= {Profile} />
-            <Route path="/error" component= {Error} />
-            <Route path="/test" component= {Testing} />
-          </Switch>
-
+          <AnimatePresence exitBeforeEnter>
+            <Switch location={this.props.location} key={this.props.location.pathname}>
+              <Route path="/" exact component= {Landing} />
+              <Route path="/auth" component= {Authentification} />
+              <Route path="/dashboard" component= {Dashboard} />
+              <Route path="/course" component= {Course} />
+              <Route path="/classes" component= {Classes} />
+              <Route path="/tasks" component= {Tasks} />
+              <Route path="/ressources" component= {Resources} />
+              <Route path="/discussions" component= {Discussion} />
+              <Route path="/profile" component= {Profile} />
+              <Route path="/error" component= {Error} />
+              <Route path="/test" component= {Testing} />
+            </Switch>
+          </AnimatePresence>
           <NotificationsDisplayer />
         </Layout>
       </div>

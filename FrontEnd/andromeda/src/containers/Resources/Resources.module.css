@@ -36,6 +36,11 @@
     margin-left: 20px;
 }
 
+.ResourceCourse li {
+    list-style: none;
+    display: inline-block;
+}
+
 .ResourceCourseInfo {
     float: left;
 }

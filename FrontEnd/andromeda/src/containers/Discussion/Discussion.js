@@ -5,6 +5,7 @@ import * as coursesActions from '../../store/actions/index';
 import classes from './Discussion.module.css';
 import axios from 'axios';
 import * as timeago from 'timeago.js';
+import {motion} from 'framer-motion';
 
 class Discussion extends Component {
     state = {
@@ -90,6 +91,26 @@ class Discussion extends Component {
         this.setState({message: '', currentDiscussion: currentDiscussion});
     }
 
+    pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%"
+        },
+        in: {
+            opacity: 1,
+            x: 0
+        },
+        out: {
+            opacity: 0,
+            x: "100%"
+        }
+    }
+
+    pageTransition = {
+        type: "tween",
+        duration: 0.4
+    }
+
     render() {
         let spinner = null;
         let discussions = null;
@@ -143,7 +164,7 @@ class Discussion extends Component {
             });
         }
         return (
-            <div>
+            <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition}>
                 {spinner}
 
                 <div className={classes.DiscussionsLeft}>
@@ -190,7 +211,7 @@ class Discussion extends Component {
                         <button onClick={this.sendMessage}>S</button>
                     </div></React.Fragment> : <p><strong>Selectionnez une discussion sur votre gauche.</strong></p>}
                 </div>
-            </div>
+            </motion.div>
         )
     }
 }

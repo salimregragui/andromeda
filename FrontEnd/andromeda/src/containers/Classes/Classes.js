@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './Classes.module.css';
 import * as coursesActions from '../../store/actions/index';
 import { connect } from 'react-redux';
+import { motion } from 'framer-motion';
 import CourseBig from '../../components/Course/CourseBig/CourseBig';
 
 class Classes extends Component {
@@ -73,6 +74,26 @@ class Classes extends Component {
         return chapterName;
     }
 
+    pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%"
+        },
+        in: {
+            opacity: 1,
+            x: 0
+        },
+        out: {
+            opacity: 0,
+            x: "100%"
+        }
+    }
+
+    pageTransition = {
+        type: "tween",
+        duration: 0.4
+    }
+
     render() {
         let progression = null;
 
@@ -92,14 +113,14 @@ class Classes extends Component {
         }
 
         return (
-            <div>
+            <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition}>
                 <br/>
                 <h1 className={classes.ClassesTitle}>Vos cours suivis</h1>
 
                 <div className={classes.ClassesCourses}>
                     {progression}
                 </div>
-            </div>
+            </motion.div>
         )
     }
 }

@@ -5,6 +5,7 @@ import ProfileUser from '../../components/Profile/ProfileUser/ProfileUser';
 import {connect} from 'react-redux';
 import * as coursesActions from '../../store/actions/index';
 import axios from 'axios';
+import {motion} from 'framer-motion';
 
 class Profile extends Component {
     state = {
@@ -48,6 +49,26 @@ class Profile extends Component {
         });
     }
 
+    pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%"
+        },
+        in: {
+            opacity: 1,
+            x: 0
+        },
+        out: {
+            opacity: 0,
+            x: "100%"
+        }
+    }
+
+    pageTransition = {
+        type: "tween",
+        duration: 0.4
+    }
+
     render() {
         let routes = null;
 
@@ -58,9 +79,9 @@ class Profile extends Component {
             </Switch>
         }
         return (
-            <div>
+            <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition}>
                 {routes}
-            </div>
+            </motion.div>
         )
     }
 }

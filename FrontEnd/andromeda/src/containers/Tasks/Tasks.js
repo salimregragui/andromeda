@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as tasksActions from '../../store/actions/index';
 import Modal from '../../components/UI/Modal/Modal';
 import * as timeago from 'timeago.js';
+import { motion } from 'framer-motion';
 
 class Tasks extends Component {
 
@@ -196,6 +197,27 @@ class Tasks extends Component {
     closeModal = () => {
         this.setState({modal:false})
     }
+    
+    pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%"
+        },
+        in: {
+            opacity: 1,
+            x: 0
+        },
+        out: {
+            opacity: 0,
+            x: "100%"
+        }
+    }
+
+    pageTransition = {
+        type: "tween",
+        transition: "linear",
+        duration: 0.4
+    }
 
     render() {
         let tasks = null;
@@ -263,8 +285,9 @@ class Tasks extends Component {
                 </Modal>
             }
         }
+
         return (
-            <div className={classes.Tasks}>
+            <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition} className={classes.Tasks}>
                 {modal}
                 <div className={classes.TasksChoices}>
                     <h1>Taches</h1>
@@ -303,7 +326,7 @@ class Tasks extends Component {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </motion.div>
         )
     }
 }

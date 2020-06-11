@@ -5,6 +5,7 @@ import * as coursesActions from '../../store/actions/index';
 import classes from './Resources.module.css';
 import Modal from '../../components/UI/Modal/Modal';
 import * as timeago from 'timeago.js';
+import {motion} from 'framer-motion';
 
 class Resources extends Component {
     state = {
@@ -114,6 +115,26 @@ class Resources extends Component {
         }
     }
 
+    pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%"
+        },
+        in: {
+            opacity: 1,
+            x: 0
+        },
+        out: {
+            opacity: 0,
+            x: "100%"
+        }
+    }
+
+    pageTransition = {
+        type: "tween",
+        duration: 0.4
+    }
+
     render() {
         let spinner = null;
         let resources = null;
@@ -144,7 +165,7 @@ class Resources extends Component {
                                 return <div key={res.id} className={classes.ResourceCourse}>
                                     <div className={classes.ResourceCourseInfo}>
                                         <span>{res.type}</span>
-                                        <em>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</em>
+                                        <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                                     </div>
                                     <div className={classes.ResourceCourseAddInfo}>
                                         <span>{timeago.format(res.created_at)}</span>
@@ -172,7 +193,7 @@ class Resources extends Component {
         }
 
         return (
-            <div className={classes.Resources}>
+            <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition} className={classes.Resources}>
                 {spinner}
                 {modal}
                 <br/>
@@ -184,7 +205,7 @@ class Resources extends Component {
                 <div className={classes.rightResources}>
                     <input type="text" value={this.state.searchBar} placeholder="Cherchez une ressource par nom" onChange={(event) => {this.changeSearchHandler(event)}} />
                 </div>
-            </div>
+            </motion.div>
         )
     }
 }
