@@ -9,7 +9,7 @@
     text-align: left;
     border-radius: 5px;
     padding-left: 5%;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 14px;
     position: relative;
 }
@@ -24,8 +24,17 @@
     border-radius: 50%;
     text-align: center;
     font-size: 12px;
-    line-height: 15px;
+    line-height: 14px;
     cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.NotificationRemove:hover {
+    background-color: white;
+    color: #181818;
+
+    transition: 0.2s;
 }
 
 .NotificationContent {

@@ -12,7 +12,6 @@ class Profile extends Component {
         selectedUser: null
     }
     componentDidMount() {
-        console.log(this.props.match);
         document.body.style.backgroundColor = '#f1f1f4';
 
         if (!this.props.progression) {
@@ -40,12 +39,21 @@ class Profile extends Component {
         })
     }
 
+    imageChangedNotification = () => {
+        this.props.onAddNotification({
+            'type': 'success',
+            'content': 'Photo de profile changée avec succès !',
+            'seen': false,
+            'displayed': false
+        });
+    }
+
     render() {
         let routes = null;
 
         if (this.props.user) {
             routes = <Switch>
-                <Route path="/profile/" exact render={() => <ProfileLogged user={this.props.user} progression={this.props.progression} onImageChange ={(token, user) => {this.props.onGetUser(token, user)}}/>} />
+                <Route path="/profile/" exact render={() => <ProfileLogged user={this.props.user} progression={this.props.progression} onImageChange ={(token, user) => {this.props.onGetUser(token, user)}} onImageChangedNotification = {this.imageChangedNotification}/>} />
                 <Route path="/profile/:userName" render={() =><ProfileUser user={this.state.selectedUser} getUser={(name) => {this.getSelectedUserHandler(name)}} />} />
             </Switch>
         }
@@ -68,7 +76,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetProgression: () => dispatch(coursesActions.coursesProgression()),
-        onGetUser: (token, user) => dispatch(coursesActions.authSuccess(token, user))
+        onGetUser: (token, user) => dispatch(coursesActions.authSuccess(token, user)),
+        onAddNotification: (notif) => dispatch(coursesActions.addNotification(notif))
     }
 }
 

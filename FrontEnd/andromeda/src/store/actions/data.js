@@ -12,7 +12,6 @@ export const tasksAll = () => {
     return dispatch => {
         axios.get('http://localhost:8000/api/auth/task')
         .then(response => {
-            console.log(response);
             dispatch(tasksAllSuccess(response.data.tasks));
         })
         .catch(error => {
@@ -25,7 +24,6 @@ export const taskAdd = (task) => {
     return dispatch => {
         axios.post('http://localhost:8000/api/auth/task', task)
         .then(response => {
-            console.log(response);
             dispatch(addNotification({
                 'type':'success',
                 'content':'Tache \''+ task.content +'\' ajoutée avec succes !',
@@ -34,7 +32,6 @@ export const taskAdd = (task) => {
             }));
         })
         .catch(error => {
-            console.log(error);
             dispatch(addNotification({
                 'type':'error',
                 'content':'La tache \''+ task.content +'\' n\'a pas pu être ajoutée !',
@@ -52,7 +49,6 @@ export const taskEdit = (task) => {
     return dispatch => {
         axios.put('http://localhost:8000/api/auth/task/'+ id, task)
         .then(response => {
-            console.log(response);
             dispatch(addNotification({
                 'type':'success',
                 'content':'Tache \''+ task.content +'\' modifiée avec succes !',
@@ -61,7 +57,6 @@ export const taskEdit = (task) => {
             }));
         })
         .catch(error => {
-            console.log(error);
             dispatch(addNotification({
                 'type':'error',
                 'content':'La tache \''+ task.content +'\' n\'a pas pu être modifiée !',
@@ -77,7 +72,6 @@ export const taskDelete = (task) => {
     return dispatch => {
         axios.delete('http://localhost:8000/api/auth/task/'+ taskId)
         .then(response => {
-            console.log(response);
             dispatch(addNotification({
                 'type':'success',
                 'content':'Tache \''+ task.content +'\' supprimée avec succès !',
@@ -109,7 +103,6 @@ export const resourcesAll = () => {
     return dispatch => {
         axios.get('http://localhost:8000/api/auth/resource')
         .then(response => {
-            console.log(response);
             dispatch(resourcesAllSuccess(response.data.CoursesResources));
         })
         .catch(error => {
@@ -130,7 +123,6 @@ export const discussionsAll = () => {
     return dispatch => {
         axios.get('http://localhost:8000/api/auth/discussion')
         .then(response => {
-            console.log(response);
             dispatch(discussionsAllSuccess(response.data.Discussions));
         })
         .catch(error => {

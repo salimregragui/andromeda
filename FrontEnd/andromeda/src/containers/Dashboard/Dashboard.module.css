@@ -4,7 +4,8 @@
     font-size: 30px;
     text-align: left;
     margin-left: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
+    line-height: 40px;
 }
 
 .DashboardGreeting span {
@@ -43,7 +44,7 @@
 }
 
 .Choices {
-    margin-left: 50px;
+    margin-left: 100px;
     margin-bottom: 20px;
 }
 

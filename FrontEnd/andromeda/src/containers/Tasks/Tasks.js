@@ -204,8 +204,8 @@ class Tasks extends Component {
         if (this.state.tasksToRender) {
             tasks = this.state.tasksToRender.map((task, id) => {
                 return (
-                    <tr key={task.id}>
-                        <td style={{color:'#181818'}}>{task.content.substring(0, 45)} {task.content.length > 45 ? '...' : null}</td>
+                    <tr key={task.id} style={{fontWeight:'400', fontSize:'12px'}}>
+                        <td style={{color:'#181818',fontWeight:'600', fontSize:'14px'}}>{task.content.substring(0, 45)} {task.content.length > 45 ? '...' : null}</td>
                         <td>{task.type}</td>
                         <td>{timeago.format(task.created_at)}</td>
                         <td>{timeago.format(task.updated_at)}</td>
@@ -237,7 +237,7 @@ class Tasks extends Component {
                 </Modal>
             }
             else if(this.state.modalType === 'editTask') {
-                modal = <Modal width='40' height='250px'>
+                modal = <Modal width='40' height='270px'>
                     <div className={classes.newTask}>
                         <br/>
                         <h1 className={classes.newTaskTitle}>Nouvelle tache</h1>

@@ -45,6 +45,7 @@ const Profile = (props) => {
             document.getElementById('userImage').style.backgroundImage = "url('" + response.data.image + "')";
             axios.post('http://localhost:8000/api/auth/me')
             .then(response => {
+                props.onImageChangedNotification();
                 props.onImageChange(localStorage.getItem('token'), response.data);
             })
             .catch(error => {
