@@ -27,6 +27,29 @@ class Dashboard extends Component {
         }
     }
 
+    addNotif = () => {
+        let types = ['success', 'error', 'info'];
+        let randomType = types[Math.floor(Math.random() * types.length)];
+
+        let anysize = 60;//the size of string 
+        let charset = "abcdefghijklmnopqrstuvwxyz"; //from where to create
+        let result="";
+        for( let i=0; i < anysize; i++ ) {
+            if (i % 10 === 0) {
+                result += ' ';
+            } else {
+                result += charset[Math.floor(Math.random() * charset.length)];
+            }
+        }
+
+        this.props.onAddNotification({
+          type:randomType,
+          content: result,
+          displayed: false,
+          seen: false
+        })
+    }
+
     getData = () => {
         this.setState({loading: true});
         axios.get('http://localhost:8000/api/auth/search/autocomplete/a', this.props.user)
@@ -62,6 +85,8 @@ class Dashboard extends Component {
                 </div>
                 <ReactJson style={{backgroundColor:'white',textAlign:'left',width:'80%',marginLeft:'50px'}} src={this.state.data} />
                 <br/>
+
+                <button onClick={this.addNotif}>Ajouter notification</button>
             </div>
         )
     }
@@ -77,7 +102,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onGetCourses: () => dispatch(coursesActions.coursesAll())
+        onGetCourses: () => dispatch(coursesActions.coursesAll()),
+        onAddNotification: (notif) => dispatch(coursesActions.addNotification(notif))
     }
 }
 

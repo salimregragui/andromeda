@@ -12,6 +12,7 @@ import Testing from './containers/Testing/Testing';
 import Resources from './containers/Resources/Resources';
 import Discussion from './containers/Discussion/Discussion';
 import Profile from './containers/Profile/Profile';
+import NotificationsDisplayer from './containers/Notifications/NotificationsDisplayer/NotificationsDisplayer';
 
 import { Switch, Route, withRouter } from 'react-router-dom';
 import axios from 'axios';
@@ -80,6 +81,8 @@ class App extends Component {
             <Route path="/error" component= {Error} />
             <Route path="/test" component= {Testing} />
           </Switch>
+
+          <NotificationsDisplayer />
         </Layout>
       </div>
     );
@@ -89,7 +92,8 @@ class App extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     onAuthStart: () => dispatch(authActions.authStart()),
-    onGetUser: (token, user) => dispatch(authActions.authSuccess(token, user))
+    onGetUser: (token, user) => dispatch(authActions.authSuccess(token, user)),
+    onAddNotification: (notif) => dispatch(authActions.addNotification(notif))
   }
 }
 

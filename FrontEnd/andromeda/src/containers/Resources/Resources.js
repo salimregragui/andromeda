@@ -160,7 +160,7 @@ class Resources extends Component {
                 </React.Fragment>
             }) : <div className={classes.CourseName}>Aucune ressource ne contient le terme cherché</div>;
         }else {
-            resources = <p>Ok ok</p>
+            resources = <div className={classes.CourseName}>Les cours que vous suivez ne contiennent aucune ressource.</div>;
         }
 
         if (this.state.showModal) {

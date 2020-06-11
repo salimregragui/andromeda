@@ -21,7 +21,7 @@ const CourseBig = (props) => {
                 <button className={classes.coursePlayButton} name={props.name} onClick={props.clickPlay}>
                     <img src={playIcon} alt="play" name={props.name} />
                 </button>
-                <span>Prochain chapitre: Lorem ipsum sit dolor...</span>
+                <span>Prochain chapitre: {props.nextChapter.substring(0, 21)}...</span>
             </div>
         </div>
     )

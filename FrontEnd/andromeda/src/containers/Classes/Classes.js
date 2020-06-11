@@ -51,6 +51,28 @@ class Classes extends Component {
         return Math.floor((totalChaptersFinished / this.props.progression[progressionId].numberOfChapter) * 100);
     }
 
+    getNextChapterName = (progressionId) => {
+        let chapterName = '';
+        
+        if (this.props.progression[progressionId].progression.chapter_id) {
+            this.props.progression[progressionId].sections.map(section => {
+                section.chapters.map(chapter => {
+                    if (chapter.id === this.props.progression[progressionId].progression.chapter_id) {
+                        chapterName = chapter.name;
+                    }
+    
+                    return null;
+                });
+    
+                return null;
+            });
+        }else {
+            chapterName = this.props.progression[progressionId].sections[0].chapters[0].name;
+        }
+
+        return chapterName;
+    }
+
     render() {
         let progression = null;
 
@@ -65,7 +87,7 @@ class Classes extends Component {
                                clickPlay={(event) => {this.redirectToCourseHandler(event)}}
                                percentageFinished={this.calculatePercentageFinished(id)}
                                courseColor={this.state.colorList[Math.floor(Math.random() * this.state.colorList.length)]}
-                               nextChapter={prog.progression.chapter_id}/>
+                               nextChapter={this.getNextChapterName(id)}/>
             ));
         }
 

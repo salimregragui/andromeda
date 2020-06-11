@@ -74,3 +74,30 @@ export const discussionsAll = () => {
         })
     }
 }
+
+export const addNotification = (notification) => {
+    return {
+        type: actionTypes.ADD_NOTIFICATION,
+        notification: notification
+    }
+}
+
+export const hideNotification = (id) => {
+    return {
+        type: actionTypes.HIDE_NOTIFICATION,
+        notificationId: id
+    }
+}
+
+export const setAsSeen = (id) => {
+    return {
+        type: actionTypes.SEEN_NOTIFICATION,
+        notificationId: id
+    }
+}
+
+export const setAsSeenAll = () => {
+    return {
+        type: actionTypes.SEEN_ALL_NOTIFICATION
+    }
+}

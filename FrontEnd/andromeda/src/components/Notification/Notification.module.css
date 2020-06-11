@@ -1,0 +1,33 @@
+.Notification {
+    width: 95%;
+    height: auto;
+    min-height: 50px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    margin-bottom: 10px;
+    display: inline-block;
+    text-align: left;
+    border-radius: 5px;
+    padding-left: 5%;
+    font-weight: 600;
+    font-size: 14px;
+    position: relative;
+}
+
+.NotificationRemove {
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    width: 15px;
+    height: 15px;
+    border:2px solid white;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 12px;
+    line-height: 15px;
+    cursor: pointer;
+}
+
+.NotificationContent {
+    width: 90%;
+}

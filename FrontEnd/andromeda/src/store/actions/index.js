@@ -15,5 +15,9 @@ export {
     tasksAll,
     taskAdd,
     resourcesAll,
-    discussionsAll
+    discussionsAll,
+    addNotification,
+    hideNotification,
+    setAsSeen,
+    setAsSeenAll
 } from './data'
