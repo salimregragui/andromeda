@@ -55,7 +55,7 @@ Route::group([
     Route::get('task/','TaskController@index');//* Display a listing of the tasks.
     Route::get('task/{task}','TaskController@show');//* Display the specified  task.
     Route::post('task/','TaskController@store');//* Store a newly created task in storage.
-    Route::put('task/','TaskController@update');//* Update the specified task in storage.
+    Route::put('task/{task}','TaskController@update');//* Update the specified task in storage.
     Route::delete('task/{task}','TaskController@destroy');//* Remove the specified task from storage.
 
     //-----------------------------Comment--------------------------------

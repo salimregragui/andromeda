@@ -17,6 +17,11 @@ class Tasks extends Component {
             status: 'a faire',
             type: 'Important'
         },
+        selectedTask: {
+            content: '',
+            status: '',
+            type: ''
+        },
         currentCategory: 'All',
         totalAll: 0,
         totalFinished: 0,
@@ -83,8 +88,19 @@ class Tasks extends Component {
     }
 
     onNewTaskHandler = () => {
-        this.setState({modal: true});
+        this.setState({modal: true, modalType: 'newTask'});
         console.log("New task modal");
+    }
+
+    onEditTaskHandler = (id) => {
+        let selectedTask = {
+            id: this.state.tasksToRender[id].id,
+            content: this.state.tasksToRender[id].content,
+            status: this.state.tasksToRender[id].status,
+            type: this.state.tasksToRender[id].type
+        }
+
+        this.setState({modal: true, modalType:'editTask', selectedTask: selectedTask});
     }
 
     changedNewTaskHandler = (event) => {
@@ -97,10 +113,27 @@ class Tasks extends Component {
         this.setState({newTask: changedNewtask})
     }
 
+    changedEditTaskHandler = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        const changedSelectedTask = {...this.state.selectedTask}
+        changedSelectedTask[name] = value;
+
+        this.setState({selectedTask: changedSelectedTask})
+    }
+
     onNewTaskSubmitHandler = (event) => {
         event.preventDefault();
         this.props.onAddTask(this.state.newTask);
         this.setState({modal: false});
+        this.props.onGetTasks();
+    }
+
+    onEditTaskSubmitHandler = (event) => {
+        event.preventDefault();
+        this.props.onEditTask(this.state.selectedTask);
+        this.setState({modal: false, selectedTask: null});
         this.props.onGetTasks();
     }
 
@@ -161,37 +194,65 @@ class Tasks extends Component {
         let modal = null;
 
         if (this.state.tasksToRender) {
-            tasks = this.state.tasksToRender.map(task => {
+            tasks = this.state.tasksToRender.map((task, id) => {
                 return (
                     <tr key={task.id}>
-                        <td style={{color:'#181818'}}>{task.content}</td>
+                        <td style={{color:'#181818'}}>{task.content.substring(0, 45)} {task.content.length > 45 ? '...' : null}</td>
                         <td>{task.type}</td>
                         <td>{timeago.format(task.created_at)}</td>
-                        <td>X</td>
+                        <td>{timeago.format(task.updated_at)}</td>
+                        <td><button onClick={() => {this.onEditTaskHandler(id)}}>Edit</button></td>
                     </tr>
                 );
             });
         }
 
         if (this.state.modal) {
-            modal = <Modal width='60' height='300px'>
-                <div className={classes.newTask}>
-                    <br/>
-                    <h1 className={classes.newTaskTitle}>Nouvelle tache</h1>
-                    <form onSubmit={(event) => {this.onNewTaskSubmitHandler(event)}}>
-                        <input type="text" name="content" value={this.state.newTask.content} onChange={(event) => {this.changedNewTaskHandler(event)}}/><br/>
-                        <select name='type' value={this.state.newTask.type} onChange={(event) => {this.changedNewTaskHandler(event)}}>
-                            <option value="Important">Important</option>
-                            <option value="Moyen">Moyen</option>
-                            <option value="Basique">Basique</option>
-                        </select>
-                        
+            if(this.state.modalType === 'newTask') {
+                modal = <Modal width='40' height='230px'>
+                    <div className={classes.newTask}>
                         <br/>
-                        <button type="submit">Ajouter la tache</button>
-                        <button style={{backgroundColor: '#181818'}} onClick={this.closeModal}>Fermer</button>
-                    </form>
-                </div>
-            </Modal>
+                        <h1 className={classes.newTaskTitle}>Nouvelle tache</h1>
+                        <form onSubmit={(event) => {this.onNewTaskSubmitHandler(event)}}>
+                            <input placeholder="Contenu de la tache" type="text" name="content" value={this.state.newTask.content} onChange={(event) => {this.changedNewTaskHandler(event)}}/><br/>
+                            <select name='type' value={this.state.newTask.type} onChange={(event) => {this.changedNewTaskHandler(event)}}>
+                                <option value="important">important</option>
+                                <option value="moyen">moyen</option>
+                                <option value="basique">basique</option>
+                            </select>
+                            
+                            <br/>
+                            <button style={{backgroundColor: '#181818'}} onClick={this.closeModal}>Fermer</button>
+                            <button type="submit">Ajouter la tache</button>
+                        </form>
+                    </div>
+                </Modal>
+            }
+            else if(this.state.modalType === 'editTask') {
+                modal = <Modal width='40' height='250px'>
+                    <div className={classes.newTask}>
+                        <br/>
+                        <h1 className={classes.newTaskTitle}>Nouvelle tache</h1>
+                        <form onSubmit={(event) => {this.onEditTaskSubmitHandler(event)}}>
+                            <input placeholder="Contenu de la tache" type="text" name="content" value={this.state.selectedTask.content} onChange={(event) => {this.changedEditTaskHandler(event)}}/><br/>
+                            <select name='type' value={this.state.selectedTask.type} onChange={(event) => {this.changedEditTaskHandler(event)}}>
+                                <option value="important">important</option>
+                                <option value="moyen">moyen</option>
+                                <option value="basique">basique</option>
+                            </select>
+                            <select name='status' value={this.state.selectedTask.status} onChange={(event) => {this.changedEditTaskHandler(event)}}>
+                                <option value="a faire">a faire</option>
+                                <option value="en cours">en cours</option>
+                                <option value="fini">fini</option>
+                            </select>
+                            
+                            <br/>
+                            <button style={{backgroundColor: '#181818'}} onClick={this.closeModal}>Fermer</button>
+                            <button type="submit">Editer la tache</button>
+                        </form>
+                    </div>
+                </Modal>
+            }
         }
         return (
             <div className={classes.Tasks}>
@@ -226,6 +287,7 @@ class Tasks extends Component {
                                 <td>Tache</td>
                                 <td>Type</td>
                                 <td>Date</td>
+                                <td>Derniere Modif.</td>
                                 <td></td>
                             </tr>
                             {tasks}
@@ -248,7 +310,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetTasks: () => dispatch(tasksActions.tasksAll()),
-        onAddTask: (task) => dispatch(tasksActions.taskAdd(task))
+        onAddTask: (task) => dispatch(tasksActions.taskAdd(task)),
+        onEditTask: (task) => dispatch(tasksActions.taskEdit(task))
     }
 }
 

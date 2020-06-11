@@ -19,6 +19,9 @@ class NotificationsDisplayer extends Component {
                                  type={notification.type} 
                                  content={notification.content}/>
                     }
+                    else {
+                        return null;
+                    }
                 }): null}
             </div>
         )

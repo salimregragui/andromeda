@@ -5,10 +5,14 @@
 .TasksChoices {
     float: left;
     width: 23%;
+    height: 100%;
     text-align: left;
     color: #181818;
     background-color: #f1f1f4;
     position: fixed;
+    top: 0;
+    z-index: -1;
+    padding-top: 70px;
 }
 
 .TasksChoices h1 {
@@ -18,7 +22,7 @@
 }
 
 .TasksChoice {
-    display: inline;
+    display: inline-block;
     width: 90%;
     height: 100px;
     border: none;
@@ -91,8 +95,25 @@
     padding: 20px;
 }
 
+.TasksBody tr button {
+    color: #c2c2c2;
+    background-color: white;
+    border: 2px solid #c2c2c2;
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 4px;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: 12px;
+}
+
+.TasksBody tr button:hover {
+    background-color: #c2c2c2;
+    color: white;
+}
+
 .newTask {
-    text-align: center;
+    text-align: left;
     color: #181818;
     font-weight: 600;
 }
@@ -108,11 +129,11 @@
 }
 
 .newTask input {
-    width: 60%;
+    width: 68%;
     height: 30px;
-    border-radius: 10px;
+    border-radius: 20px;
     border: 1px solid #c2c2c2;
-    padding-left: 10px;
+    padding-left: 2%;
     margin-top: 10px;
 }
 
@@ -120,12 +141,16 @@
     outline: none;
 }
 .newTask select {
-    width: 60%;
+    width: 70.5%;
     height: 30px;
-    border-radius: 10px;
+    border-radius: 20px;
     border: 1px solid #c2c2c2;
-    padding-left: 10px;
+    padding-left: 2%;
     margin-top: 10px;
+}
+
+.newTask select:focus {
+    outline: none;
 }
 
 .newTask select:focus {
@@ -137,7 +162,10 @@
 
 .newTask button {
     margin-top: 20px;
-    width: 60%;
+    margin-right: 30px;
+    margin-left: -15px;
+    padding-left: 20px;
+    padding-right: 20px;
     height: 30px;
     background-color: #3459D6;
     border: none;
@@ -145,4 +173,13 @@
     cursor: pointer;
     font-weight: 600;
     color: white;
+    float: right;
+
+    transition: 0.2s;
+}
+
+.newTask button:hover {
+    background-color: #1e42bb;
+
+    transition: 0.2s;
 }

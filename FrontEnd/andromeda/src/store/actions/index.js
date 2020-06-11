@@ -14,6 +14,7 @@ export {
 export {
     tasksAll,
     taskAdd,
+    taskEdit,
     resourcesAll,
     discussionsAll,
     addNotification,

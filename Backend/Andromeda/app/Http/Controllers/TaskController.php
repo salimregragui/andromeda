@@ -137,8 +137,8 @@ class TaskController extends Controller
     {
         return request()->validate([
             "content" => 'required|string',
-            "type" => 'required|in:Important,Moyen,Basique',
-            "status" => 'required|in:Fini,en cours,a faire',
+            "type" => 'required|in:important,moyen,basique',
+            "status" => 'required|in:fini,en cours,a faire',
             
         ]);
     }
