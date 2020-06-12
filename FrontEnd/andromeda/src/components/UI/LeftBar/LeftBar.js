@@ -48,6 +48,12 @@ const LeftBar = (props) => {
                 exact
             ><img src={props.location.pathname === '/discussions' ? discussionIconSelect : discussionIcon} alt="discussion"/> Discussions</NavLink>
             
+            {props.user.role === 'Admin' ? <NavLink 
+                to='/admin'
+                activeClassName={classes.active}
+                exact
+            >Admin Panel</NavLink> : null}
+
             <div className={classes.Logout}>
                 <NavLink to="/auth/logout" exact>Deconnexion</NavLink>
             </div>

@@ -63,7 +63,7 @@ class Authentification extends Component {
     }
 
     componentDidUpdate() {
-        if (this.props.logged)
+        if (this.props.logged && this.props.location.pathname !== '/dashboard')
         {
             this.props.history.push({
                 pathname: '/dashboard',

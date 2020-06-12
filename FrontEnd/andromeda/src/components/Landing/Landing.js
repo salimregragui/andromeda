@@ -1,12 +1,33 @@
 import React from 'react';
 import classes from './Landing.module.css';
 import landingImage from '../../assets/images/landing-img.png';
+import {motion} from 'framer-motion';
 
 const Landing = () => {
     document.body.style.backgroundColor = '#ffffff';
+
+    let pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%"
+        },
+        in: {
+            opacity: 1,
+            x: 0
+        },
+        out: {
+            opacity: 0,
+            x: "100%"
+        }
+    }
+
+    let pageTransition = {
+        type: "tween",
+        duration: 0.6
+    }
     
     return (
-        <React.Fragment>
+        <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}>
             <div className={classes.LandingTop}>
                 <img src={landingImage} alt="Landing" />
                 <div className={classes.LandingTop_Text}>
@@ -56,7 +77,7 @@ const Landing = () => {
                     </p>
                 </div>
             </div>
-        </React.Fragment>
+        </motion.div>
     )
 }
 

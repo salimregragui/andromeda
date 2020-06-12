@@ -12,6 +12,7 @@ import thunk from 'redux-thunk';
 import authReducer from './store/reducers/auth';
 import coursesReducer from './store/reducers/courses';
 import dataReducer from './store/reducers/data';
+import adminReducer from './store/reducers/admin';
 import axios from 'axios';
 
 //Token qui va être ajouté à toutes les requetes http vers le backend
@@ -25,7 +26,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
   auth: authReducer,
   courses: coursesReducer,
-  data: dataReducer
+  data: dataReducer,
+  admin: adminReducer
 });
 
 //on créer notre store avec le thunk middleware qui permet le déclenchement d'actions asynchrones
