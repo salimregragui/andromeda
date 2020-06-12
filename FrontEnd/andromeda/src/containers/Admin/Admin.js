@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import classes from './Admin.module.css';
 import { connect } from 'react-redux';
 import * as timeago from 'timeago.js';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import * as adminActions from '../../store/actions/index';
+import Modal from '../../components/UI/Modal/Modal';
+import axios from 'axios';
 
 class Admin extends Component {
 
     state = {
-        currentCategory: 'Professors'
+        currentCategory: 'Professors',
+        selectedUser : null,
+        selectedCourse : null,
+        showingModal: false
     }
 
     componentDidMount() {
@@ -83,8 +88,99 @@ class Admin extends Component {
         duration: 0.6
     }
 
+    onSeeUserHandler = (userId) => {
+        this.setState({selectedUser: this.props.users[userId], showingModal: true});
+    }
+
+    onSeeCourseHandler = (courseId) => {
+        this.setState({selectedCourse: this.props.courses[courseId], showingModal: true});
+    }
+
+    closeModal = () => {
+        this.setState({showingModal: false});
+    }
+
+    banUser = (userId, username) => {
+        axios.post('http://localhost:8000/api/auth/user/' + userId + '/banned')
+        .then(response => {
+            this.props.onAddNotification({
+                'type': 'success',
+                'content': 'L\'utilisateur ' + username + ' a été bannis avec succès !',
+                'seen': false,
+                'displayed': false
+            });
+            this.props.onGetUsers();
+        })
+        .catch(error => console.log(error));
+
+        this.setState({selectedUser: null, showingModal: false});
+    }
+
+    unbanUser = (userId, username) => {
+        axios.post('http://localhost:8000/api/auth/user/' + userId + '/unbanned')
+        .then(response => {
+            console.log(response);
+            this.props.onAddNotification({
+                'type': 'success',
+                'content': 'L\'utilisateur ' + username + ' a été dé-bannis avec succès !',
+                'seen': false,
+                'displayed': false
+            });
+            this.props.onGetUsers();
+        })
+        .catch(error => console.log(error));
+
+        this.setState({selectedUser: null, showingModal: false});
+    }
+
     render() {
         let content = null;
+        let modal = null;
+
+        if (this.state.showingModal) {
+            if (this.state.currentCategory === 'Users' || this.state.currentCategory === 'Professors') {
+                modal = <Modal width='46' height='400'>
+                    <div className={classes.userInfos}>
+                        <div className={classes.userInfosImg} style={{backgroundImage: this.state.selectedUser.image ? "url('" + this.state.selectedUser.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                        <div className={classes.userInfosText}>
+                            <span>Name : </span> {this.state.selectedUser.name}<br/>
+                            <span>Email : </span> {this.state.selectedUser.email}<br/>
+                            <span>Role : </span> {this.state.selectedUser.role}<br/>
+                            <span>Status : </span> {this.state.selectedUser.status}<br/>
+                            <span>Compte Créer : </span> {timeago.format(this.state.selectedUser.created_at)}<br/>
+                        </div>
+
+                        <div className={classes.userButtons}>
+                            {this.state.selectedUser.status === 'Banned' ? <button onClick={() => {this.unbanUser(this.state.selectedUser.id, this.state.selectedUser.name)}}>Dé-bannir</button> : <button onClick={() => {this.banUser(this.state.selectedUser.id, this.state.selectedUser.name)}}>Bannir</button>}
+                            <button style={{backgroundColor: "#181818"}} onClick={this.closeModal}>Fermer</button>
+                        </div>
+                        <br/><br/><br/>
+                    </div>
+                </Modal>
+            }
+
+            if (this.state.currentCategory === 'Courses') {
+                modal = <Modal width='60' height='600'>
+                    <div className={classes.userInfos}>
+                        <div className={classes.userInfosImg} style={{backgroundImage: this.state.selectedCourse.image ? "url('" + this.state.selectedCourse.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                        <div className={classes.userInfosText}>
+                            <span>Name : </span> {this.state.selectedCourse.name}<br/>
+                            <span>Professeur : </span> Salim Regragui<br/>
+                            <span>Note : </span> {this.state.selectedCourse.rating} / 5<br/>
+                            <span>Status : </span> {this.state.selectedCourse.valide === 1 ? 'Validé' : 'Non validé'}<br/>
+                            <span>Cours Créer : </span> {timeago.format(this.state.selectedCourse.created_at)}<br/>
+                        </div>
+
+                        <div className={classes.userButtons}>
+
+                            <button style={{backgroundColor: "#181818"}} onClick={this.closeModal}>Fermer</button>
+                        </div>
+                        <br/><br/><br/>
+                    </div>
+                </Modal>
+            }
+        }
+
         if (this.state.currentCategory === 'Professors') {
             let professors = null;
 
@@ -96,7 +192,7 @@ class Admin extends Component {
                             <td style={{color:'#181818',fontWeight:'600', fontSize:'14px'}}>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.status}</td>
-                            <td><button onClick={() => {this.onEditTaskHandler(id)}}>Voir</button></td>
+                            <td><button onClick={() => {this.onSeeUserHandler(id)}}>Voir</button></td>
                         </tr>
                     }
                     else {
@@ -129,7 +225,7 @@ class Admin extends Component {
                             <td style={{color:'#181818',fontWeight:'600', fontSize:'14px'}}>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.status}</td>
-                            <td><button onClick={() => {this.onEditTaskHandler(id)}}>Voir</button></td>
+                            <td><button onClick={() => {this.onSeeUserHandler(id)}}>Voir</button></td>
                         </tr>
                     }
                     else {
@@ -162,7 +258,7 @@ class Admin extends Component {
                         <td>Salim Regragui</td>
                         <td>{course.valide === 1 ? 'Validé' : 'Non Validé'}</td>
                         <td>{course.rating} / 5</td>
-                        <td><button onClick={() => {this.onEditTaskHandler(id)}}>Voir</button></td>
+                        <td><button onClick={() => {this.onSeeCourseHandler(id)}}>Voir</button></td>
                     </tr>
                 })
             }
@@ -182,6 +278,9 @@ class Admin extends Component {
         }
         return (
             <motion.div id="main" initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition} className={classes.Admin}>
+                <AnimatePresence>
+                    {modal}
+                </AnimatePresence>
                 <div className={classes.AdminChoices}>
                     <h1>Admin</h1>
 
@@ -220,7 +319,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onGetCourses: () => dispatch(adminActions.coursesAllAdmin()),
-        onGetUsers: () => dispatch(adminActions.usersAllAdmin())
+        onGetUsers: () => dispatch(adminActions.usersAllAdmin()),
+        onAddNotification: (notif) => dispatch(adminActions.addNotification(notif))
     }
 }
 

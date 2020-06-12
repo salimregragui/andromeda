@@ -75,6 +75,20 @@ class UserController extends Controller
     {
         if ($user->role != 'Admin') {
             $user->status ='Banned';
+            $user->save();
+            abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
+        }
+        else {
+            abort(401);
+        }
+        
+    }
+
+    public function unbanned(User $user)
+    {
+        if ($user->role != 'Admin') {
+            $user->status ='Actif';
+            $user->save();
             abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.    
         }
         else {

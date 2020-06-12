@@ -129,7 +129,7 @@ class Discussion extends Component {
                             <br/><br/>
                             <span>{discussion.users.name}</span>
                             <br/><br/><br/>
-                            {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
+                        {discussion.users.id !== this.props.user.id ? 'Vous : ' : discussion.users.name + ' : '}{discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
                             <em>{timeago.format(discussion.visibleMessages[discussion.visibleMessages.length - 1].created_at)}</em>
                             <br/><br/>
                         </div>
@@ -141,7 +141,7 @@ class Discussion extends Component {
                                 <br/><br/>
                                 <span>{discussion.users.name}</span>
                                 <br/><br/><br/>
-                                {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
+                                {discussion.users.id !== this.props.user.id ? 'Vous : ' : discussion.users.name + ' : '}{discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
                                 <em>{timeago.format(discussion.visibleMessages[discussion.visibleMessages.length - 1].created_at)}</em>
                                 <br/><br/>
                             </div>
@@ -155,7 +155,7 @@ class Discussion extends Component {
                         <br/><br/>
                         <span>{discussion.users.name}</span>
                         <br/><br/><br/>
-                        {discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
+                        {discussion.users.id !== this.props.user.id ? 'Vous : ' : discussion.users.name + ' : '}{discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
                         <em>{timeago.format(discussion.visibleMessages[discussion.visibleMessages.length - 1].created_at)}</em>
                         <br/><br/>
                     </div>
