@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import classes from './NotificationsDisplayer.module.css';
 import Notification from '../../../components/Notification/Notification';
 import * as NotificationActions from '../../../store/actions/index';
+import {AnimatePresence} from 'framer-motion';
 
 class NotificationsDisplayer extends Component {
     hideNotificationHandler = (id) => {
@@ -11,18 +12,20 @@ class NotificationsDisplayer extends Component {
     render() {
         return (
             <div className={classes.Notifications}>
-                {this.props.notifications ? this.props.notifications.map((notification, id) => {
-                    if (!notification.displayed) {
-                        return <Notification 
-                                 key={id}
-                                 notificationHide = {() => {this.hideNotificationHandler(id)}}
-                                 type={notification.type} 
-                                 content={notification.content}/>
-                    }
-                    else {
-                        return null;
-                    }
-                }): null}
+                <AnimatePresence>
+                    {this.props.notifications ? this.props.notifications.map((notification, id) => {
+                        if (!notification.displayed) {
+                            return <Notification 
+                                    key={id}
+                                    notificationHide = {() => {this.hideNotificationHandler(id)}}
+                                    type={notification.type} 
+                                    content={notification.content}/>
+                        }
+                        else {
+                            return null;
+                        }
+                    }): null}
+                </AnimatePresence>
             </div>
         )
     }
