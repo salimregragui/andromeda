@@ -3,6 +3,7 @@ import classes from './Course.module.css';
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as coursesActions from '../../store/actions/index';
+import {motion} from 'framer-motion';
 
 import CourseAdd from './CourseAdd/CourseAdd';
 import CourseView from './CourseView/CourseView';
@@ -50,6 +51,26 @@ class Course extends Component {
         }
     }
 
+    pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%"
+        },
+        in: {
+            opacity: 1,
+            x: 0
+        },
+        out: {
+            opacity: 0,
+            x: "100%"
+        }
+    }
+
+    pageTransition = {
+        type: "tween",
+        duration: 0.6
+    }
+
     render() {
         let courses = null;
 
@@ -66,13 +87,13 @@ class Course extends Component {
             </React.Fragment>;
         }
         return (
-            <div className={classes.Course}>
+            <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition} className={classes.Course}>
                 <Switch>
                     <Route path="/course/" exact render = {() => { return courses}} />
                     <Route path="/course/add" exact component= {CourseAdd} />
                     <Route path="/course/:courseName" component= {CourseView} />
                 </Switch>
-            </div>
+            </motion.div>
         )
     }
 }

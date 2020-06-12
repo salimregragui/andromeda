@@ -216,7 +216,7 @@ class Tasks extends Component {
     pageTransition = {
         type: "tween",
         transition: "linear",
-        duration: 0.4
+        duration: 0.6
     }
 
     render() {
@@ -287,7 +287,7 @@ class Tasks extends Component {
         }
 
         return (
-            <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition} className={classes.Tasks}>
+            <motion.div id="main" initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition} className={classes.Tasks}>
                 {modal}
                 <div className={classes.TasksChoices}>
                     <h1>Taches</h1>

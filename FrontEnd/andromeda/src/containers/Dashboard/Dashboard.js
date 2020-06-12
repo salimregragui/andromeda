@@ -81,7 +81,7 @@ class Dashboard extends Component {
 
     pageTransition = {
         type: "tween",
-        duration: 0.4
+        duration: 0.6
     }
 
     render() {
