@@ -2,31 +2,10 @@ import React from 'react';
 import classes from './SignUp.module.css';
 import signUpImage from '../../../assets/images/register-img.jpg';
 import { NavLink } from 'react-router-dom';
-import {motion} from 'framer-motion';
 
 const SignUp = (props) => {
-    let pageVariants = {
-        initial: {
-            opacity: 0,
-            x: "-100%"
-        },
-        in: {
-            opacity: 1,
-            x: 0
-        },
-        out: {
-            opacity: 0,
-            x: "100%"
-        }
-    }
-
-    let pageTransition = {
-        type: "tween",
-        duration: 0.6
-    }
-
     return (
-        <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} className={classes.SignUp}>
+        <div className={classes.SignUp}>
             <img src={signUpImage} alt="signup" />
             <div className={classes.SignUp_Content}>
                 <h1>Andromeda</h1>
@@ -56,7 +35,7 @@ const SignUp = (props) => {
                 >Vous avez déja un compte ? <strong>Connectez-vous !</strong></NavLink>
                 <br/><br/><br/>
             </div>
-        </motion.div>
+        </div>
     )
 }
 

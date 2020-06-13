@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import SignIn from '../../components/Authentification/SignIn/SignIn';
 import SignUp from '../../components/Authentification/SignUp/SignUp';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as authActions from '../../store/actions/index';
 import Logout from './Logout/Logout';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import {motion} from 'framer-motion';
 
 class Authentification extends Component {
     state = {
@@ -62,20 +63,29 @@ class Authentification extends Component {
         this.props.onRegister(signUpData);
     }
 
-    componentDidUpdate() {
-        if (this.props.logged && this.props.location.pathname !== '/dashboard')
-        {
-            this.props.history.push({
-                pathname: '/dashboard',
-                state: { 
-                    from: this.props.location.pathname
-                }
-            });
+    pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%"
+        },
+        in: {
+            opacity: 1,
+            x: 0
+        },
+        out: {
+            opacity: 0,
+            x: "100%"
         }
+    }
+
+    pageTransition = {
+        type: "tween",
+        duration: 0.6
     }
 
     render() {
         let error = null;
+        let redirect = null;
 
         if (this.props.error) {
             error = (<div>{this.props.error.message}</div>);
@@ -86,10 +96,16 @@ class Authentification extends Component {
         {
             spinner= <Spinner />;
         }
+
+        if (this.props.logged && localStorage.getItem('token'))
+        {
+            redirect = <Redirect to="/dashboard" />
+        }
         return (
-            <React.Fragment>
+            <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition}>
                 {spinner}
                 {error}
+                {redirect}
                 <Switch>
                     <Route path="/auth/signin" render= {() => 
                         <SignIn email={this.state.signIn.email} 
@@ -108,7 +124,7 @@ class Authentification extends Component {
 
                     <Route path="/auth/logout" component={Logout} />
                 </Switch>
-            </React.Fragment>
+            </motion.div>
         );
     }
 }
