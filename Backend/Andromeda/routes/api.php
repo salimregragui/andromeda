@@ -59,6 +59,8 @@ Route::group([
     Route::delete('task/{task}','TaskController@destroy');//* Remove the specified task from storage.
 
     //-----------------------------Comment--------------------------------
+    Route::get('comment/course/{course}','CommentController@index');
+    Route::get('comment/chapter/{chapter}','CommentController@show');
    
     Route::post('comment/{chapter}','CommentController@store')->middleware('CheckProfessor');
     Route::put('comment/{comment}','CommentController@update')->middleware('CheckProfessor');
@@ -105,5 +107,11 @@ Route::group([
 
     //-----------------------------Search--------------------------------------
     Route::get('search/autocomplete/{query}','SearchController@autocomplete');
+
+    //-----------------------------Search--------------------------------------
+    
+    Route::post('comment/response/{comment}','ResponseController@store');
+    Route::delete('response/{response}','ResponseController@destroy');
+
 });
 
