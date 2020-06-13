@@ -186,7 +186,7 @@ class Discussion extends Component {
                     <div className={classes.mainDiscussion}>
                         {this.state.currentDiscussion.visibleMessages.map(message => {
                             if (message.user_id === this.props.user.id) {
-                                return <div key={message.id} className={classes.sentMessageHolder}>
+                                return <div key={message.id + '-' + message.user_id} className={classes.sentMessageHolder}>
                                     <div className={classes.sentMessage}>
                                         {message.text}
                                         <br/>
@@ -195,7 +195,7 @@ class Discussion extends Component {
                                     </div>
                                 </div>
                             } else {
-                                return <div key={message.id} className={classes.receivedMessageHolder}>
+                                return <div key={message.id + '-' + message.user_id} className={classes.receivedMessageHolder}>
                                     <div className={classes.receivedMessage}>
                                         {message.text}
                                         <br/>

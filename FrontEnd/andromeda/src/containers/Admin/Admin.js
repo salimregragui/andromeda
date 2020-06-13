@@ -188,7 +188,7 @@ class Admin extends Component {
                 professors = this.props.users.map((user,id) => {
                     if (user.role === 'Professor') {
                         return <tr key={user.id} style={{fontWeight:'400', fontSize:'14px'}}>
-                            <td><img style={{borderRadius: '50%'}} src={user.image ? user.image : 'http://localhost:3000/profile-placeholder.jpg'} width='40px' height='40px'/></td>
+                            <td><img alt="a" style={{borderRadius: '50%'}} src={user.image ? user.image : 'http://localhost:3000/profile-placeholder.jpg'} width='40px' height='40px'/></td>
                             <td style={{color:'#181818',fontWeight:'600', fontSize:'14px'}}>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.status}</td>
@@ -221,7 +221,7 @@ class Admin extends Component {
                 users = this.props.users.map((user,id) => {
                     if (user.role === 'Student') {
                         return <tr key={user.id} style={{fontWeight:'400', fontSize:'14px'}}>
-                            <td><img style={{borderRadius: '50%'}} src={user.image ? user.image : 'http://localhost:3000/profile-placeholder.jpg'} width='40px' height='40px'/></td>
+                            <td><img alt="a" style={{borderRadius: '50%'}} src={user.image ? user.image : 'http://localhost:3000/profile-placeholder.jpg'} width='40px' height='40px'/></td>
                             <td style={{color:'#181818',fontWeight:'600', fontSize:'14px'}}>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.status}</td>
@@ -253,7 +253,7 @@ class Admin extends Component {
             if (this.props.courses) {
                 courses = this.props.courses.map((course,id) => {
                     return <tr key={course.id} style={{fontWeight:'400', fontSize:'14px'}}>
-                        <td><img style={{borderRadius: '50%'}} src={course.image} width='40px' height='40px'/></td>
+                        <td><img alt="a" style={{borderRadius: '50%'}} src={course.image} width='40px' height='40px'/></td>
                         <td style={{color:'#181818',fontWeight:'600', fontSize:'14px'}}>{course.name}</td>
                         <td>Salim Regragui</td>
                         <td>{course.valide === 1 ? 'Validé' : 'Non Validé'}</td>

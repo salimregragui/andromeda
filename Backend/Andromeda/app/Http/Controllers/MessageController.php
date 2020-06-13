@@ -16,25 +16,21 @@ class MessageController extends Controller
             $user = auth()->userOrFail();
         
             $this->validation();
-            $discussion_id=request(['discussion_id']);
+            $discussion = request(['discussion_id']);
+            $discussion_id= $discussion['discussion_id'];
             if ($discussion_id == null) {
                 //TODO create discution 
-               if ($type =='groupe') {
-                    $new_discussion= Discussion::create([
-                        'type' => $type,
-                    ]);
-               }
-               else {
-                    $new_discussion= Discussion::create([
-                        'type' => 'prive',
-                    ]);
-               }
+                $new_discussion= Discussion::create([
+                    'type' => $type,
+                ]);
+                $new_discussion->save();
 
-               $discussion_id=$new_discussion->id;
+               $discussion_id = $new_discussion->id;
+
                //* attach this user whith the discusion
-               $user2= User::find(request(['user_id']));
-               $user2->Discussions->attach($new_discussion->id);
-               $user->Discussions->attach($new_discussion->id);
+               $user2= User::find(request(['user_id']))->first();
+               $user2->discussions()->attach($discussion_id);
+               $user->discussions()->attach($discussion_id);
             }
             //todo create message and attach the message whit discussion 
             $attachment = null;
@@ -45,7 +41,7 @@ class MessageController extends Controller
             }
 
             $message= Message::create([
-                'discussion_id'=> $discussion_id['discussion_id'],
+                'discussion_id'=> $discussion_id,
                 'user_id' => $user->id,
                 'text' => request('text'),
                 'attachment' => $attachment ,
