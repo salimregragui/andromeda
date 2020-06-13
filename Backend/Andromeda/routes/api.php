@@ -109,10 +109,16 @@ Route::group([
     //-----------------------------Search--------------------------------------
     Route::get('search/autocomplete/{query}','SearchController@autocomplete');
 
-    //-----------------------------Search--------------------------------------
+    //-----------------------------Comment--------------------------------------
     
     Route::post('comment/response/{comment}','ResponseController@store');
     Route::delete('response/{response}','ResponseController@destroy');
 
+    //-----------------------------Like--------------------------------------
+
+    Route::get('like-unlike-comment/{comment}','LikeController@like_unlike_comment');
+    Route::get('like-unlike-response/{response}','LikeController@like_unlike_response');
+
+    
 });
 
