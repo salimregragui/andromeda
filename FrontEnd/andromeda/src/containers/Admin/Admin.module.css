@@ -1,0 +1,149 @@
+.Admin {
+    width: 100%;
+}
+
+.AdminChoices {
+    float: left;
+    width: 23%;
+    margin-top: 71px;
+    height: 100%;
+    text-align: left;
+    color: #181818;
+    background-color: #f1f1f4;
+    position: fixed;
+    top: 0;
+    padding-top: 30px;
+}
+
+.AdminChoices h1 {
+    margin-left: 30px;
+    font-weight: 700;
+    font-size: 28px;
+    margin-top: 0px;
+}
+
+.AdminChoice {
+    display: inline-block;
+    width: 90%;
+    height: 100px;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10%;
+    text-align: left;
+    padding-left: 30px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.AdminChoice:focus {
+    outline: none;
+}
+
+.AdminChoice span {
+    font-weight: 400;
+    font-size: 16px;
+    color: #7e7e7e;
+}
+
+.AdminBody {
+    float: right;
+    width: 70%;
+    background-color: white;
+    height: 100%;
+}
+
+.AdminBody table {
+    width: 94%;
+    margin-left: 3%;
+    text-align: left;
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #c2c2c2;
+    border-collapse:separate; 
+    border-spacing:0 30px; 
+}
+
+.AdminBody tr {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.AdminBody tr button {
+    color: #c2c2c2;
+    background-color: white;
+    border: 2px solid #c2c2c2;
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 4px;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: 12px;
+}
+
+.AdminBody tr button:hover {
+    background-color: #c2c2c2;
+    color: white;
+}
+
+.userInfos {
+    text-align: left;
+    padding-top: 20px;
+    margin-left: 20px;
+    width: 100%;
+    height: auto;
+    position: relative;
+    color: #181818;
+}
+
+.userInfosImg {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    background-position: center;
+    background-size:100% auto;
+    background-repeat: no-repeat;
+    float: left;
+    margin-right: 20px;
+}
+
+.userInfosText {
+    padding-top: 14px;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.userInfosText span {
+    font-weight: 600;
+}
+
+.userButtons {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+
+.userButtons button {
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #e74c3c;
+    color: white;
+    font-weight: 600;
+    font-size: 12px;
+    border-radius: 20px;
+    border: none;
+    margin-right: 20px;
+    margin-left: -10px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.userButtons button:hover {
+    background-color: #c0392b;
+
+    transition: 0.2s;
+}

@@ -31,11 +31,11 @@ const ProfileUser = (props) => {
         userData = <React.Fragment>
             <div className={classes.Profile}>
                 <div className={classes.userInfos}>
-                    <div className={classes.userImage} style={{backgroundImage:props.user.image ? "url('http://localhost:8000/storage/images/" + props.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                    <div className={classes.userImage} style={{backgroundImage:props.user.image ? "url('" + props.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                     <div className={classes.userInfosText}>
-                        {props.user.name}<br/><br/>
+                        {props.user.name}<br/>
                         <span>Compte crée : {timeago.format(props.user.created_at)}</span>
-                        <button>Commencer discussion</button>
+                        <button onClick={props.discussionStart}>Commencer discussion</button>
                     </div>
                 </div>
 

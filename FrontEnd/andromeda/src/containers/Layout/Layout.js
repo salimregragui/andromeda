@@ -11,7 +11,7 @@ class Layout extends Component {
         let contentClass = classes.ContentLeftBar;
 
         if (this.props.logged) {
-            leftBar = <LeftBar />
+            leftBar = <LeftBar user={this.props.user} />
         }
 
         if (this.props.location.pathname === '/error' || this.props.location.pathname === '/' || this.props.location.pathname === '/auth/signup' || this.props.location.pathname === '/auth/signin') {

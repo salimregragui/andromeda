@@ -22,4 +22,9 @@ export {
     hideNotification,
     setAsSeen,
     setAsSeenAll
-} from './data'
+} from './data';
+
+export {
+    coursesAllAdmin,
+    usersAllAdmin
+} from './admin';

@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './Error.module.css';
 import errorImage from '../../assets/images/error.png';
+import {motion} from 'framer-motion';
 
 function getErrorCode(message) {
     let n = message.trim().split(" ");
@@ -9,10 +10,31 @@ function getErrorCode(message) {
 }
 
 const Error = (props) => {
+    document.body.style.backgroundColor = "#ffffff";
     let error = {
         number: 69,
         message: "Oh comme c'est gentil de votre part de visiter cette page alors qu'il ny'a pas d'erreur !"
     };
+
+    let pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%"
+        },
+        in: {
+            opacity: 1,
+            x: 0
+        },
+        out: {
+            opacity: 0,
+            x: "100%"
+        }
+    }
+
+    let pageTransition = {
+        type: "tween",
+        duration: 0.6
+    }
 
     if (props.location.state)
     {
@@ -39,7 +61,7 @@ const Error = (props) => {
         }
     }
     return (
-        <React.Fragment>
+        <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}>
             <div className={classes.Error}>
                 <img className={classes.ErrorImg} src={errorImage} alt="error" />
                 <div className={classes.ErrorData}>
@@ -47,7 +69,7 @@ const Error = (props) => {
                    <span>{error.message}</span> 
                 </div>
             </div>
-        </React.Fragment>
+        </motion.div>
     )
 }
 

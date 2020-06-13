@@ -77,7 +77,7 @@ const Profile = (props) => {
             </div>
 
             <div className={classes.userData}>
-                {props.user.role === 'Professor' ? <NavLink to="/course/add">Ajouter Un cours</NavLink> : null}
+                {props.user.role === 'Professor' || props.user.role === 'Admin' ? <NavLink to="/course/add">Ajouter Un cours</NavLink> : null}
                 <div className={classes.userDataBox}>
                     Type de Compte : <span>Premium</span>
                 </div>

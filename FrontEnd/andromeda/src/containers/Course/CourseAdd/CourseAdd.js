@@ -34,7 +34,7 @@ class CourseAdd extends Component {
 
     componentDidUpdate() {
         if(this.props.user) {
-            if(this.props.user.role !== 'Professor') {
+            if(this.props.user.role !== 'Professor' && this.props.user.role !== 'Admin') {
                 this.props.history.push('/dashboard');
             }
         }

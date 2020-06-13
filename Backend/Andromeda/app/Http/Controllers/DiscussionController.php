@@ -139,28 +139,18 @@ class DiscussionController extends Controller
             }
             // et il faut que l'autre utilisateur est des discussions
             if ( $user->Discussions->isNotEmpty()) {
-
+                $discussion_id = null;
                 foreach (auth()->user()->Discussions as $discussion ) {
-                
-                    if ($discussion->type =='groupe' and $discussion->Users->find($user)->id == $user->id ) {
+                    if ($discussion->type =='groupe' and  $discussion->Users->first()->id == $user->id ) {
                        
-                        $discussion['users']=$discussion->Users;
-                        $discussion['visibleMessages']= $discussion->Messages->where('created_at','>=',$discussion['pivot']->updated_at);
-                       
-                        $data['created_at']=$discussion['created_at'];
-                        $data['updated_at']=$discussion['updated_at'];
-                        $data['id']=$discussion['id'];
-                        $data['users']=$discussion['users'];
-                        $data['visibleMessages']=$discussion['visibleMessages'];
-                        $data['pivot']=$discussion['pivot'];
-                        $data['type']=$discussion['type'];
-                        return response()->json(['Discussion' =>$data]);
+                        $discussion_id = $discussion->id;
+                        return response()->json(['discussion_id' =>$discussion_id]);
                     }
                 }
-    
-                abort(204); //Requête traitée avec succès mais pas d’information à renvoyer.
-    
+                return response()->json(['discussion_id' => $discussion_id]);
             }
+            $discussion_id = null;
+            return response()->json(['discussion_id' => $discussion_id]);
             
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
         

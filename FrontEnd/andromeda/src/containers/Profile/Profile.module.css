@@ -1,0 +1,49 @@
+.newMessage {
+    text-align: left;
+    padding-top: 20px;
+    margin-left: 20px;
+    position: relative;
+}
+
+.newMessage h1 {
+    font-size: 16px;
+    margin-top: 0px;
+}
+
+.newMessage input {
+    width: 80%;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid #c2c2c2;
+    color: #181818;
+}
+
+.newMessage input:focus {
+    outline: none;
+}
+
+.newMessageButtons {
+    position: absolute;
+    right: 10px;
+    bottom: -90px;
+}
+
+.newMessageButtons button {
+    background-color: #3459D6;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.newMessageButtons button:hover {
+    background-color: #203ea1;
+
+    transition: 0.2s;
+}

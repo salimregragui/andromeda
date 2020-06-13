@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as tasksActions from '../../store/actions/index';
 import Modal from '../../components/UI/Modal/Modal';
 import * as timeago from 'timeago.js';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 class Tasks extends Component {
 
@@ -16,7 +16,7 @@ class Tasks extends Component {
         newTask: {
             content: '',
             status: 'a faire',
-            type: 'Important'
+            type: 'important'
         },
         selectedTask: {
             content: '',
@@ -252,7 +252,7 @@ class Tasks extends Component {
                             </select>
                             
                             <br/>
-                            <button style={{backgroundColor: '#181818'}} onClick={this.closeModal}>Fermer</button>
+                            <button type="button" style={{backgroundColor: '#181818'}} onClick={this.closeModal}>Fermer</button>
                             <button type="submit">Ajouter la tache</button>
                         </form>
                     </div>
@@ -277,8 +277,8 @@ class Tasks extends Component {
                             </select>
                             
                             <br/>
-                            <button style={{backgroundColor: '#181818'}} onClick={this.closeModal}>Fermer</button>
-                            <button style={{backgroundColor: '#e74c3c'}} onClick={this.onDeleteTaskHandler}>Supprimer la tache</button>
+                            <button type="button" style={{backgroundColor: '#181818'}} onClick={this.closeModal}>Fermer</button>
+                            <button type="button" style={{backgroundColor: '#e74c3c'}} onClick={this.onDeleteTaskHandler}>Supprimer la tache</button>
                             <button type="submit">Editer la tache</button>
                         </form>
                     </div>
@@ -288,7 +288,9 @@ class Tasks extends Component {
 
         return (
             <motion.div id="main" initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition} className={classes.Tasks}>
-                {modal}
+                <AnimatePresence>
+                    {modal}
+                </AnimatePresence>
                 <div className={classes.TasksChoices}>
                     <h1>Taches</h1>
 
@@ -319,7 +321,7 @@ class Tasks extends Component {
                                 <td>Tache</td>
                                 <td>Type</td>
                                 <td>Date</td>
-                                <td>Derniere Modif.</td>
+                                <td>Der. Modif.</td>
                                 <td></td>
                             </tr>
                             {tasks}
