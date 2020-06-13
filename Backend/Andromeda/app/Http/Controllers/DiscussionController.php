@@ -141,7 +141,7 @@ class DiscussionController extends Controller
             if ( $user->Discussions->isNotEmpty()) {
                 $discussion_id = null;
                 foreach (auth()->user()->Discussions as $discussion ) {
-                    if ($discussion->type =='groupe' and  $discussion->Users->first()->id == $user->id ) {
+                    if ($discussion->type =='groupe' and  $discussion->Users->find($user)->id == $user->id ) {
                        
                         $discussion_id = $discussion->id;
                         return response()->json(['discussion_id' =>$discussion_id]);
