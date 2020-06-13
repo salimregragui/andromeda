@@ -4,22 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Response extends Model
 {
     //
     protected $guarded = [];
 
-    public function Chapter()
+    public function Comment()
     {
-        return $this->belongsTo(Chapter::class);
+        return $this->belongsTo(Comment::class);
     }
     public function User()
     {
         return $this->belongsTo(User::class);
-    }
-    public function Responses()
-    {
-        return $this->hasMany(Response::class)->latest();
     }
     public function Likes()
     {

@@ -15,29 +15,14 @@ class SearchController extends Controller
     {
         
         $data =array();
-/*
-          $data['Courses']=Course::where('name','like','%'.$query.'%')->get();
-        $data['Sections']=Section::where('name','like','%'.$query.'%')->get();
-        $data['Chapters']=Chapter::where('name','like','%'.$query.'%')->get();
-       
-        foreach ($data['Chapters'] as $chapter) {
-            
-            $chapter['course_id']=$chapter->Section->Course->name;
-            unset($chapter->Section);
-        }
-        foreach ($data['Sections'] as $section) {
-            
-            $section['course_id']=$section->Course->name;
-            unset($section->Course);
-        }
-*/
+
         $data['Courses']=Course::where([['name','like','%'.$query.'%'],['valide',1]])->get();
         $data['Sections']=Section::select('sections.id','sections.number','sections.name as section_name','courses.name as course_name')->leftJoin('courses', 'sections.course_id', '=', 'courses.id')->where([['sections.name','like','%'.$query.'%'],['courses.valide',1]])->get();
         $data['Chapters']=Chapter::select('chapters.name as chapter_name','chapters.number','sections.id as section_id','sections.number as sections_number','sections.name as section_name','courses.name as course_name')->leftJoin('sections', 'chapters.section_id', '=', 'sections.id')->leftJoin('courses', 'sections.course_id', '=', 'courses.id')->where('chapters.name','like','%'.$query.'%')->get();
        
-        // $data['Resources']=Resource::where('name','like','%'.$query.'%')->get();
         try {
             $user=auth()->userOrFail();
+            
             $data['Tasks']=Task::where([
                 ['content','like','%'.$query.'%'],
                 ['user_id',$user->id]

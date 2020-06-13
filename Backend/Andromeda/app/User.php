@@ -123,4 +123,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Comment::class)->latest();
     }
+    public function Responses()
+    {
+        return $this->hasMany(Response::class)->latest();
+    }
+    public function Likes()
+    {
+        return $this->hasMany(Like::class)->latest();
+    }
 }
