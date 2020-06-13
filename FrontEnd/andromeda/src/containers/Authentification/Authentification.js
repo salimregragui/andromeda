@@ -99,7 +99,14 @@ class Authentification extends Component {
 
         if (this.props.logged && localStorage.getItem('token'))
         {
-            redirect = <Redirect to="/dashboard" />
+            redirect = <Redirect to={
+                {
+                    pathname: "/dashboard",
+                    state: {
+                        from: this.props.location.pathname
+                    }
+                }
+            } />
         }
         return (
             <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition}>
