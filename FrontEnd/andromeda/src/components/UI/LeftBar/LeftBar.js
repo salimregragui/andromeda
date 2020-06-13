@@ -18,7 +18,7 @@ const LeftBar = (props) => {
     return (
         <div className={classes.LeftBar}>
             <div className={classes.Logo}>
-                <span>Andromeda</span>
+                <span><li>andro</li>meda</span>
             </div>
 
             <h3 className={classes.mainMenu}>Main Menu</h3>

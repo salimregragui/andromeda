@@ -30,6 +30,12 @@
     cursor: pointer;
 }
 
+li {
+    list-style: none;
+    display: inline;
+    font-weight: 400;
+}
+
 .Profile {
     font-weight: 600;
     font-size: 14px;

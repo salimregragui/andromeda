@@ -28,7 +28,7 @@ const Topbar = (props) => {
     return (
         <header className={classes.Topbar}>
             <div className={classes.Logo}>
-                <span>Andromeda</span>
+                <span><li>andro</li>meda</span>
             </div>
 
             <SearchBar />
