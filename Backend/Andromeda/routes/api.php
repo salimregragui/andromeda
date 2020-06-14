@@ -63,8 +63,8 @@ Route::group([
     Route::get('comment/course/{course}','CommentController@index');
     Route::get('comment/chapter/{chapter}','CommentController@show');
    
-    Route::post('comment/{chapter}','CommentController@store')->middleware('CheckProfessor');
-    Route::put('comment/{comment}','CommentController@update')->middleware('CheckProfessor');
+    Route::post('comment/{chapter}','CommentController@store');
+    Route::put('comment/{comment}','CommentController@update');
     Route::delete('comment/{comment}','CommentController@destroy');
 
     //-----------------------------Section---------------------------------
@@ -119,6 +119,8 @@ Route::group([
     Route::get('like-unlike-comment/{comment}','LikeController@like_unlike_comment');
     Route::get('like-unlike-response/{response}','LikeController@like_unlike_response');
 
-    
+    //-----------------------------Note & Comment Course --------------------------------------
+
+    Route::post('comment-course/{course}','ProgressionController@store');
 });
 

@@ -21,9 +21,21 @@ class CourseController extends Controller
         foreach ($courses as $course) 
         {
             $cptChapter=0; //compteur de chapitre dans chaque cours
-            $course->image=asset(Storage::url('images/'.$course->image));
+            if ($course->image =!null) {
+                $course->image=asset(Storage::url('images/'.$course->image));
+            }
+            
             $course['suivis']=$course->Followed()->count(); // nombre d'user qui suivent ce cours 
             
+            foreach ($course->Followed as $user) {
+                
+                $user->Progressions->where('course_id',$course->id)->first();
+              
+                if ($user->image != null) {
+                    $user->image=asset(Storage::url('images/'.$user->image));
+                }
+            }
+
             foreach ($course->Sections as $section) 
             {
               $section->Summary;
@@ -31,10 +43,7 @@ class CourseController extends Controller
               foreach ($section->Chapters as $chapter) 
                 {
                     $cptChapter++;
-                    foreach ($chapter->Comments as $comment ) 
-                    {
-                        
-                    }
+                    
                 }
             }
 

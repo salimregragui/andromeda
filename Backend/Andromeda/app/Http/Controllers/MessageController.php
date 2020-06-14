@@ -56,7 +56,7 @@ class MessageController extends Controller
     protected function validation()
     {
         return request()->validate([
-            "text" => 'required_if:attachment,null',
+            "text" => 'required_if:attachment,null|max:2048',
             "attachment" => 'required_if:text,null|image|mimes:jpeg,png,jpg,svg,gif|max:2048', //? should the message attachment be only an image ?
             "user_id" => 'required_if:discussion_id,null',// id de celui a qui on envoi le message
             "discussion_id" => 'required_if:user_id,null',
