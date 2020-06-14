@@ -157,7 +157,6 @@ class Tasks extends Component {
         
         if (name !== this.state.currentCategory) {
             this.setState({currentCategory: name});
-            console.log(this.state.currentCategory);
             this.getTasksToRender(name);
         }
     }
@@ -168,28 +167,25 @@ class Tasks extends Component {
         if (this.props.tasks) {
             if (category === 'All') {
                 this.setState({tasksToRender: this.props.tasks});
-                console.log(this.state.tasksToRender);
             }
             else if (category === 'Done') {
                 newTasks = this.props.tasks.filter(task => {
                     return task.status === 'fini'
                 });
                 this.setState({tasksToRender: newTasks, totalFinished: newTasks.length});
-                console.log(this.state.tasksToRender);
+
             }
             else if (category === 'InProgress') {
                 newTasks = this.props.tasks.filter(task => {
                     return task.status === 'en cours'
                 });
                 this.setState({tasksToRender: newTasks, totalToBeDone: newTasks.length});
-                console.log(this.state.tasksToRender);
             }
             else if (category === 'ToBeDone') {
                 newTasks = this.props.tasks.filter(task => {
                     return task.status === 'a faire'
                 });
                 this.setState({tasksToRender: newTasks, totalToDo: newTasks.length});
-                console.log(this.state.tasksToRender);
             }
         }
     }

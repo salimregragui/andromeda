@@ -53,7 +53,7 @@ class CommentController extends Controller
             array_push($data,$comment);
 
         }
-        return $data;
+        return response()->json(['comments' => $data]);
     }
 
     public function store(Chapter $chapter)

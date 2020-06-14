@@ -4,13 +4,18 @@ import { connect } from 'react-redux';
 // import * as coursesActions from '../../../store/actions/index';
 import ReactPlayer from 'react-player';
 import ReactMarkdown from 'react-markdown';
+import {motion} from 'framer-motion';
+import axios from 'axios';
+import likeIcon from '../../../assets/images/like.svg';
+import unlikeIcon from '../../../assets/images/unlike.svg';
 
 class CourseView extends Component {
     state = {
         currentChapter: 'UX design en action',
         currentChapterVideo: 'https://www.youtube.com/watch?v=ysz5S6PUM-U',
         displayedSections: [false, false],
-        infos: 'details cours'
+        infos: 'details cours',
+        chapterComments: null
     }
     componentDidMount() {
         document.body.style.backgroundColor = '#f1f1f4';
@@ -27,20 +32,52 @@ class CourseView extends Component {
         this.setState({displayedSections: sectionsDisplay});
     }
 
-    chapterChangeHandler = (name, link) => {
-        this.setState({currentChapter: name, currentChapterVideo: link});
-        console.log(this.state);
+    chapterChangeHandler = (id, name, link) => {
+        this.setState({currentChapter: name, currentChapterVideo: link, chapterComments: null});
+        this.getChapterComments(id);
     }
 
     dataButtonsHandler = (name) => {
         let buttons = document.getElementsByClassName(classes.buttonData);
+        console.log(buttons);
 
         Array.prototype.forEach.call(buttons, button => {
+            console.log("button");
             button.style.color = '#757575';
         });
 
         document.getElementById(name).style.color = '#181818';
         this.setState({infos: name});
+    }
+
+    getChapterComments = (chapterId) => {
+        axios.get('http://localhost:8000/api/auth/comment/chapter/' + chapterId)
+        .then(response => {
+            this.setState({chapterComments: response.data.comments});
+            console.log(this.state);
+        })
+        .catch(error => console.log(error));
+    }
+
+    pageVariants = {
+        initial: {
+            opacity: 0,
+            x: "-100%"
+        },
+        in: {
+            opacity: 1,
+            x: 0
+        },
+        out: {
+            opacity: 0,
+            x: "100%"
+        }
+    }
+
+    pageTransition = {
+        type: "tween",
+        transition: "linear",
+        duration: 0.6
     }
 
     render() {
@@ -51,7 +88,6 @@ class CourseView extends Component {
         if (this.props.progression) {
             progression = this.props.progression.find(ps => ps.name === this.props.match.params.courseName.split('-').join(' '));
             progression = progression.progression;
-            console.log(progression);
         }
 
         if(this.props.courses && course === null) {
@@ -73,13 +109,12 @@ class CourseView extends Component {
                                         textDecoration: this.props.progression ? chapter.id < progression.chapter_id ? 'line-through' : 'none' : null
                                         }
                                     }
-                                    onClick={() => {this.chapterChangeHandler(chapter.name, chapter.video)}}
+                                    onClick={() => {this.chapterChangeHandler(chapter.id, chapter.name, chapter.video)}}
                                     >Chapitre {chapter_counter} : {chapter.name}</button>
                         })}
                     </div>
                 </div>
             })
-            console.log(course);
         }
 
         if (this.state.infos === 'details cours' && course) {
@@ -88,13 +123,38 @@ class CourseView extends Component {
             </React.Fragment>
         }
         else if (this.state.infos === 'commentaires' && course) {
-            data = <React.Fragment>
-                commentaires
-            </React.Fragment>
+            let comments = this.state.chapterComments ?
+                this.state.chapterComments.map(chapterComment => {
+                    // let liked = chapterComment.like.some(e => e.user.name === this.props.user.name).length;
+                    return <div key={chapterComment.id} className={classes.comment}>
+                        <div className={classes.commentImg} style={{backgroundImage: chapterComment.user.image ? "url('http://localhost:8000/storage/images/" + chapterComment.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                        <div className={classes.commentInfos}>
+                            {chapterComment.user.name}
+
+                            <span>Liker</span> <button><img src={likeIcon} alt="like" width="12px" height="12px" /></button>
+                        </div>
+                        <div className={classes.commentContent}>
+                            {chapterComment.content}
+                        </div>
+
+                        <div className={classes.commentButtons}>
+                            <button>Voir toute la discussion ({chapterComment.responses.length})</button>
+                        </div>
+                        <br/><br/>
+                    </div>
+                }) : <p>Aucun commentaire pour ce chapitre !</p>;
+            data = <React.Fragment> 
+                <div className={classes.addComment}>
+                    <h2>Ajouter un commentaire</h2>
+                    <button>Commenter</button>
+                </div>
+
+                {comments}
+                </React.Fragment>
         }
 
         return (
-            <div className={classes.CourseView}>
+            <motion.div id="main" initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition} className={classes.CourseView}>
                 {course ? <React.Fragment>
                     <div className={classes.CourseViewLeft}>
                         <ReactPlayer url={this.state.currentChapterVideo} controls width='600px' height='400px'/>
@@ -119,7 +179,7 @@ class CourseView extends Component {
                         <br/><br/>
                     </div>
                 </React.Fragment> : null}
-            </div>
+            </motion.div>
         )
     }
 }
