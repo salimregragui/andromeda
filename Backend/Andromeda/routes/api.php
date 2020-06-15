@@ -26,6 +26,7 @@ Route::group([
 
     Route::get('course','CourseController@index'); //* display all valide  courses
     Route::get('course/invalide','CourseController@invalideCourses');//* display all invalide  courses
+    Route::get('course-validation/{course}','CourseController@valide')->middleware('CheckAdmin');//* make a course valide
     Route::get('course/progression','CourseController@courseProgressions');//* display all courses followed with progression
     Route::get('course/{course}','CourseController@show');//* display specific course
     Route::post('course','CourseController@store')->middleware('CheckProfessor');//* store course

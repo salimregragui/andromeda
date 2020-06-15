@@ -58,6 +58,10 @@ class CourseController extends Controller
         // Display the specified course with all sections and chapters
         $cptChapter=0; //compteur de chapitre dans chaque cours
 
+        if ($course->image =!null) {
+            $course->image=asset(Storage::url('images/'.$course->image));
+        }
+
         $course['suivis']=$course->Followed()->count(); // nombre d'user qui suivent ce cours 
         
         foreach ($course->Sections as $section) 
@@ -67,11 +71,6 @@ class CourseController extends Controller
             foreach ($section->Chapters as $chapter) 
             {
                 $cptChapter++;
-                
-                foreach ($chapter->Comments as $comment ) 
-                {
-                    
-                }
             }
         }
 
@@ -173,7 +172,7 @@ class CourseController extends Controller
                 'rating' => request('rating'),
                 'user_id' => auth()->user()->id,
                 'image' => Str::random(5).''.time().'.'.Str::random(3).'.'.request()->image->getClientOriginalExtension(),
-
+                'valide' =>  auth()->user()->role =='Admin' and auth()->user()->status == 'Active' ? 1 : 0
             ]);
             request()->image->move(public_path('storage/images/'),$course->image);
             $course->save();
@@ -253,5 +252,12 @@ class CourseController extends Controller
     {
         return $this->show_courses(0);
 
+    }
+
+    public function valide(Course $course)
+    {
+        $course->valide = 1;
+        $course->save();
+        return $course;
     }
 }
