@@ -23,6 +23,26 @@
     font-size: 16px;
 }
 
+.CourseViewRight button {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #f1f1f4;
+    color: #181818;
+    border: 2px solid #181818;
+    border-radius: 5px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.CourseViewRight button:hover {
+    background-color: #181818;
+    color: white;
+
+    transition: 0.2s;
+}
+
 .CourseViewSection {
     width: 80%;
     background-color: white;
@@ -165,7 +185,7 @@
     border: 2px solid #e74c3c;
     border-radius: 50%;
     background-color: white;
-    line-height: 30px;
+    line-height: 27px;
     cursor: pointer;
 
     transition: 0.2s;
@@ -368,7 +388,8 @@
     border: 2px solid #e74c3c;
     border-radius: 50%;
     background-color: white;
-    line-height: 23px;
+    line-height: 22px;
+    padding-left: 5px;
     cursor: pointer;
 
     transition: 0.2s;
@@ -488,7 +509,8 @@
     border: 2px solid #e74c3c;
     border-radius: 50%;
     background-color: white;
-    line-height: 23px;
+    line-height: 22px;
+    padding-left: 5px;
     cursor: pointer;
 
     transition: 0.2s;

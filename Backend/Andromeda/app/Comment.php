@@ -19,7 +19,7 @@ class Comment extends Model
     }
     public function Responses()
     {
-        return $this->hasMany(Response::class)->latest();
+        return $this->hasMany(Response::class);
     }
     public function Likes()
     {

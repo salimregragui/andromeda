@@ -17,7 +17,11 @@ class Admin extends Component {
     }
 
     componentDidMount() {
-        document.body.style = 'background: white;';
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.style.backgroundColor = '#2C2839';
+        } else {
+            document.body.style = 'background: white;';
+        }
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
         }
@@ -57,10 +61,21 @@ class Admin extends Component {
         let categories = document.getElementsByClassName(classes.AdminChoice);
 
         Array.prototype.forEach.call(categories, category => {
-            category.style.backgroundColor = '#f1f1f4'
+            if (localStorage.getItem('theme') === 'dark') {
+                category.style.backgroundColor = '#312C40';
+                category.style.color = 'white';
+            } else {
+                category.style.backgroundColor = '#f1f1f4'
+            }
         });
 
-        document.getElementById(name).style.backgroundColor = '#ffffff';
+        if (localStorage.getItem('theme') === 'dark') {
+            document.getElementById(name).style.backgroundColor = '#2C2839';
+            document.getElementById(name).style.color = 'white';
+        }
+        else {
+            document.getElementById(name).style.backgroundColor = 'white';
+        }
         
         if (name !== this.state.currentCategory) {
             this.setState({currentCategory: name});
@@ -133,6 +148,16 @@ class Admin extends Component {
         this.setState({selectedUser: null, showingModal: false});
     }
 
+    darkThemeForeground = {
+        backgroundColor: '#312C40',
+        color: 'white'
+    }
+
+    darkThemeBackground = {
+        backgroundColor: '#2C2839',
+        width: '72%'
+    }
+
     render() {
         let content = null;
         let modal = null;
@@ -140,7 +165,7 @@ class Admin extends Component {
         if (this.state.showingModal) {
             if (this.state.currentCategory === 'Users' || this.state.currentCategory === 'Professors') {
                 modal = <Modal width='46' height='400'>
-                    <div className={classes.userInfos}>
+                    <div className={classes.userInfos} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                         <div className={classes.userInfosImg} style={{backgroundImage: this.state.selectedUser.image ? "url('" + this.state.selectedUser.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                         <div className={classes.userInfosText}>
                             <span>Name : </span> {this.state.selectedUser.name}<br/>
@@ -161,9 +186,9 @@ class Admin extends Component {
 
             if (this.state.currentCategory === 'Courses') {
                 modal = <Modal width='60' height='600'>
-                    <div className={classes.userInfos}>
+                    <div className={classes.userInfos} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                         <div className={classes.userInfosImg} style={{backgroundImage: this.state.selectedCourse.image ? "url('" + this.state.selectedCourse.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
-                        <div className={classes.userInfosText}>
+                        <div className={classes.userInfosText} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                             <span>Name : </span> {this.state.selectedCourse.name}<br/>
                             <span>Professeur : </span> Salim Regragui<br/>
                             <span>Note : </span> {this.state.selectedCourse.rating} / 5<br/>
@@ -189,10 +214,10 @@ class Admin extends Component {
                     if (user.role === 'Professor') {
                         return <tr key={user.id} style={{fontWeight:'400', fontSize:'14px'}}>
                             <td><img alt="a" style={{borderRadius: '50%'}} src={user.image ? user.image : 'http://localhost:3000/profile-placeholder.jpg'} width='40px' height='40px'/></td>
-                            <td style={{color:'#181818',fontWeight:'600', fontSize:'14px'}}>{user.name}</td>
+                            <td style={{color:localStorage.getItem('theme') === 'dark' ? 'white' : '#181818',fontWeight:'600', fontSize:'14px'}}>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.status}</td>
-                            <td><button onClick={() => {this.onSeeUserHandler(id)}}>Voir</button></td>
+                            <td><button style={{backgroundColor:localStorage.getItem('theme') === 'dark' ? '#2C2839' : null}} onClick={() => {this.onSeeUserHandler(id)}}>Voir</button></td>
                         </tr>
                     }
                     else {
@@ -202,7 +227,7 @@ class Admin extends Component {
             }
             content = <table>
                 <tbody>
-                    <tr style={{color:'#5d5d5d'}}>
+                    <tr style={{color:localStorage.getItem('theme') === 'dark' ? '#f1f1f4' : '#5d5d5d'}}>
                         <td>Image</td>
                         <td>Nom</td>
                         <td>Email</td>
@@ -222,10 +247,10 @@ class Admin extends Component {
                     if (user.role === 'Student') {
                         return <tr key={user.id} style={{fontWeight:'400', fontSize:'14px'}}>
                             <td><img alt="a" style={{borderRadius: '50%'}} src={user.image ? user.image : 'http://localhost:3000/profile-placeholder.jpg'} width='40px' height='40px'/></td>
-                            <td style={{color:'#181818',fontWeight:'600', fontSize:'14px'}}>{user.name}</td>
+                            <td style={{color:localStorage.getItem('theme') === 'dark' ? 'white' : '#181818',fontWeight:'600', fontSize:'14px'}}>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.status}</td>
-                            <td><button onClick={() => {this.onSeeUserHandler(id)}}>Voir</button></td>
+                            <td><button style={{backgroundColor:localStorage.getItem('theme') === 'dark' ? '#2C2839' : null}} onClick={() => {this.onSeeUserHandler(id)}}>Voir</button></td>
                         </tr>
                     }
                     else {
@@ -236,7 +261,7 @@ class Admin extends Component {
 
             content = <table>
                 <tbody>
-                    <tr style={{color:'#5d5d5d'}}>
+                    <tr style={{color:localStorage.getItem('theme') === 'dark' ? '#f1f1f4' : '#5d5d5d'}}>
                         <td>Image</td>
                         <td>Nom</td>
                         <td>Email</td>
@@ -254,17 +279,17 @@ class Admin extends Component {
                 courses = this.props.courses.map((course,id) => {
                     return <tr key={course.id} style={{fontWeight:'400', fontSize:'14px'}}>
                         <td><img alt="a" style={{borderRadius: '50%'}} src={course.image} width='40px' height='40px'/></td>
-                        <td style={{color:'#181818',fontWeight:'600', fontSize:'14px'}}>{course.name}</td>
+                        <td style={{color:localStorage.getItem('theme') === 'dark' ? 'white' : '#181818',fontWeight:'600', fontSize:'14px'}}>{course.name}</td>
                         <td>Salim Regragui</td>
                         <td>{course.valide === 1 ? 'Validé' : 'Non Validé'}</td>
                         <td>{course.rating} / 5</td>
-                        <td><button onClick={() => {this.onSeeCourseHandler(id)}}>Voir</button></td>
+                        <td><button style={{backgroundColor:localStorage.getItem('theme') === 'dark' ? '#2C2839' : null}} onClick={() => {this.onSeeCourseHandler(id)}}>Voir</button></td>
                     </tr>
                 })
             }
             content = <table>
                 <tbody>
-                    <tr style={{color:'#5d5d5d'}}>
+                    <tr style={{color:localStorage.getItem('theme') === 'dark' ? '#f1f1f4' : '#5d5d5d'}}>
                         <td>Image</td>
                         <td>Nom</td>
                         <td>Professeur</td>
@@ -281,25 +306,29 @@ class Admin extends Component {
                 <AnimatePresence>
                     {modal}
                 </AnimatePresence>
-                <div className={classes.AdminChoices}>
+                <div className={classes.AdminChoices} style={localStorage.getItem('theme') === 'dark' ? this.darkThemeForeground : null}>
                     <h1>Admin</h1>
 
-                    <button id='Professors' onClick={() => {this.categoriesHandler('Professors')}} className={classes.AdminChoice}  style={{backgroundColor:'white'}}>
+                    <button id='Professors' onClick={() => {this.categoriesHandler('Professors')}} className={classes.AdminChoice}  style={{ backgroundColor : localStorage.getItem('theme') === 'dark' ? '#2C2839' :'white', color: localStorage.getItem('theme') === 'dark' ? 'white' : null}}>
                         Professeurs<br/>
                         <span>Gerer</span>
                     </button>
-                    <button id='Users' onClick={() => {this.categoriesHandler('Users')}} className={classes.AdminChoice}>
+                    <button id='Users' onClick={() => {this.categoriesHandler('Users')}} className={classes.AdminChoice} style={{ backgroundColor : localStorage.getItem('theme') === 'dark' ? '#312C40' :'#f1f1f4', color: localStorage.getItem('theme') === 'dark' ? 'white' : '#181818'}}>
                         Utilisateurs<br/>
                         <span>Gerer</span>
                     </button>
-                    <button id='Courses' onClick={() => {this.categoriesHandler('Courses')}} className={classes.AdminChoice}>
+                    <button id='Courses' onClick={() => {this.categoriesHandler('Courses')}} className={classes.AdminChoice} style={{ backgroundColor : localStorage.getItem('theme') === 'dark' ? '#312C40' :'#f1f1f4', color: localStorage.getItem('theme') === 'dark' ? 'white' : '#181818'}}>
                         Cours<br/>
+                        <span>Gerer</span>
+                    </button>
+                    <button id='Bugs' onClick={() => {this.categoriesHandler('Bugs')}} className={classes.AdminChoice} style={{ backgroundColor : localStorage.getItem('theme') === 'dark' ? '#312C40' :'#f1f1f4', color: localStorage.getItem('theme') === 'dark' ? 'white' : '#181818'}}>
+                        Bugs<br/>
                         <span>Gerer</span>
                     </button>
                     <br/><br/>
                 </div>
 
-                <div className={classes.AdminBody}>
+                <div className={classes.AdminBody} style={localStorage.getItem('theme') === 'dark' ? this.darkThemeBackground : null}>
                     {content}
                 </div>
             </motion.div>

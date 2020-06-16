@@ -171,6 +171,31 @@ class CourseView extends Component {
         }
     }
 
+    followCourse = (type) => {
+        let courseId = this.props.courses.find(ps => ps.name === this.props.match.params.courseName.split('-').join(' '))
+        axios.get('http://localhost:8000/api/auth/follow/' + courseId.id)
+        .then (response => {
+            console.log('ok !');
+            if (type === 'follow') {
+                this.props.onNotificationAdd({
+                    'type': 'success',
+                    'content':'Vous suivez maintenant ce cours, votre progression sera maintenant enregistrée sur votre compte !',
+                    'seen': false,
+                    'displayed': false
+                })
+            } else {
+                this.props.onNotificationAdd({
+                    'type': 'success',
+                    'content':'Vous ne suivez plus ce cours, toute votre progression a été supprimée !',
+                    'seen': false,
+                    'displayed': false
+                })
+            }
+            this.props.onGetProgression();
+        })
+        .catch(error=> console.log(error));
+    }
+
     pageVariants = {
         initial: {
             opacity: 0,
@@ -220,8 +245,7 @@ class CourseView extends Component {
                             if (localStorage.getItem('theme') === 'dark') {
                                 style = {backgroundColor: '#2C2839', color:this.state.currentChapter === chapter.name ? '#3459D6' : 'white'};
                             } else {
-                                style = {color : this.state.currentChapter === chapter.name ? '#3459D6' : '#757575',
-                                textDecoration: this.props.progression ? chapter.id < progression.chapter_id ? 'line-through' : 'none' : null
+                                style = {color : this.state.currentChapter === chapter.name ? '#3459D6' : '#757575'
                                 }
                             }
                             return <button 
@@ -270,7 +294,7 @@ class CourseView extends Component {
                         <button className={classes.closeThread} onClick={this.closeModal}>x</button>
                         <h2>Thread</h2>
                         <div className={classes.threadModalScroll}>
-                            <div className={classes.threadComment} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null}>
+                            <div className={classes.threadComment} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', border:'none'} : null}>
                                 <div className={classes.threadCommentImg} onClick={() => {this.props.history.push('/profile/' + this.state.chapterComments[this.state.commentId].user.name.split(' ').join('-'))}} style={{cursor:'pointer', backgroundImage: this.state.chapterComments[this.state.commentId].user.image ? "url('http://localhost:8000/storage/images/" + this.state.chapterComments[this.state.commentId].user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                                 <div className={classes.threadCommentInfos} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                                     {this.state.chapterComments[this.state.commentId].user.name} 
@@ -280,7 +304,7 @@ class CourseView extends Component {
 
                                     <span>{this.state.chapterComments[this.state.commentId].likes.length} likes</span> {likedButton}
                                 </div>
-                                <div className={classes.threadCommentContent}>
+                                <div className={classes.threadCommentContent} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                                     {this.state.chapterComments[this.state.commentId].content}
                                 </div>
 
@@ -290,13 +314,13 @@ class CourseView extends Component {
                                 <br/><br/>
                             </div>
                             {this.state.chapterComments[this.state.commentId].responses.map(response => {
-                                let likedResponse = <button onClick={() => {this.likeComment(response.id)}} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null}><img src={likeIcon} alt="like" width="10px" height="10px" /></button>
+                                let likedResponse = <button onClick={() => {this.likeResponse(response.id)}} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null}><img src={likeIcon} alt="like" width="10px" height="10px" /></button>
                 
                                 if (response.likes.some(e => e.user.name === this.props.user.name)) {
                                     likedResponse = <button onClick={() => {this.likeResponse(response.id)}} style={{backgroundColor: '#e74c3c'}}><img src={unlikeIcon} alt="like" width="10px" height="10px" /></button>
                                 }
-                                return <div key={response.id} className={classes.threadResponse} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null}>
-                                    <div className={classes.threadResponseImg} onClick={() => {this.props.history.push('/profile/' + this.state.chapterComments[this.state.commentId].user.name.split(' ').join('-'))}} style={{cursor:'pointer', backgroundImage: this.state.chapterComments[this.state.commentId].user.image ? "url('http://localhost:8000/storage/images/" + this.state.chapterComments[this.state.commentId].user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                                return <div key={response.id} className={classes.threadResponse} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', border:'none'} : null}>
+                                    <div className={classes.threadResponseImg} onClick={() => {this.props.history.push('/profile/' + response.user.name.split(' ').join('-'))}} style={{cursor:'pointer', backgroundImage: response.user.image ? "url('http://localhost:8000/storage/images/" + response.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                                     <div className={classes.threadResponseInfos} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                                         {response.user.name} 
                                         {this.props.courses.find(cs => cs.name === this.props.match.params.courseName.split('-').join(' ')).user_id === this.state.chapterComments[this.state.commentId].user.id ? <em style={localStorage.getItem('theme') === 'dark' ? {border:'1px solid white'} : null}>Auteur du cours</em> : null}
@@ -305,7 +329,7 @@ class CourseView extends Component {
 
                                         <span>{response.likes.length} likes</span> {likedResponse}
                                     </div>
-                                    <div className={classes.threadResponseContent}>
+                                    <div className={classes.threadResponseContent} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                                         {response.content}
                                     </div>
 
@@ -365,6 +389,17 @@ class CourseView extends Component {
                 </React.Fragment>
         }
 
+        let followButton = null;
+        if (this.props.progression) {
+            if (this.props.progression.some(e => e.name === this.props.match.params.courseName.split('-').join(' '))) {
+                followButton = <button onClick={() => {this.followCourse('unfollow')}}>Ne plus suivre ce cours</button>;
+            } else {
+                followButton = <button onClick={() => {this.followCourse('follow')}}>Suivre ce cours</button>
+            }
+        } else {
+            followButton = <button onClick={() => {this.followCourse('follow')}}>Suivre ce cours</button>
+        }
+
         return (
             <motion.div id="main" initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition} className={classes.CourseView}>
                 <AnimatePresence>
@@ -389,6 +424,7 @@ class CourseView extends Component {
                     </div>
 
                     <div className={classes.CourseViewRight} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
+                        {followButton}
                         <h2>Contenu du cours</h2>
                         {sections}
                         <br/><br/>
@@ -410,7 +446,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onNotificationAdd: (notif) => dispatch(notificationActions.addNotification(notif))
+        onNotificationAdd: (notif) => dispatch(notificationActions.addNotification(notif)),
+        onGetProgression: () => dispatch(notificationActions.coursesProgression())
     }
 }
 
