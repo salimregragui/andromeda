@@ -20,12 +20,12 @@ class LikeController extends Controller
                 $like->comment_id=$comment->id;
                 $like->user_id=$user->id;
                 $like->save();
-                return $like;
+                return ['liked' => 'liked'];
             }
             else {
                 $like=Like::where([['user_id',$user->id],['comment_id',$comment->id]])->firstOrFail();
                 $like->delete();
-
+                return ['liked' => 'unliked'];
             }
            
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
@@ -43,11 +43,12 @@ class LikeController extends Controller
                 $like->response_id=$response->id;
                 $like->user_id=$user->id;
                 $like->save();
-                return $like;
+                return ['liked' => 'liked'];
             }
             else {
                 $like=Like::where([['user_id',$user->id],['response_id',$response->id]])->firstOrFail();
                 $like->delete();
+                return ['liked' => 'unliked'];
 
             }
            

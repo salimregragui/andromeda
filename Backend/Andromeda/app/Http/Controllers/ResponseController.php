@@ -39,7 +39,7 @@ class ResponseController extends Controller
             
             }
 
-            return response()->json(['Comment' => $response]);
+            return response()->json(['chapter_id' => $comment->Chapter->id]);
         
         }
         abort(401);

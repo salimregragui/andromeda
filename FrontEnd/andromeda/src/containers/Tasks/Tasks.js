@@ -31,7 +31,12 @@ class Tasks extends Component {
     }
 
     componentDidMount() {
-        document.body.style = 'background: white;';
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.style.backgroundColor = '#2C2839';
+        } else {
+            document.body.style = 'background: white;';
+        }
+
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
         }
@@ -150,10 +155,21 @@ class Tasks extends Component {
         let categories = document.getElementsByClassName(classes.TasksChoice);
 
         Array.prototype.forEach.call(categories, category => {
-            category.style.backgroundColor = '#f1f1f4'
+            if (localStorage.getItem('theme') === 'dark') {
+                category.style.backgroundColor = '#312C40';
+                category.style.color = 'white';
+            } else {
+                category.style.backgroundColor = '#f1f1f4'
+            }
         });
-
-        document.getElementById(name).style.backgroundColor = '#ffffff';
+        
+        if (localStorage.getItem('theme') === 'dark') {
+            document.getElementById(name).style.backgroundColor = '#2C2839';
+            document.getElementById(name).style.color = 'white';
+        }
+        else {
+            document.getElementById(name).style.backgroundColor = 'white';
+        }
         
         if (name !== this.state.currentCategory) {
             this.setState({currentCategory: name});
@@ -215,6 +231,15 @@ class Tasks extends Component {
         duration: 0.6
     }
 
+    darkThemeForeground = {
+        backgroundColor: '#312C40',
+        color: 'white'
+    }
+
+    darkThemeBackground = {
+        backgroundColor: '#2C2839'
+    }
+
     render() {
         let tasks = null;
         let modal = null;
@@ -223,11 +248,11 @@ class Tasks extends Component {
             tasks = this.state.tasksToRender.map((task, id) => {
                 return (
                     <tr key={task.id} style={{fontWeight:'400', fontSize:'12px'}}>
-                        <td style={{color:'#181818',fontWeight:'600', fontSize:'14px'}}>{task.content.substring(0, 45)} {task.content.length > 45 ? '...' : null}</td>
+                        <td style={{color:localStorage.getItem('theme') === 'dark' ? 'white' : '#181818',fontWeight:'600', fontSize:'14px'}}>{task.content.substring(0, 45)} {task.content.length > 45 ? '...' : null}</td>
                         <td>{task.type}</td>
                         <td>{timeago.format(task.created_at)}</td>
                         <td>{timeago.format(task.updated_at)}</td>
-                        <td><button onClick={() => {this.onEditTaskHandler(id)}}>Edit</button></td>
+                        <td><button style={{backgroundColor:localStorage.getItem('theme') === 'dark' ? '#2C2839' : null}} onClick={() => {this.onEditTaskHandler(id)}}>Edit</button></td>
                     </tr>
                 );
             });
@@ -287,22 +312,22 @@ class Tasks extends Component {
                 <AnimatePresence>
                     {modal}
                 </AnimatePresence>
-                <div className={classes.TasksChoices}>
+                <div className={classes.TasksChoices} style={localStorage.getItem('theme') === 'dark' ? this.darkThemeForeground : null}>
                     <h1>Taches</h1>
 
-                    <button id='All' onClick={() => {this.categoriesHandler('All')}} className={classes.TasksChoice}  style={{backgroundColor:'white'}}>
+                    <button id='All' onClick={() => {this.categoriesHandler('All')}} className={classes.TasksChoice}  style={{ backgroundColor : localStorage.getItem('theme') === 'dark' ? '#2C2839' :'white', color: localStorage.getItem('theme') === 'dark' ? 'white' : null}}>
                         {this.state.totalAll}<br/>
                         <span>Toutes les taches</span>
                     </button>
-                    <button id='Done' onClick={() => {this.categoriesHandler('Done')}} className={classes.TasksChoice}>
+                    <button id='Done' onClick={() => {this.categoriesHandler('Done')}} className={classes.TasksChoice} style={{ backgroundColor : localStorage.getItem('theme') === 'dark' ? '#312C40' :'#f1f1f4', color: localStorage.getItem('theme') === 'dark' ? 'white' : '#181818'}}>
                         {this.state.totalFinished}<br/>
                         <span>Taches finies</span>
                     </button>
-                    <button id='InProgress' onClick={() => {this.categoriesHandler('InProgress')}} className={classes.TasksChoice}>
+                    <button id='InProgress' onClick={() => {this.categoriesHandler('InProgress')}} className={classes.TasksChoice} style={{ backgroundColor : localStorage.getItem('theme') === 'dark' ? '#312C40' :'#f1f1f4', color: localStorage.getItem('theme') === 'dark' ? 'white' : '#181818'}}>
                         {this.state.totalToBeDone}<br/>
                         <span>Taches en cours</span>
                     </button>
-                    <button id='ToBeDone' onClick={() => {this.categoriesHandler('ToBeDone')}} className={classes.TasksChoice}>
+                    <button id='ToBeDone' onClick={() => {this.categoriesHandler('ToBeDone')}} className={classes.TasksChoice} style={{ backgroundColor : localStorage.getItem('theme') === 'dark' ? '#312C40' :'#f1f1f4', color: localStorage.getItem('theme') === 'dark' ? 'white' : '#181818'}}>
                         {this.state.totalToDo}<br/>
                         <span>Taches a faire</span>
                     </button>
@@ -310,10 +335,10 @@ class Tasks extends Component {
                     <br/><br/><br/>
                 </div>
 
-                <div className={classes.TasksBody}>
+                <div className={classes.TasksBody} style={localStorage.getItem('theme') === 'dark' ? this.darkThemeBackground : null}>
                     <table>
                         <tbody>
-                            <tr style={{color:'#5d5d5d'}}>
+                            <tr style={{color:localStorage.getItem('theme') === 'dark' ? '#f1f1f4' : '#5d5d5d'}}>
                                 <td>Tache</td>
                                 <td>Type</td>
                                 <td>Date</td>

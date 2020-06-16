@@ -18,7 +18,11 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        document.body.style = 'background: #f1f1f4;';
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.style.backgroundColor = '#312C40';
+        } else {
+            document.body.style = 'background: #f1f1f4;';
+        }
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
         }
@@ -120,21 +124,10 @@ class Dashboard extends Component {
             <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition}>
                 {spinner}
                 <br/>
-                {this.props.user ? <div className={classes.DashboardGreeting}>
+                {this.props.user ? <div className={classes.DashboardGreeting} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#312C40', color:'white'} : null}>
                     Bonjour {this.props.user.name},<br/>
                     <span>Qu'allez vous apprendre aujourd'hui ?</span>
-                </div> : <React.Fragment><CustomLoading width="300px"
-                            height="30px"
-                            marginLeft="50px"
-                            marginTop="20px"
-                            marginBottom="0px"/>
-                         <CustomLoading width="500px"
-                            height="30px"
-                            marginLeft="50px"
-                            marginTop="0px"
-                            marginBottom="30px"/>
-                        </React.Fragment>
-                }
+                </div> : null}
                 
                 <div className={classes.Choices}>
                     <button style={{color:"#3459D6"}} onClick={() => {this.coursesChoicesHandler('populaires')}}>Populaires</button>
@@ -144,8 +137,8 @@ class Dashboard extends Component {
 
                 {courses}
                 <br/>
-                <div className={classes.Progression}>
-                    <h1>Progression</h1>
+                <div className={classes.Progression} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', color:'white'} : null}>
+                    <h1 style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>Progression</h1>
                     <NavLink to='/classes' exact>Voir tout</NavLink>
 
                     {progression}

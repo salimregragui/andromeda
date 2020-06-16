@@ -67,7 +67,7 @@ class App extends Component {
       spinner = null
     }
     return (
-      <div className="App" style={{overflowX:"hidden"}}>
+      <div className="App" style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#312C40', overflowX:'hidden'} : {overflowX:"hidden"}}>
         {spinner}
         <Layout>
           <AnimatePresence exitBeforeEnter>

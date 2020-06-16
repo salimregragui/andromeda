@@ -21,7 +21,7 @@ class CourseController extends Controller
         foreach ($courses as $course) 
         {
             $cptChapter=0; //compteur de chapitre dans chaque cours
-            if ($course->image =!null) {
+            if ($course->image != null) {
                 $course->image=asset(Storage::url('images/'.$course->image));
             }
             

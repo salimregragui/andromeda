@@ -22,7 +22,7 @@ class Layout extends Component {
             <React.Fragment>
                 {this.props.location.pathname !== '/auth/signin' && this.props.location.pathname !== '/auth/signup' ? <Topbar user={this.props.user} /> : null}
                 {leftBar}
-                <main className={contentClass}>
+                <main className={contentClass} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#312C40'} : null}>
                     {this.props.children}
                 </main>
             </React.Fragment>

@@ -23,7 +23,11 @@ class Resources extends Component {
     }
 
     componentDidMount() {
-        document.body.style = 'background: #f1f1f4;';
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.style.backgroundColor = '#312C40';
+        } else {
+            document.body.style = 'background: #f1f1f4;';
+        }
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
         }
@@ -147,7 +151,7 @@ class Resources extends Component {
         if (this.state.resourcesToDisplay && this.state.displayedResources.length >= 1) {
             resources = this.state.resourcesToDisplay.length >= 1 ? this.state.resourcesToDisplay.map((resource, id) => {
                 return <React.Fragment key={resource.id}>
-                    <div className={classes.CourseName} onClick={() => {this.displayedResourcesHandler(id)}}>
+                    <div className={classes.CourseName} onClick={() => {this.displayedResourcesHandler(id)}} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null}>
                         Cours : {resource.name}
                     </div>
 
@@ -162,14 +166,14 @@ class Resources extends Component {
                                     splitName = shownName.split('|||');
                                     searched = splitName[1];
                                 }
-                                return <div key={res.id} className={classes.ResourceCourse}>
+                                return <div key={res.id} className={classes.ResourceCourse} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null}>
                                     <div className={classes.ResourceCourseInfo}>
                                         <span>{res.type}</span>
                                         <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                                     </div>
                                     <div className={classes.ResourceCourseAddInfo}>
                                         <span>{timeago.format(res.created_at)}</span>
-                                        <button onClick={() => {this.resourceDisplayHandler(res)}}>Voir</button>
+                                        <button style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white', border:'2px solid white'} : null} onClick={() => {this.resourceDisplayHandler(res)}}>Voir</button>
                                     </div>
                                 </div>
                             }
@@ -179,9 +183,9 @@ class Resources extends Component {
                         })}
                     </div>
                 </React.Fragment>
-            }) : <div className={classes.CourseName}>Aucune ressource ne contient le terme cherché</div>;
+            }) : <div style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null} className={classes.CourseName}>Aucune ressource ne contient le terme cherché</div>;
         }else {
-            resources = <div className={classes.CourseName}>Les cours que vous suivez ne contiennent aucune ressource.</div>;
+            resources = <div style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null} className={classes.CourseName}>Les cours que vous suivez ne contiennent aucune ressource.</div>;
         }
 
         if (this.state.showModal) {
@@ -197,13 +201,13 @@ class Resources extends Component {
                 {spinner}
                 {modal}
                 <br/>
-                <div className={classes.leftResources}>
+                <div className={classes.leftResources} style={localStorage.getItem('theme') === 'dark' ? {color: 'white'} : null}>
                     <h1>Toutes vos ressources</h1>
                     {resources} 
                 </div>
 
                 <div className={classes.rightResources}>
-                    <input type="text" value={this.state.searchBar} placeholder="Cherchez une ressource par nom" onChange={(event) => {this.changeSearchHandler(event)}} />
+                    <input style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null} type="text" value={this.state.searchBar} placeholder="Cherchez une ressource par nom" onChange={(event) => {this.changeSearchHandler(event)}} />
                 </div>
             </motion.div>
         )

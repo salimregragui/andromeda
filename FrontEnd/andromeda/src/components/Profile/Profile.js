@@ -9,16 +9,16 @@ const Profile = (props) => {
 
     if (props.progression) {
         courses = <React.Fragment>
-            <div className={classes.userDataBox}>
+            <div className={classes.userDataBox} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', color:'white'} : null}>
                 Cours suivis : <span>{props.progression.length}</span>
             </div>
 
             {props.progression.map(prog => (
-                <div key={prog.id} className={classes.courseFollowed}>
+                <div key={prog.id} className={classes.courseFollowed} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', color:'white'} : null}>
                     <div className={classes.courseFollowedImg} style={{backgroundImage: "url('" + prog.image + "')"}}></div>
                     <div className={classes.courseFollowedData}>
                         {prog.name}
-                        {prog.user_id === props.user.id ? <NavLink to="/course/add">Edit</NavLink> : null}
+                        {prog.user_id === props.user.id ? <NavLink style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', border: '2px solid white', color:'white'} : null} to="/course/add">Edit</NavLink> : null}
                     </div>
                 </div>
             ))}
@@ -68,7 +68,7 @@ const Profile = (props) => {
                 <div id="userImage" onClick={() => handleClick()} className={classes.userImage} style={{backgroundImage:props.user.image ? "url('http://localhost:8000/storage/images/" + props.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                 
                 <input style={{display:'none'}} id="uploadFile" type="file" name="image" ref={fileInput} onChange={(event) => {handleFileChange(event)}}/>
-                <div className={classes.userInfosText}>
+                <div className={classes.userInfosText} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                     <em>Cliquer sur votre photo pour l'éditer.</em><br/><br/>
                     {props.user.name}<br/>
                     <span>Compte crée : {timeago.format(props.user.created_at)}</span>
@@ -78,11 +78,11 @@ const Profile = (props) => {
 
             <div className={classes.userData}>
                 {props.user.role === 'Professor' || props.user.role === 'Admin' ? <NavLink to="/course/add">Ajouter Un cours</NavLink> : null}
-                <div className={classes.userDataBox}>
+                <div className={classes.userDataBox} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', color:'white'} : null}>
                     Type de Compte : <span>Premium</span>
                 </div>
 
-                <div className={classes.userDataBox}>
+                <div className={classes.userDataBox} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', color:'white'} : null}>
                     Status : <span> {props.user.role}</span>
                 </div>
                 

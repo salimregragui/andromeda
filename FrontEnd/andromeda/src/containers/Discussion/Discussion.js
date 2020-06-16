@@ -19,7 +19,12 @@ class Discussion extends Component {
     updateDiscussions = null;
 
     componentDidMount() {
-        document.body.style = 'background: #f1f1f4;';
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.style.backgroundColor = '#312C40';
+        } else {
+            document.body.style = 'background: #f1f1f4;';
+        }
+        
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
         }
@@ -135,11 +140,11 @@ class Discussion extends Component {
                         </div>
                     </div>
                     } else {
-                        return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
+                        return <div style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null} key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
                             <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('http://localhost:8000/storage/images/" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                             <div className={classes.aDiscussionInfos}>
                                 <br/><br/>
-                                <span>{discussion.users.name}</span>
+                                <span style={localStorage.getItem('theme') === 'dark' ? {color: 'white'} : null}>{discussion.users.name}</span>
                                 <br/><br/><br/>
                                 {discussion.users.id !== this.props.user.id ? 'Vous : ' : discussion.users.name + ' : '}{discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
                                 <em>{timeago.format(discussion.visibleMessages[discussion.visibleMessages.length - 1].created_at)}</em>
@@ -149,11 +154,11 @@ class Discussion extends Component {
                     }
                 }
                 else {
-                    return <div key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
+                    return <div style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null} key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
                     <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('http://localhost:8000/storage/images/" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                     <div className={classes.aDiscussionInfos}>
                         <br/><br/>
-                        <span>{discussion.users.name}</span>
+                        <span style={localStorage.getItem('theme') === 'dark' ? {color: 'white'} : null}>{discussion.users.name}</span>
                         <br/><br/><br/>
                         {discussion.users.id !== this.props.user.id ? 'Vous : ' : discussion.users.name + ' : '}{discussion.visibleMessages[discussion.visibleMessages.length - 1].text.substring(0, 26)}...
                         <em>{timeago.format(discussion.visibleMessages[discussion.visibleMessages.length - 1].created_at)}</em>
@@ -167,19 +172,19 @@ class Discussion extends Component {
             <motion.div initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition}>
                 {spinner}
 
-                <div className={classes.DiscussionsLeft}>
-                    <input type="text" placeholder="Trouver un contact" />
-                    <h3>Ma Chat List :</h3>
+                <div className={classes.DiscussionsLeft} style={localStorage.getItem('theme') === 'dark' ? {color: 'white'} : null}>
+                    <input style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null} type="text" placeholder="Trouver un contact" />
+                    <h3 style={localStorage.getItem('theme') === 'dark' ? {color: 'white'} : null}>Ma Chat List :</h3>
                     <div className={classes.AllDiscussions}>
                         {discussions}
                     </div>
                 </div>
 
-                <div className={classes.DiscussionsRight}>
+                <div className={classes.DiscussionsRight} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null}>
                     {this.state.currentDiscussion ? <React.Fragment><div className={classes.DiscussionInfos}>
                     <div className={classes.DiscussionInfosImg} style={{backgroundImage: this.state.currentDiscussion.users.image ? "url('http://localhost:8000/storage/images/" + this.state.currentDiscussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                         <br/>
-                        <span>{this.state.currentDiscussion.users.name}</span>
+                        <span style={localStorage.getItem('theme') === 'dark' ? {color: 'white'} : null}>{this.state.currentDiscussion.users.name}</span>
                         <br/><br/>
                     </div>
 

@@ -59,7 +59,7 @@ class Notifications extends Component {
 
         return (
             <div className={classes.GlobalNotifications}>
-                <div className={classes.Notifications} onClick={this.toggleNotificationsTabHandler}>
+                <div className={classes.Notifications} onClick={this.toggleNotificationsTabHandler} style = {localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null}>
                     <div className={`${classes.NotificationsAvailable} ${totalNotifications === 0 ? classes.noNotifications : null}`}></div>
                     <img src={NotificationsIcon} alt="notifications" />
                 </div>

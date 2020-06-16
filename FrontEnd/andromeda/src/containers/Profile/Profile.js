@@ -17,7 +17,11 @@ class Profile extends Component {
         message : ''
     }
     componentDidMount() {
-        document.body.style.backgroundColor = '#f1f1f4';
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.style.backgroundColor = '#312C40';
+        } else {
+            document.body.style = 'background: #f1f1f4;';
+        }
 
         if (!this.props.progression) {
             this.setState({progressionLoaded: false});

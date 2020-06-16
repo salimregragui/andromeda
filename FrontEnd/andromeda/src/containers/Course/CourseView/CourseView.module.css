@@ -145,6 +145,17 @@
     color: #e74c3c;
 }
 
+.commentInfos em {
+    font-size: 9px;
+    border: 1px solid #181818;
+    border-radius: 5px;
+    margin-left: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
 .commentInfos button {
     position: absolute;
     right: 15px;
@@ -189,6 +200,7 @@
     padding-left: 10px;
     padding-right: 10px;
     cursor: pointer;
+    margin-left: 10px;
 
     transition: 0.2s;
 }
@@ -232,6 +244,319 @@
 
 .addComment button:hover {
     background-color: #294ab6;
+
+    transition: 0.2s;
+}
+
+.responseModal {
+    text-align: left;
+}
+
+.responseModal h2 {
+    font-weight: 600;
+    font-size: 16px;
+    margin-left: 20px;
+    padding-top: 20px;
+}
+
+.responseModal input {
+    border: 1px solid #c2c2c2;
+    border-radius: 10px;
+    width: 80%;
+    height: 40px;
+    margin-left: 20px;
+}
+
+.responseModal input:focus {
+    outline: none;
+}
+
+.responseModal button {
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+    border: none;
+    background-color: #3459D6;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: -10px;
+
+    transition: 0.2s;
+}
+
+.responseModal button:hover {
+    background-color: #294ab6;
+
+    transition: 0.2s;
+}
+
+.threadModal {
+    text-align: left;
+    position: relative;
+    padding-top: 1px;
+}
+
+.threadModal h2 {
+    font-size: 16px;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.threadComment {
+    width: 90%;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    margin-left: 5%;
+    position: relative;
+    border: 1px solid #c2c2c2;
+}
+
+.threadCommentImg {
+    background-position: center;
+    background-size:100% auto;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    border-radius: 50%;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.threadCommentInfos {
+    position: relative;
+    margin-top: 11px;
+    color: #181818;
+    font-size: 14px;
+    width: 92%;
+    float: right;
+    position: relative;
+}
+
+.threadCommentInfos span {
+    position: absolute;
+    right: 45px;
+    top: -11px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #e74c3c;
+}
+
+.threadCommentInfos em {
+    font-size: 9px;
+    border: 1px solid #181818;
+    border-radius: 5px;
+    margin-left: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.threadCommentInfos button {
+    position: absolute;
+    right: 15px;
+    top: -15px;
+    width: 25px;
+    height: 25px;
+    border: 2px solid #e74c3c;
+    border-radius: 50%;
+    background-color: white;
+    line-height: 23px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.threadCommentInfos button:hover {
+    background-color: #e74c3c;
+
+    transition: 0.2s;
+}
+
+.threadCommentContent {
+    width: 96%;
+    margin-left: 10px;
+    text-align: left;
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #757575;
+}
+
+.threadCommentButtons {
+    position: absolute;
+    right: 15px;
+}
+
+.threadCommentButtons button {
+    background-color: white;
+    color: #3459D6;
+    border: 2px solid #3459D6;
+    border-radius: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+
+    transition: 0.2s;
+}
+
+.threadCommentButtons button:hover {
+    background-color: #3459D6;
+    color: white;
+
+    transition: 0.2s;
+}
+
+.threadModalScroll {
+    width: 100%;
+    height: 600px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.threadResponse {
+    width: 85%;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    margin-left: 10%;
+    position: relative;
+    border: 1px solid #c2c2c2;
+}
+
+.threadResponseImg {
+    background-position: center;
+    background-size:100% auto;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    border-radius: 50%;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.threadResponseInfos {
+    position: relative;
+    margin-top: 11px;
+    color: #181818;
+    font-size: 14px;
+    width: 92%;
+    float: right;
+    position: relative;
+}
+
+.threadResponseInfos span {
+    position: absolute;
+    right: 45px;
+    top: -11px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #e74c3c;
+}
+
+.threadResponseInfos em {
+    font-size: 9px;
+    border: 1px solid #181818;
+    border-radius: 5px;
+    margin-left: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.threadResponseInfos button {
+    position: absolute;
+    right: 15px;
+    top: -15px;
+    width: 25px;
+    height: 25px;
+    border: 2px solid #e74c3c;
+    border-radius: 50%;
+    background-color: white;
+    line-height: 23px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.threadResponseInfos button:hover {
+    background-color: #e74c3c;
+
+    transition: 0.2s;
+}
+
+.threadResponseContent {
+    width: 96%;
+    margin-left: 10px;
+    text-align: left;
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #757575;
+}
+
+.threadResponseButtons {
+    position: absolute;
+    right: 15px;
+}
+
+.threadResponseButtons button {
+    background-color: white;
+    color: #3459D6;
+    border: 2px solid #3459D6;
+    border-radius: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+
+    transition: 0.2s;
+}
+
+.threadResponseButtons button:hover {
+    background-color: #3459D6;
+    color: white;
+
+    transition: 0.2s;
+}
+
+.closeThread {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #181818;
+    background: none;
+    cursor: pointer;
+    padding-left: 4px;
+    font-size: 12px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.closeThread:hover {
+    background-color: #181818;
+    color: white;
 
     transition: 0.2s;
 }

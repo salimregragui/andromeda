@@ -16,8 +16,8 @@ import classesIconSelect from '../../../assets/images/classes-icon-select.svg';
 
 const LeftBar = (props) => {
     return (
-        <div className={classes.LeftBar}>
-            <div className={classes.Logo}>
+        <div className={classes.LeftBar} style = {localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'}: null}>
+            <div className={classes.Logo} style = {localStorage.getItem('theme') === 'dark' ? {color : 'white', borderBottom: '1px solid #312C40', borderRight: '1px solid #312C40'} : null}>
                 <span><li>andro</li>meda</span>
             </div>
 
@@ -55,7 +55,7 @@ const LeftBar = (props) => {
             >Admin Panel</NavLink> : null}
 
             <div className={classes.Logout}>
-                <NavLink to="/auth/logout" exact>Deconnexion</NavLink>
+                <NavLink to="/auth/logout" exact style = {localStorage.getItem('theme') === 'dark' ? {backgroundColor : '#3459D6', borderBottom: '1px solid #312C40', borderRight: '1px solid #312C40'} : null}>Deconnexion</NavLink>
             </div>
         </div>
     )
