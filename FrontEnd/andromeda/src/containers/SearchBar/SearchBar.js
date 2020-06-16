@@ -100,7 +100,7 @@ class SearchBar extends Component {
                             searched = splitName[1];
                         }
 
-                       return <div key={'chapter-' + cid} className={classes.searchElement} onClick={() => {this.goToDataHandler('chapter', chapter.course_name)}}>
+                       return <div style = {localStorage.getItem('theme') === 'dark' ? {color:'white'} : null} key={'chapter-' + cid} className={classes.searchElement} onClick={() => {this.goToDataHandler('chapter', chapter.course_name)}}>
                            <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                         </div>
                     })}
@@ -120,7 +120,7 @@ class SearchBar extends Component {
                             splitName = shownName.split('|||');
                             searched = splitName[1];
                         }
-                       return <div key={section.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('section', section.course_name)}}>
+                       return <div style = {localStorage.getItem('theme') === 'dark' ? {color:'white'} : null} key={section.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('section', section.course_name)}}>
                            <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                         </div>
                     })}
@@ -140,7 +140,7 @@ class SearchBar extends Component {
                              splitName = shownName.split('|||');
                              searched = splitName[1];
                          }
-                       return <div key={course.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('course', course.name)}}>
+                       return <div style = {localStorage.getItem('theme') === 'dark' ? {color:'white'} : null} key={course.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('course', course.name)}}>
                            <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                         </div>
                     })}
@@ -160,7 +160,7 @@ class SearchBar extends Component {
                              splitName = shownName.split('|||');
                              searched = splitName[1];
                          }
-                       return <div key={'resource-' + resource.resource_id} className={classes.searchElement} onClick={() => {this.goToDataHandler('resource', resource.resource_name)}}>
+                       return <div style = {localStorage.getItem('theme') === 'dark' ? {color:'white'} : null} key={'resource-' + resource.resource_id} className={classes.searchElement} onClick={() => {this.goToDataHandler('resource', resource.resource_name)}}>
                            <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                         </div>
                     })}
@@ -180,7 +180,7 @@ class SearchBar extends Component {
                             splitName = shownName.split('|||');
                             searched = splitName[1];
                         }
-                      return <div key={task.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('task', task.content)}}>
+                      return <div style = {localStorage.getItem('theme') === 'dark' ? {color:'white'} : null} key={task.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('task', task.content)}}>
                           <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                        </div>
                     })}
@@ -200,7 +200,7 @@ class SearchBar extends Component {
                             splitName = shownName.split('|||');
                             searched = splitName[1];
                         }
-                      return <div key={user.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('user', user.name)}}>
+                      return <div style = {localStorage.getItem('theme') === 'dark' ? {color:'white'} : null} key={user.id} className={classes.searchElement} onClick={() => {this.goToDataHandler('user', user.name)}}>
                           <li>{splitName ? splitName[0] : shownName }<em className={classes.searchedElement} dangerouslySetInnerHTML={{ __html: searched }}></em>{splitName ? splitName[2] : null }</li>
                        </div>
                     })}
@@ -218,12 +218,12 @@ class SearchBar extends Component {
         return (
             <div className={classes.Search}>
                 <input placeholder="Cherchez dans les cours, ressources, utilisateurs, ..." type="text" value={this.state.search} onChange={this.changeSearchHandler} />
-                <div className={`${classes.SearchResults} ${this.state.showingResults ? null : classes.hiddenSearch}`}>
+                <div style = {localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', border:'1px solid #201d2a'} : null} className={`${classes.SearchResults} ${this.state.showingResults ? null : classes.hiddenSearch}`}>
                     {searchResults && searchResults !== 'Loading...' && searchResults !== 'Aucun resultat trouvé.' ? searchResults.map((sr, id) => {
                         return <React.Fragment key={id}>
                             {sr}
                         </React.Fragment>
-                    }) : <strong>{searchResults}</strong>}
+                    }) : <strong style = {localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>{searchResults}</strong>}
                     <br/>
                 </div>
             </div>

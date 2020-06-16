@@ -38,15 +38,15 @@ class Notifications extends Component {
         }
 
         if (notifications && this.state.notificationsShowing) {
-            notificationsTab = <div className={classes.NotificationsTab}>
-                <button onClick={this.setAllNotificationsSeen}>
+            notificationsTab = <div className={classes.NotificationsTab} style = {localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', border:'1px solid #201d2a'} : null}>
+                <button onClick={this.setAllNotificationsSeen} style = {localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null}>
                     <img src={NotificationHide} alt="Mark as read" />
                     <span>Marquer tout comme lu</span>
                 </button>
                 {notifications.map((notification,id) =>{
                     if (!notification.seen) {
                         return <div key={id} className={classes.aNotification}>
-                                <button onClick={() => this.setNotificationSeen(id)}><img src={NotificationHide} alt="Mark as read" /></button>
+                                <button style = {localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null} onClick={() => this.setNotificationSeen(id)}><img src={NotificationHide} alt="Mark as read" /></button>
                                 <div className={classes.aNotificationContent}>{notification.content}</div>
                             </div>
                     }

@@ -237,7 +237,8 @@ class Tasks extends Component {
     }
 
     darkThemeBackground = {
-        backgroundColor: '#2C2839'
+        backgroundColor: '#2C2839',
+        width: '72%'
     }
 
     render() {
@@ -261,7 +262,7 @@ class Tasks extends Component {
         if (this.state.modal) {
             if(this.state.modalType === 'newTask') {
                 modal = <Modal width='40' height='230px'>
-                    <div className={classes.newTask}>
+                    <div className={classes.newTask} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                         <br/>
                         <h1 className={classes.newTaskTitle}>Nouvelle tache</h1>
                         <form onSubmit={(event) => {this.onNewTaskSubmitHandler(event)}}>
