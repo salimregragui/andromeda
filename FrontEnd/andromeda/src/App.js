@@ -50,12 +50,7 @@ class App extends Component {
       .catch(error => {
         this.setState({loading: false})
         localStorage.removeItem('token');
-        this.props.history.push({
-          pathname: '/error',
-          state: {
-              error: error
-          }
-        });
+        this.props.history.push('/auth/signin');
         })
     }
   }

@@ -179,14 +179,14 @@ class CourseView extends Component {
             if (type === 'follow') {
                 this.props.onNotificationAdd({
                     'type': 'success',
-                    'content':'Vous suivez maintenant ce cours !',
+                    'content':'Vous suivez maintenant ce cours, votre progression sera maintenant enregistrée sur votre compte !',
                     'seen': false,
                     'displayed': false
                 })
             } else {
                 this.props.onNotificationAdd({
                     'type': 'success',
-                    'content':'Vous ne suivez plus ce cours !',
+                    'content':'Vous ne suivez plus ce cours, toute votre progression a été supprimée !',
                     'seen': false,
                     'displayed': false
                 })
