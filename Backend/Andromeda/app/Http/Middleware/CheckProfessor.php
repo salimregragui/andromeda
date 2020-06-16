@@ -19,7 +19,7 @@ class CheckProfessor
 
             $user = auth()->userOrFail();
             
-            if ( ! ($user->role == 'Admin' or $user->role == 'Professor') ) {
+            if ( ! ($user->role == 'Admin' or ($user->role == 'Professor' and $user->status == 'Active')) ) {
                 abort(401);
             }
             

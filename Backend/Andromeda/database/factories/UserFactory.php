@@ -25,6 +25,6 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => '$2y$10$DIPzP2Xd5VpuY0YZz2wuw.QU4T.Gty49uV9IB2OaiRBox5TcIgtsm', // password 12345678
         'remember_token' => Str::random(10),
         'role'=> 'Professor',
-        'status' => 'actif',
+        'status' => 'Active',
     ];
 });

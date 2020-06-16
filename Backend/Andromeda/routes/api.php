@@ -26,6 +26,7 @@ Route::group([
 
     Route::get('course','CourseController@index'); //* display all valide  courses
     Route::get('course/invalide','CourseController@invalideCourses');//* display all invalide  courses
+    Route::get('course-validation/{course}','CourseController@valide')->middleware('CheckAdmin');//* make a course valide
     Route::get('course/progression','CourseController@courseProgressions');//* display all courses followed with progression
     Route::get('course/{course}','CourseController@show');//* display specific course
     Route::post('course','CourseController@store')->middleware('CheckProfessor');//* store course
@@ -122,5 +123,19 @@ Route::group([
     //-----------------------------Note & Comment Course --------------------------------------
 
     Route::post('comment-course/{course}','ProgressionController@store');
+
+    //-----------------------------Bugs--------------------------------------
+
+    Route::get('bug','BugController@index')->middleware('CheckAdmin');
+    Route::get('bug/show-approved','BugController@showApproved')->middleware('CheckAdmin');
+    Route::get('bug/show-none-approved','BugController@showNoneApproved')->middleware('CheckAdmin');
+    Route::get('bug/approved/{bug}','BugController@approved')->middleware('CheckAdmin');
+    Route::get('bug/repaired/{bug}','BugController@repaired')->middleware('CheckAdmin');
+    Route::post('bug','BugController@store');
+    Route::delete('bug/{bug}','BugController@noneApproved')->middleware('CheckAdmin');
+
+
+
+
 });
 
