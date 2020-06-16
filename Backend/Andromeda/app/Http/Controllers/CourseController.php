@@ -21,7 +21,7 @@ class CourseController extends Controller
         foreach ($courses as $course) 
         {
             $cptChapter=0; //compteur de chapitre dans chaque cours
-            if ($course->image =!null) {
+            if ($course->image !=null) {
                 $course->image=asset(Storage::url('images/'.$course->image));
             }
             
@@ -190,7 +190,7 @@ class CourseController extends Controller
     {   
         $user = auth()->user();
 
-        if ($course->User == $user or $user->role == 'Admin' ) {
+        if ($course->User == $user or $user->role == 'Admin' and request()->hasFile('image')) {
         
             $this->validation();
             $extention=request()->image->getClientOriginalExtension();
@@ -231,7 +231,7 @@ class CourseController extends Controller
         if ($course->User == $user or $user->role == 'Admin' ) {
             $file_path='storage/images/'.$course->image;
 
-            if (file_exists($file_path)) {
+            if (file_exists($file_path) and $course->image != null) {
                 unlink($file_path);
             }
             $course->delete();

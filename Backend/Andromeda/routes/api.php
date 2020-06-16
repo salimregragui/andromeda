@@ -123,5 +123,19 @@ Route::group([
     //-----------------------------Note & Comment Course --------------------------------------
 
     Route::post('comment-course/{course}','ProgressionController@store');
+
+    //-----------------------------Bugs--------------------------------------
+
+    Route::get('bug','BugController@index')->middleware('CheckAdmin');
+    Route::get('bug/show-approved','BugController@showApproved')->middleware('CheckAdmin');
+    Route::get('bug/show-none-approved','BugController@showNoneApproved')->middleware('CheckAdmin');
+    Route::get('bug/approved/{bug}','BugController@approved')->middleware('CheckAdmin');
+    Route::get('bug/repaired/{bug}','BugController@repaired')->middleware('CheckAdmin');
+    Route::post('bug','BugController@store');
+    Route::delete('bug/{bug}','BugController@noneApproved')->middleware('CheckAdmin');
+
+
+
+
 });
 

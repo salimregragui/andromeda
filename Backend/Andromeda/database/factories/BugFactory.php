@@ -12,5 +12,7 @@ $factory->define(Bug::class, function (Faker $faker) {
         'attachment' => 'bug.jpg',
         'approved' => 0,
         'repaired' => 0,
+        'description' => $faker->paragraph(),
+        
     ];
 });
