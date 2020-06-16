@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Chapter;
 use App\Course;
-
+use App\Progression;
 
 class ProgressionController extends Controller
 {
@@ -66,5 +67,23 @@ class ProgressionController extends Controller
         ]);
     }
 
+    public function update(Progression $progression,Chapter $chapter)
+    {
+        try {
+            $user = auth()->userOrFail();
+            
+            if ($user->Progressions->where('id',$progression->id)->first()){
+                $progression->chapter_id=$chapter->id;
+                $progression->save();
+                return response()->json(['Progression'=>$progression]);
+            }
+            abort(401);
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+            abort(401);
+        }
+        abort(401);
+
+        
+    }
    
 }

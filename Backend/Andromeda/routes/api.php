@@ -134,7 +134,9 @@ Route::group([
     Route::post('bug','BugController@store');
     Route::delete('bug/{bug}','BugController@noneApproved')->middleware('CheckAdmin');
 
+    //-----------------------------Progression--------------------------------------
 
+    Route::put('progression/{progression}/{chapter}','ProgressionController@update');
 
 
 });
