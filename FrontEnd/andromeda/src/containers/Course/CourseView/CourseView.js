@@ -13,8 +13,8 @@ import * as notificationActions from '../../../store/actions/index';
 
 class CourseView extends Component {
     state = {
-        currentChapter: 'UX design en action',
-        currentChapterVideo: 'https://www.youtube.com/watch?v=ysz5S6PUM-U',
+        currentChapter: '',
+        currentChapterVideo: '',
         displayedSections: [false, false],
         infos: 'details cours',
         chapterComments: null,
@@ -22,7 +22,8 @@ class CourseView extends Component {
         response: '',
         commentId: null,
         modalType: null,
-        chapterId: null
+        chapterId: null,
+        loaded: false
     }
     componentDidMount() {
         if (localStorage.getItem('theme') === 'dark') {
@@ -33,6 +34,41 @@ class CourseView extends Component {
 
         if (!localStorage.getItem('token')) {
             this.props.history.push('/auth/signin');
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.props.progression && !this.state.loaded && this.props.courses) {
+            let nextChapterId = null;
+            let nextChapterName = '';
+            let nextChapterVideo = '';
+            let course = this.props.courses.find(ps => ps.name === this.props.match.params.courseName.split('-').join(' '));
+            let progression = this.props.progression.find(ps => ps.name === this.props.match.params.courseName.split('-').join(' '));
+        
+            if (progression) {
+                if (progression.progression.chapter_id !== null) {
+                    course.sections.map(section => {
+                        section.chapters.map(chapter => {
+                            if (chapter.id === progression.progression.chapter_id) {
+                                nextChapterId = chapter.id;
+                                nextChapterName = chapter.name;
+                                nextChapterVideo = chapter.video;
+                            }
+                        })
+                    })
+                } else {
+                    nextChapterName = course.sections[0].chapters[0].name;
+                    nextChapterVideo = course.sections[0].chapters[0].video;
+                    nextChapterId = course.sections[0].chapters[0].id;
+                }
+            } else {
+                nextChapterName = '';
+                nextChapterVideo = '';
+                nextChapterId = '';
+            }
+
+            this.setState({chapterId: nextChapterId, currentChapterVideo: nextChapterVideo, currentChapter: nextChapterName, loaded: true});
+            console.log(this.state);
         }
     }
 
@@ -169,6 +205,64 @@ class CourseView extends Component {
         else if (type === 'comment') {
             this.setState({comment: event.target.value});
         }
+    }
+
+    updateProgression = () => {
+        let progression = null;
+        
+        if(this.props.progression) {
+            progression = this.props.progression.find(ps => ps.name === this.props.match.params.courseName.split('-').join(' '));
+            if (progression) {
+                progression = progression.progression;
+            }
+        }
+
+        let nextChapterId = null;
+        let nextChapterName = '';
+        let nextChapterVideo = '';
+        let nextOne = false;
+        let course = this.props.courses.find(ps => ps.name === this.props.match.params.courseName.split('-').join(' '));
+        course.sections.map(section => {
+            section.chapters.map(chapter => {
+                if (chapter.id === this.state.chapterId) {
+                    nextOne = true;
+                }
+
+                if (nextOne && chapter.id !== this.state.chapterId) {
+                    nextChapterId = chapter.id;
+                    nextChapterName = chapter.name;
+                    nextChapterVideo = chapter.video;
+                    nextOne = false;
+                }
+            })
+        })
+
+        if (progression) {
+            if (nextChapterId > progression.chapter_id) {
+                axios.put('http://localhost:8000/api/auth/progression/' + progression.id + '/' + nextChapterId)
+                .then(response => {
+                    console.log(response);
+                    this.props.onNotificationAdd({
+                        'type':'success',
+                        'content': 'Votre progression a été mise à jour !',
+                        'seen': false,
+                        'displayed': false
+                    })
+                    this.props.onGetProgression();
+                })
+                .catch(error => console.log(error));
+            }
+        } else {
+            this.props.onNotificationAdd({
+                'type':'error',
+                'content': 'Suivez le cours pour sauvegarder votre progression !',
+                'seen': false,
+                'displayed': false
+            })
+        }
+
+        this.setState({currentChapter: nextChapterName, chapterId: nextChapterId, currentChapterVideo: nextChapterVideo});
+        console.log(this.state);
     }
 
     followCourse = (type) => {
@@ -407,7 +501,8 @@ class CourseView extends Component {
                 </AnimatePresence>
                 {course ? <React.Fragment>
                     <div className={classes.CourseViewLeft} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
-                        <ReactPlayer url={this.state.currentChapterVideo} controls width='600px' height='400px'/>
+                        {this.state.currentChapterVideo !== '' ? <ReactPlayer url={this.state.currentChapterVideo} controls width='600px' height='400px'
+                        onEnded={this.updateProgression}/> : null }
                         <h2>{course.name}</h2>
                         {followButton}
 
