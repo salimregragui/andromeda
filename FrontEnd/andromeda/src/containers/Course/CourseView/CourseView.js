@@ -392,12 +392,12 @@ class CourseView extends Component {
         let followButton = null;
         if (this.props.progression) {
             if (this.props.progression.some(e => e.name === this.props.match.params.courseName.split('-').join(' '))) {
-                followButton = <button onClick={() => {this.followCourse('unfollow')}}>Ne plus suivre ce cours</button>;
+                followButton = <button className={classes.followButton} onClick={() => {this.followCourse('unfollow')}}>Ne plus suivre ce cours</button>;
             } else {
-                followButton = <button onClick={() => {this.followCourse('follow')}}>Suivre ce cours</button>
+                followButton = <button className={classes.followButton} onClick={() => {this.followCourse('follow')}}>Suivre ce cours</button>
             }
         } else {
-            followButton = <button onClick={() => {this.followCourse('follow')}}>Suivre ce cours</button>
+            followButton = <button className={classes.followButton} onClick={() => {this.followCourse('follow')}}>Suivre ce cours</button>
         }
 
         return (
@@ -409,6 +409,7 @@ class CourseView extends Component {
                     <div className={classes.CourseViewLeft} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                         <ReactPlayer url={this.state.currentChapterVideo} controls width='600px' height='400px'/>
                         <h2>{course.name}</h2>
+                        {followButton}
 
                         <div className={classes.CourseViewBar} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', color:'white'} : null}>
                             <button id='details cours' className={classes.buttonData} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', color: 'white'} : {color: '#181818'}} onClick={() => {this.dataButtonsHandler('details cours')}}>Details du cours</button>
@@ -424,7 +425,6 @@ class CourseView extends Component {
                     </div>
 
                     <div className={classes.CourseViewRight} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
-                        {followButton}
                         <h2>Contenu du cours</h2>
                         {sections}
                         <br/><br/>
