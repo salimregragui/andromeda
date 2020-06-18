@@ -86,7 +86,7 @@ li {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #2196f3;
     -webkit-transition: 0.4s;
     transition: 0.4s;
   }
@@ -96,7 +96,7 @@ li {
     content: "";
     height: 30px;
     width: 30px;
-    left: 0px;
+    right: 0px;
     bottom: 4px;
     top: 0;
     bottom: 0;
@@ -104,24 +104,24 @@ li {
     -webkit-transition: 0.4s;
     transition: 0.4s;
     box-shadow: 0 0px 15px #2020203d;
-    background: white url('https://i.ibb.co/FxzBYR9/night.png');
+    background: white url('https://i.ibb.co/7JfqXxB/sunny.png');
     background-repeat: no-repeat;
     background-position: center;
   }
   
   input:checked + .slider {
-    background-color: #2196f3;
+    background-color: #ccc;
   }
   
   input:focus + .slider {
-    box-shadow: 0 0 1px #2196f3;
+    box-shadow: 0 0 1px #ccc;
   }
   
   input:checked + .slider:before {
-    -webkit-transform: translateX(20px);
-    -ms-transform: translateX(20px);
-    transform: translateX(20px);
-    background: white url('https://i.ibb.co/7JfqXxB/sunny.png');
+    -webkit-transform: translateX(-20px);
+    -ms-transform: translateX(-20px);
+    transform: translateX(-20px);
+    background: white url('https://i.ibb.co/FxzBYR9/night.png');
     background-repeat: no-repeat;
     background-position: center;
   }
@@ -152,7 +152,7 @@ li {
     -webkit-transition: 0.4s;
     transition: 0.4s;
     box-shadow: 0 0px 15px #2020203d;
-    background: white url('https://i.ibb.co/FxzBYR9/sunny.png');
+    background: white url('https://i.ibb.co/FxzBYR9/night.png');
     background-repeat: no-repeat;
     background-position: center;
   }
@@ -163,13 +163,13 @@ li {
   
   input:focus + .sliderDark {
     box-shadow: 0 0 1px #2196f3;
-  }
+  } 
   
   input:checked + .sliderDark:before {
     -webkit-transform: translateX(20px);
     -ms-transform: translateX(20px);
     transform: translateX(20px);
-    background: white url('https://i.ibb.co/7JfqXxB/night.png');
+    background: white url('https://i.ibb.co/7JfqXxB/sunny.png');
     background-repeat: no-repeat;
     background-position: center;
   }
