@@ -148,6 +148,21 @@ class Admin extends Component {
         this.setState({selectedUser: null, showingModal: false});
     }
 
+    validateCourse = () => {
+        axios.get('http://localhost:8000/api/auth/course-validation/' + this.state.selectedCourse.id)
+        .then(response => {
+            console.log(response);
+            this.props.onAddNotification({
+                'type': 'success',
+                'content': 'Le cours ' + this.state.selectedCourse.name + ' a été validé avec succès !',
+                'seen': false,
+                'displayed': false
+            });
+            this.props.onGetCourses();
+        })
+        .catch(error => console.log(error));
+    }
+
     darkThemeForeground = {
         backgroundColor: '#312C40',
         color: 'white'
@@ -198,6 +213,7 @@ class Admin extends Component {
 
                         <div className={classes.userButtons}>
 
+                            {this.state.selectedCourse.valide !== 1 ? <button onClick={this.validateCourse}>Valider le cours</button> : null}
                             <button style={{backgroundColor: "#181818"}} onClick={this.closeModal}>Fermer</button>
                         </div>
                         <br/><br/><br/>

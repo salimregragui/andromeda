@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Chapter;
 use App\Course;
 use App\Progression;
+use Illuminate\Support\Facades\Storage;
 
 class ProgressionController extends Controller
 {

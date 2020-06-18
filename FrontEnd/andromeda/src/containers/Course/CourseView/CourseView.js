@@ -10,6 +10,9 @@ import likeIcon from '../../../assets/images/like.svg';
 import unlikeIcon from '../../../assets/images/unlike.svg';
 import Modal from '../../../components/UI/Modal/Modal';
 import * as notificationActions from '../../../store/actions/index';
+import Star from '../../../assets/images/full-star.svg';
+import HalfStar from '../../../assets/images/half-star.svg';
+import EmptyStar from '../../../assets/images/empty-star.svg';
 
 class CourseView extends Component {
     state = {
@@ -23,7 +26,9 @@ class CourseView extends Component {
         commentId: null,
         modalType: null,
         chapterId: null,
-        loaded: false
+        loaded: false,
+        review: '',
+        note: 0
     }
     componentDidMount() {
         if (localStorage.getItem('theme') === 'dark') {
@@ -56,10 +61,14 @@ class CourseView extends Component {
                             }
                         })
                     })
+
+                    this.getChapterComments(nextChapterId);
                 } else {
                     nextChapterName = course.sections[0].chapters[0].name;
                     nextChapterVideo = course.sections[0].chapters[0].video;
                     nextChapterId = course.sections[0].chapters[0].id;
+
+                    this.getChapterComments(course.sections[0].chapters[0].id);
                 }
             } else {
                 nextChapterName = '';
@@ -117,6 +126,12 @@ class CourseView extends Component {
         axios.post('http://localhost:8000/api/auth/comment/response/' + commentId, response)
         .then(response => {
             console.log(response);
+            this.props.onNotificationAdd({
+                'type': 'success',
+                'content': 'Vous avez répondu au cours avec succès !',
+                'seen': false,
+                'displayed': false
+            });
             this.getChapterComments(response.data.chapter_id);
             this.closeModal();
         })
@@ -131,7 +146,42 @@ class CourseView extends Component {
         axios.post('http://localhost:8000/api/auth/comment/'+this.state.chapterId, response)
         .then(response => {
             console.log(response);
+            this.props.onNotificationAdd({
+                'type': 'success',
+                'content': 'Vous avez ajouter un commentaire au chapitre avec succès !',
+                'seen': false,
+                'displayed': false
+            });
             this.getChapterComments(this.state.chapterId);
+            this.closeModal();
+        })
+        .catch(error => console.log(error));
+    }
+
+    addReview = () => {
+        let review = null;
+        if (this.state.review === '') {
+            review = {
+                note: this.state.note
+            }
+        } else {
+            review = {
+                text: this.state.review,
+                note: this.state.note
+            }
+        }
+
+        let course = this.props.courses.find(ps => ps.name === this.props.match.params.courseName.split('-').join(' '));
+
+        axios.post('http://localhost:8000/api/auth/comment-course/'+course.id, review)
+        .then(response => {
+            console.log(response);
+            this.props.onNotificationAdd({
+                'type': 'success',
+                'content': 'Vous avez ajouter un avis au cours avec succès !',
+                'seen': false,
+                'displayed': false
+            });
             this.closeModal();
         })
         .catch(error => console.log(error));
@@ -194,16 +244,27 @@ class CourseView extends Component {
         this.setState({modalType:'comment'});
     }
 
+    showReviewModal = () => {
+        this.setState({modalType: 'review'});
+    }
+
     closeModal = () => {
         this.setState({modalType: null, response: '', comment: ''});
     }
 
-    changeInputHandler = (event, type) => {
+    changeInputHandler = (event, type, input) => {
         if (type === 'response') {
             this.setState({response: event.target.value});
         }
         else if (type === 'comment') {
             this.setState({comment: event.target.value});
+        }
+        else if (type === 'review') {
+            if (input === 'note') {
+                this.setState({note: event.target.value});
+            } else {
+                this.setState({review: event.target.value});
+            }
         }
     }
 
@@ -319,7 +380,9 @@ class CourseView extends Component {
         let modal = null;
         if (this.props.progression) {
             progression = this.props.progression.find(ps => ps.name === this.props.match.params.courseName.split('-').join(' '));
-            progression = progression.progression;
+            if (progression) {
+                progression = progression.progression;
+            }
         }
 
         if(this.props.courses && course === null) {
@@ -372,6 +435,17 @@ class CourseView extends Component {
                         <h2>Ajouter un commentaire</h2>
                         <input placeholder="Ecrivez votre commentaire ici." type="text" value={this.state.comment} onChange={(event) => {this.changeInputHandler(event, 'comment')}}/>
                         <button onClick={this.addCommentHandler}>Envoyer le commentaire</button>
+                        <button onClick={this.closeModal}>Annuler</button>
+                    </div>
+                </Modal>
+            }
+            else if (this.state.modalType === 'review') {
+                modal = <Modal width="40" height="250px">
+                    <div className={classes.responseModal}>
+                        <h2>Ajouter un avis</h2>
+                        <input placeholder="La note du cours (entre 0 et 5)" type="text" value={this.state.note} onChange={(event) => {this.changeInputHandler(event, 'review', 'note')}}/><br/><br/>
+                        <input placeholder="Pourquoi cette note ? (optionnel)" type="text" value={this.state.review} onChange={(event) => {this.changeInputHandler(event, 'review', 'text')}}/>
+                        <button onClick={this.addReview}>Envoyer l'avis</button>
                         <button onClick={this.closeModal}>Annuler</button>
                     </div>
                 </Modal>
@@ -482,18 +556,120 @@ class CourseView extends Component {
                 {comments}
                 </React.Fragment>
         }
+        else if (this.state.infos === 'avis' && course) {
+            let avis = <p>Ce cours ne contient aucun avis.</p>;
+
+            if (course.followed) {
+                avis = course.followed.map(follow => {
+                    let progression = follow.progressions.find(ps => ps.course_id === course.id);
+                    if (progression) {
+                        if (progression.note) {
+                            let stars = null;
+                            let noteRestante = 5;
+                            let noteProgressionRestant = 5 - progression.note;
+                            for(let i = 0; i < Math.floor(progression.note); i++) {
+                                stars = [stars, <img key={Math.floor(Math.random() * 5000)} src={Star} width="16px" height="16px" />];
+                                noteRestante = noteRestante - 1;
+                            }
+
+                            if (noteRestante >= 1 && noteProgressionRestant >= 1) {
+                                for(let i = 0; i < noteRestante; i++) {
+                                    stars = [stars, <img key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="16px" height="16px" />]
+                                }
+
+                                noteRestante = 0;
+                            }
+
+                            return <div key={follow.id} className={classes.comment} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null}>
+                                <div className={classes.commentImg} onClick={() => {this.props.history.push('/profile/' + follow.name.split(' ').join('-'))}} style={{cursor:'pointer', backgroundImage: follow.image ? "url('" + follow.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                                <div className={classes.commentInfos} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
+                                    {follow.name} 
+                                    {follow.role === 'Professor' ? <em style={{border: '1px solid #16a085', color:'#16a085'}}>Professeur</em> : null}
+                                    {follow.role === 'Admin' ? <em style={{border: '1px solid #2ecc71', color:'#2ecc71'}}>Administrateur</em> : null}
+                                    <span style={{right:'20px', marginTop:'0px'}}>{stars}</span>
+                                </div>
+                                <div className={classes.commentContent}>
+                                    {progression.text ? progression.text : null}
+                                </div>
+                                <br/><br/>
+                            </div>
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        return null;
+                    }
+                })
+            }
+
+            let addReview = null;
+
+            if (progression) {
+                if (!progression.note) {
+                    addReview = <div className={classes.addComment} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', color:'white'} : null}>
+                        <h2 style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>Ajouter un avis</h2>
+                        <button onClick={this.showReviewModal}>Donner avis</button>
+                    </div>
+                }
+            }
+
+            data = <React.Fragment>
+                {addReview}
+                {avis}
+            </React.Fragment>;
+        }
 
         let followButton = null;
         if (this.props.progression) {
             if (this.props.progression.some(e => e.name === this.props.match.params.courseName.split('-').join(' '))) {
-                followButton = <button className={classes.followButton} onClick={() => {this.followCourse('unfollow')}}>Ne plus suivre ce cours</button>;
+                followButton = <button style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#312C40', color:'white', border: '2px solid white'} : null} className={classes.followButton} onClick={() => {this.followCourse('unfollow')}}>Ne plus suivre ce cours</button>;
             } else {
-                followButton = <button className={classes.followButton} onClick={() => {this.followCourse('follow')}}>Suivre ce cours</button>
+                followButton = <button style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#312C40', color:'white', border: '2px solid white'} : null} className={classes.followButton} onClick={() => {this.followCourse('follow')}}>Suivre ce cours</button>
             }
         } else {
-            followButton = <button className={classes.followButton} onClick={() => {this.followCourse('follow')}}>Suivre ce cours</button>
+            followButton = <button style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#312C40', color:'white', border: '2px solid white'} : null} className={classes.followButton} onClick={() => {this.followCourse('follow')}}>Suivre ce cours</button>
         }
 
+        let courseStars = null;
+        if (course) {
+            let noteRestante = 5;
+            let noteProgressionRestant = 5 - course.rating;
+            for(let i = 0; i < Math.floor(course.rating); i++) {
+                courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={Star} width="16px" height="16px" />];
+                noteRestante = noteRestante - 1;
+            }
+    
+            if (noteRestante >= 1 && noteProgressionRestant === 1) {
+                console.log("yeaah");
+                for(let i = 0; i < noteRestante; i++) {
+                    courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="16px" height="16px" />]
+                }
+    
+                noteRestante = 0;
+            }
+    
+            if (noteRestante > 1 && noteProgressionRestant < 5 && noteProgressionRestant > 1 && noteProgressionRestant % 1 !== 0) {
+                courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={HalfStar} width="16px" height="16px" />];
+    
+                for(let i = 0; i < noteRestante - 1; i++) {
+                    courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="16px" height="16px" />]
+                }
+    
+                noteRestante = 0;
+            }
+
+            if (noteRestante > 1 && noteProgressionRestant < 5 && noteProgressionRestant > 1 && noteProgressionRestant % 1 === 0) {
+                for(let i = 0; i < noteRestante; i++) {
+                    courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="16px" height="16px" />]
+                }
+    
+                noteRestante = 0;
+            }
+    
+            if (noteRestante === 1 && noteProgressionRestant < 1 && noteProgressionRestant > 0) {
+                courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={HalfStar} width="16px" height="16px" />]
+            }
+        }
         return (
             <motion.div id="main" initial="initial" animate="in" exit="out" variants={this.pageVariants} transition={this.pageTransition} className={classes.CourseView}>
                 <AnimatePresence>
@@ -504,15 +680,16 @@ class CourseView extends Component {
                         {this.state.currentChapterVideo !== '' ? <ReactPlayer url={this.state.currentChapterVideo} controls width='600px' height='400px'
                         onEnded={this.updateProgression}/> : null }
                         <h2>{course.name}</h2>
-                        {followButton}
-
+                        {followButton}<br/>
+                        <em>{courseStars}</em>
+                        <br/><br/>
                         <div className={classes.CourseViewBar} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', color:'white'} : null}>
                             <button id='details cours' className={classes.buttonData} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', color: 'white'} : {color: '#181818'}} onClick={() => {this.dataButtonsHandler('details cours')}}>Details du cours</button>
                             <button style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null} id='commentaires' onClick={() => {this.dataButtonsHandler('commentaires')}} className={classes.buttonData}>Commentaires du chapitre</button>
-                            <button style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null} id='projets' onClick={() => {this.dataButtonsHandler('projets')}} className={classes.buttonData}>Projets</button>
+                            <button style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null} id='avis' onClick={() => {this.dataButtonsHandler('avis')}} className={classes.buttonData}>Avis</button>
                         </div>
 
-                        <div className={classes.CourseViewData}>
+                        <div className={classes.CourseViewData} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                             {data}
                             <br/><br/>
                         </div>
