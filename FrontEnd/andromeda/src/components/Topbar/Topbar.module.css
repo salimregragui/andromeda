@@ -6,28 +6,30 @@
 }
 
 .Logo {
-    width: 15%;
-    height: 100%;
+    width: 16.5%;
+    height: 70px;
     font-weight: 700;
     font-size: 22px;
     color: #181818;
     border-right: 1px solid #dadada;
     text-align: left;
-    align-items: center;
-    padding-left: 3%;
     float: left;
+    border-bottom: 1px solid #dadada;
+    padding-left: 1.5%;
+}
+
+.Logo img {
+    float: left;
+    margin-top: 15px;
+    margin-right: 5px;
 }
 
 .Logo span {
     margin: 0;
     position: relative;
-    top: 30%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-}
-
-.Logo span:hover {
-    cursor: pointer;
+    line-height: 70px;
 }
 
 li {

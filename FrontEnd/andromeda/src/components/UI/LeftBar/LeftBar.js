@@ -12,13 +12,14 @@ import discussionIconSelect from '../../../assets/images/discussion-icon-select.
 import tasksIconSelect from '../../../assets/images/tasks-icon-select.svg';
 import ressourcesIconSelect from '../../../assets/images/resources-icon-select.svg';
 import classesIconSelect from '../../../assets/images/classes-icon-select.svg';
+import Logo from '../../../assets/images/logo-alone.svg';
 
 
 const LeftBar = (props) => {
     return (
         <div className={classes.LeftBar} style = {localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'}: null}>
             <div className={classes.Logo} style = {localStorage.getItem('theme') === 'dark' ? {color : 'white', borderBottom: '1px solid #312C40', borderRight: '1px solid #312C40'} : null}>
-                <span><li>andro</li>meda</span>
+                <img src={Logo} height="40px"/><span><li>andro</li>meda</span>
             </div>
 
             <h3 className={classes.mainMenu}>Main Menu</h3>

@@ -28,7 +28,7 @@ class CourseView extends Component {
         chapterId: null,
         loaded: false,
         review: '',
-        note: 0
+        note: 1
     }
     componentDidMount() {
         if (localStorage.getItem('theme') === 'dark') {
@@ -59,7 +59,10 @@ class CourseView extends Component {
                                 nextChapterName = chapter.name;
                                 nextChapterVideo = chapter.video;
                             }
+
+                            return null;
                         })
+                        return null;
                     })
 
                     this.getChapterComments(nextChapterId);
@@ -295,7 +298,11 @@ class CourseView extends Component {
                     nextChapterVideo = chapter.video;
                     nextOne = false;
                 }
+
+                return null;
             })
+
+            return null;
         })
 
         if (progression) {
@@ -323,7 +330,7 @@ class CourseView extends Component {
         }
 
         this.setState({currentChapter: nextChapterName, chapterId: nextChapterId, currentChapterVideo: nextChapterVideo});
-        console.log(this.state);
+        this.getChapterComments(nextChapterId);
     }
 
     followCourse = (type) => {
@@ -443,7 +450,13 @@ class CourseView extends Component {
                 modal = <Modal width="40" height="250px">
                     <div className={classes.responseModal}>
                         <h2>Ajouter un avis</h2>
-                        <input placeholder="La note du cours (entre 0 et 5)" type="text" value={this.state.note} onChange={(event) => {this.changeInputHandler(event, 'review', 'note')}}/><br/><br/>
+                        <select value={this.state.note} onChange={(event) => {this.changeInputHandler(event, 'review', 'note')}}>
+                            <option value='1'>1</option>
+                            <option value='2'>2</option>
+                            <option value='3'>3</option>
+                            <option value='4'>4</option>
+                            <option value='5'>5</option>
+                        </select><br/><br/>
                         <input placeholder="Pourquoi cette note ? (optionnel)" type="text" value={this.state.review} onChange={(event) => {this.changeInputHandler(event, 'review', 'text')}}/>
                         <button onClick={this.addReview}>Envoyer l'avis</button>
                         <button onClick={this.closeModal}>Annuler</button>
@@ -568,13 +581,13 @@ class CourseView extends Component {
                             let noteRestante = 5;
                             let noteProgressionRestant = 5 - progression.note;
                             for(let i = 0; i < Math.floor(progression.note); i++) {
-                                stars = [stars, <img key={Math.floor(Math.random() * 5000)} src={Star} width="16px" height="16px" />];
+                                stars = [stars, <img alt="s" key={Math.floor(Math.random() * 5000)} src={Star} width="16px" height="16px" />];
                                 noteRestante = noteRestante - 1;
                             }
 
                             if (noteRestante >= 1 && noteProgressionRestant >= 1) {
                                 for(let i = 0; i < noteRestante; i++) {
-                                    stars = [stars, <img key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="16px" height="16px" />]
+                                    stars = [stars, <img alt="s" key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="16px" height="16px" />]
                                 }
 
                                 noteRestante = 0;
@@ -635,24 +648,24 @@ class CourseView extends Component {
             let noteRestante = 5;
             let noteProgressionRestant = 5 - course.rating;
             for(let i = 0; i < Math.floor(course.rating); i++) {
-                courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={Star} width="16px" height="16px" />];
+                courseStars = [courseStars, <img alt="s" key={Math.floor(Math.random() * 5000)} src={Star} width="16px" height="16px" />];
                 noteRestante = noteRestante - 1;
             }
     
             if (noteRestante >= 1 && noteProgressionRestant === 1) {
                 console.log("yeaah");
                 for(let i = 0; i < noteRestante; i++) {
-                    courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="16px" height="16px" />]
+                    courseStars = [courseStars, <img alt="s" key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="14px" height="14px" />]
                 }
     
                 noteRestante = 0;
             }
     
             if (noteRestante > 1 && noteProgressionRestant < 5 && noteProgressionRestant > 1 && noteProgressionRestant % 1 !== 0) {
-                courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={HalfStar} width="16px" height="16px" />];
+                courseStars = [courseStars, <img alt="s" key={Math.floor(Math.random() * 5000)} src={HalfStar} width="16px" height="16px" />];
     
                 for(let i = 0; i < noteRestante - 1; i++) {
-                    courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="16px" height="16px" />]
+                    courseStars = [courseStars, <img alt="s" key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="14px" height="14px" />]
                 }
     
                 noteRestante = 0;
@@ -660,14 +673,14 @@ class CourseView extends Component {
 
             if (noteRestante > 1 && noteProgressionRestant < 5 && noteProgressionRestant > 1 && noteProgressionRestant % 1 === 0) {
                 for(let i = 0; i < noteRestante; i++) {
-                    courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="16px" height="16px" />]
+                    courseStars = [courseStars, <img alt="s" key={Math.floor(Math.random() * 5000)} src={EmptyStar} width="16px" height="16px" />]
                 }
     
                 noteRestante = 0;
             }
     
             if (noteRestante === 1 && noteProgressionRestant < 1 && noteProgressionRestant > 0) {
-                courseStars = [courseStars, <img key={Math.floor(Math.random() * 5000)} src={HalfStar} width="16px" height="16px" />]
+                courseStars = [courseStars, <img alt="s" key={Math.floor(Math.random() * 5000)} src={HalfStar} width="16px" height="16px" />]
             }
         }
         return (

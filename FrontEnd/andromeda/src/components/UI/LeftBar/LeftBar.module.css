@@ -10,7 +10,7 @@
 }
 
 .Logo {
-    width: 85%;
+    width: 92%;
     height: 70px;
     font-weight: 700;
     font-size: 22px;
@@ -19,15 +19,21 @@
     text-align: left;
     float: left;
     border-bottom: 1px solid #dadada;
-    padding-left: 15%;
+    padding-left: 8%;
+}
+
+.Logo img {
+    float: left;
+    margin-top: 15px;
+    margin-right: 5px;
 }
 
 .Logo span {
     margin: 0;
     position: relative;
-    top: 30%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+    line-height: 70px;
 }
 
 .Logo span:hover {

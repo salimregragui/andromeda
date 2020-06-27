@@ -299,6 +299,18 @@
     outline: none;
 }
 
+.responseModal select {
+    border: 1px solid #c2c2c2;
+    border-radius: 10px;
+    width: 81%;
+    height: 40px;
+    margin-left: 20px;
+}
+
+.responseModal select:focus {
+    outline: none;
+}
+
 .responseModal button {
     float: right;
     margin-top: 20px;

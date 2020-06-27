@@ -7,7 +7,6 @@ import * as coursesActions from '../../store/actions/index';
 import Course from '../../components/Course/Course';
 import CourseSmall from '../../components/Course/CourseSmall/CourseSmall';
 import classes from './Dashboard.module.css';
-import CustomLoading from '../../components/UI/CustomLoading/CustomLoading';
 
 class Dashboard extends Component {
     state = {
@@ -103,7 +102,7 @@ class Dashboard extends Component {
                                name={course.name}
                                image={course.image}
                                nbrLessons={course.numberOfChapter}
-                               nbrMinutes="240"
+                               nbrMinutes={course.numberOfChapter * 12}
                                clickPlay={(event) => {this.redirectToCourseHandler(event)}}
                                nbrStudents={course.suivis} />
             ));

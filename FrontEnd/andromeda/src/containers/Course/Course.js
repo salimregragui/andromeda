@@ -80,12 +80,13 @@ class Course extends Component {
 
         if (this.props.courses) {
             courses = <React.Fragment>
-                <h1>Tous les cours disponible</h1>
+                <h1 style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>Tous les cours disponible</h1>
                  {this.props.courses.map(course => (
                     <CourseShow key={course.id}
                                    name={course.name}
+                                   image={course.image}
                                    nbrLessons={course.numberOfChapter}
-                                   nbrMinutes="240"
+                                   nbrMinutes={course.numberOfChapter * 12}
                                    nbrStudents={course.suivis} />
                 ))}
             </React.Fragment>;

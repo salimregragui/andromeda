@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import {connect} from 'react-redux';
 import * as NotificationActions from '../../store/actions/index';
+import Logo from '../../assets/images/logo-alone.svg';
 
 const Topbar = (props) => {
     const [sliderStyle, setSliderStyle] = useState(0);
@@ -38,6 +39,7 @@ const Topbar = (props) => {
                 'displayed': false
             });
         }
+        window.location.reload();
     }
 
     let image = <div className={classes.ProfileImg} style={{backgroundImage: "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
@@ -59,20 +61,26 @@ const Topbar = (props) => {
     return (
         <header className={classes.Topbar} style = {localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', borderBottom: '1px solid #312C40'} : null}>
             <div className={classes.Logo} style = {localStorage.getItem('theme') === 'dark' ? {color: 'white', borderBottom: '1px solid #312C40'} : null}>
-                <span><li>andro</li>meda</span>
+                <img src={Logo} height="40px"/><span><li>andro</li>meda</span>
             </div>
 
-            <SearchBar />
-            <Notifications />
-            <label id="switch" className={classes.switch}>
+            {props.logged ? <SearchBar /> : null}
+            {props.logged ? <Notifications /> : null}
+            {props.logged ?<label id="switch" className={classes.switch}>
                 <input type="checkbox" onChange={toggleTheme} id="slider" />
                 <span className={`${sliderStyle} ${classes.round}`}></span>
-            </label>
+            </label> : null}
             <nav>
                 {navigation}
             </nav>
         </header>
     )
+}
+
+let mapStateToProps = state => {
+    return {
+        logged: state.auth.logged
+    }
 }
 
 let mapDispatchToProps = dispatch => {
@@ -81,4 +89,4 @@ let mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(Topbar));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Topbar));
