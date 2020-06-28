@@ -2,10 +2,10 @@ import React, { useRef } from 'react';
 import classes from './Landing.module.css';
 import landingImage from '../../assets/images/landing-img.png';
 import InterfaceImage from '../../assets/images/Tasks.jpg';
-import Resources from '../../assets/images/Ressources.jpg';
+import Resources from '../../assets/images/quiz.png';
 import Ziyad from '../../assets/images/ziyad.png';
 import Salim from '../../assets/images/salim.png';
-import Course from '../../assets/images/Course.png';
+import Course from '../../assets/images/Course.jpg';
 import {motion} from 'framer-motion';
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)

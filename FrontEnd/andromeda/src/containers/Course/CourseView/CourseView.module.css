@@ -26,6 +26,19 @@
     font-size: 16px;
 }
 
+.CourseViewRight button {
+    width: 80%;
+    background-color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    font-weight: 600;
+    color: #181818;
+}
+
 .followButton {
     padding: 5px;
     padding-left: 10px;

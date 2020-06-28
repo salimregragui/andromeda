@@ -59,7 +59,8 @@ export const register = (signUpData) => {
         const user = {
             email: signUpData.email,
             password: signUpData.password,
-            username: signUpData.username
+            username: signUpData.username,
+            role: signUpData.role
         }
         axios.post('http://localhost:8000/api/auth/register', user)
             .then(response => {

@@ -17,9 +17,8 @@ class QuizController extends Controller
             
             foreach ($course->Sections as $section) {
 
-                $result=$section->quiz->Result($user);
                 $question=$section->quiz->questions;
-                $data=['Result' => $result , 'Questions' => $question];
+                $data=['Questions' => $question];
                 array_push($all_data,$data);
 
             }

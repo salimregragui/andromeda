@@ -5,14 +5,14 @@
 }
 
 .SignUp img {
-    width: 40%;
+    width: 50%;
     float: left;
-    margin-left: 80px;
+    margin-left: 50px;
     margin-top: 90px;
 }
 
 .SignUp_Content {
-    width: 50%;
+    width: 46%;
     text-align: center;
     float: right;
     margin-top: 10px;
@@ -46,13 +46,26 @@
     width: 57%;
     height: 30px;
     border-radius: 5px;
-    border: 1px solid #8A8A8A;
+    border: 1px solid #181818;
     padding-left: 3%;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
 .SignUp_Content input:focus {
+    outline: none;
+}
+
+.SignUp_Content select {
+    width: 61%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #181818;
+    padding-left: 3%;
+    cursor: pointer;
+}
+
+.SignUp_Content select:focus {
     outline: none;
 }
 

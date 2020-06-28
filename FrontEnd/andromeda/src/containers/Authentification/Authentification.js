@@ -18,7 +18,8 @@ class Authentification extends Component {
             email: '',
             password: '',
             confirmPassword: '',
-            username: ''
+            username: '',
+            role: 'Student'
         },
         errors: []
     }
@@ -59,7 +60,8 @@ class Authentification extends Component {
         const signUpData = {
             email: this.state.signUp.email,
             password: this.state.signUp.password,
-            username: this.state.signUp.username
+            username: this.state.signUp.username,
+            role: this.state.signUp.role
         }
         this.props.onRegister(signUpData);
     }

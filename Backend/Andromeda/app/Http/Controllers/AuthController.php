@@ -36,9 +36,18 @@ class AuthController extends Controller
 
     public function register()
     {
+        $status = null;
+
+        if (request('role') == 'Professor') {
+            $status = 'En attente';
+        } else {
+            $status = 'Active';
+        }
         User::create([
             'name' => request('username'),
             'email' => request('email'),
+            'role' => request('role'),
+            'status' => $status,
             'password' => Hash::make(request('password')),
             
         ]);

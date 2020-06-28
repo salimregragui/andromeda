@@ -28,7 +28,44 @@ class CourseView extends Component {
         chapterId: null,
         loaded: false,
         review: '',
-        note: 1
+        note: 1,
+        allQuizzes: [
+            {
+                'question': 'Inside which HTML element do we put the JavaScript?',
+                'response1': '<javascript>',
+                'response2':'<scripting>',
+                'response3':'<js>',
+                'response_correcte':'<script>'
+            },
+            {
+                'question': 'Where is the correct place to insert a JavaScript?',
+                'response1': 'Outside of both',
+                'response2':'<body>',
+                'response3':'<head>',
+                'response_correcte':'<head> and <body> are correct'
+            },
+            {
+                'question': 'What is the correct syntax for referring to an external script called "xxx.js"?',
+                'response1': '<script name="xxx.js">',
+                'response2':'<script href="xxx.js">',
+                'response3':'<script js="xxx.js">',
+                'response_correcte':'<script src="xxx.js">'
+            },
+            {
+                'question': 'The external JavaScript file must contain the <script> tag',
+                'response1': 'True',
+                'response2':'If you want',
+                'response3':'It needs to be on both files',
+                'response_correcte':'False'
+            },
+            {
+                'question': 'How do you write "Hello World" in an alert box?',
+                'response1': 'alertBox("Hello world")',
+                'response2':'msgBox("Hello world")',
+                'response3':'msg("Hello world")',
+                'response_correcte':'alert("Hello world")'
+            }
+        ]
     }
     componentDidMount() {
         if (localStorage.getItem('theme') === 'dark') {
@@ -98,7 +135,6 @@ class CourseView extends Component {
 
     dataButtonsHandler = (name) => {
         let buttons = document.getElementsByClassName(classes.buttonData);
-        console.log(buttons);
 
         Array.prototype.forEach.call(buttons, button => {
             button.style.color = '#757575';
@@ -116,7 +152,6 @@ class CourseView extends Component {
         axios.get('http://localhost:8000/api/auth/comment/chapter/' + chapterId)
         .then(response => {
             this.setState({chapterComments: response.data.comments});
-            console.log(this.state);
         })
         .catch(error => console.log(error));
     }
@@ -128,7 +163,6 @@ class CourseView extends Component {
 
         axios.post('http://localhost:8000/api/auth/comment/response/' + commentId, response)
         .then(response => {
-            console.log(response);
             this.props.onNotificationAdd({
                 'type': 'success',
                 'content': 'Vous avez répondu au cours avec succès !',
@@ -148,7 +182,6 @@ class CourseView extends Component {
 
         axios.post('http://localhost:8000/api/auth/comment/'+this.state.chapterId, response)
         .then(response => {
-            console.log(response);
             this.props.onNotificationAdd({
                 'type': 'success',
                 'content': 'Vous avez ajouter un commentaire au chapitre avec succès !',
@@ -178,7 +211,6 @@ class CourseView extends Component {
 
         axios.post('http://localhost:8000/api/auth/comment-course/'+course.id, review)
         .then(response => {
-            console.log(response);
             this.props.onNotificationAdd({
                 'type': 'success',
                 'content': 'Vous avez ajouter un avis au cours avec succès !',
@@ -249,6 +281,10 @@ class CourseView extends Component {
 
     showReviewModal = () => {
         this.setState({modalType: 'review'});
+    }
+
+    showQuiz = () => {
+        this.setState({modalType: 'quiz'});
     }
 
     closeModal = () => {
@@ -420,6 +456,7 @@ class CourseView extends Component {
                                     onClick={() => {this.chapterChangeHandler(chapter.id, chapter.name, chapter.video)}}
                                     >Chapitre {chapter_counter} : {chapter.name}</button>
                         })}
+                        {section_counter === 1 ? <button style={{backgroundColor: '#27ae60', color:'white',marginBottom:'0px'}}>Quiz deja passer : 16.5 / 20</button> : <button onClick={this.showQuiz}>Quiz de la section</button>}
                     </div>
                 </div>
             })
@@ -460,6 +497,24 @@ class CourseView extends Component {
                         <input placeholder="Pourquoi cette note ? (optionnel)" type="text" value={this.state.review} onChange={(event) => {this.changeInputHandler(event, 'review', 'text')}}/>
                         <button onClick={this.addReview}>Envoyer l'avis</button>
                         <button onClick={this.closeModal}>Annuler</button>
+                    </div>
+                </Modal>
+            }
+            else if (this.state.modalType === 'quiz') {
+                modal = <Modal width="60" height="250px" fullscreen>
+                    <button onClick={this.closeModal}>Fermer</button>
+                    <div className={classes.responseModal} style={{height:'95%',overflowY:'scroll', overflowX:'hidden'}}>
+                        {this.state.allQuizzes.map(quiz => {
+                            return <div key={quiz.question} style={{marginLeft:'30px'}}>
+                                <p style={{fontWeight:'600'}}>{quiz.question}</p>
+                                <ul style={{listStyleType:'circle', cursor:'pointer'}}>
+                                    <li>{quiz.response1}</li><br/>
+                                    <li>{quiz.response2}</li><br/>
+                                    <li>{quiz.response3}</li><br/>
+                                    <li>{quiz.response_correcte}</li><br/>
+                                </ul>
+                            </div>
+                        })}
                     </div>
                 </Modal>
             }

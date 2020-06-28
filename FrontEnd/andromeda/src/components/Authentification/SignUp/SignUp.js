@@ -26,6 +26,12 @@ const SignUp = (props) => {
                 <label>Confirmer Mot de passe :</label>
                 <input type="password" name="confirmPassword" placeholder="Confirmer votre Mot de passe" value={props.confirmPass} onChange={props.changed} /><br/>
                 
+                <label>Type de compte :</label>
+                <select name="role" value={props.role} onChange={props.changed}>
+                    <option value="Student">Etudiant</option>
+                    <option value="Professor">Professeur</option>
+                </select><br/>
+                
                 <br/><br/><br/>
                 <button onClick={props.submitedSignUp}>S'inscrire</button>
 
