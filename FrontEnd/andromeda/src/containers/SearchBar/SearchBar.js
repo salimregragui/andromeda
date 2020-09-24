@@ -42,7 +42,7 @@ class SearchBar extends Component {
         if (!this.state.loading) {
             this.setState({loading: true});
     
-            axios.get('http://localhost:8000/api/auth/search/autocomplete/' + str)
+            axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/search/autocomplete/' + str)
             .then(response => {
               this.setState({data:response.data});  
               this.setState({loading: false});

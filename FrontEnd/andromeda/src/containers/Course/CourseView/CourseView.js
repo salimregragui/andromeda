@@ -149,7 +149,7 @@ class CourseView extends Component {
     }
 
     getChapterComments = (chapterId) => {
-        axios.get('http://localhost:8000/api/auth/comment/chapter/' + chapterId)
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/comment/chapter/' + chapterId)
         .then(response => {
             this.setState({chapterComments: response.data.comments});
         })
@@ -161,7 +161,7 @@ class CourseView extends Component {
             content: this.state.response
         }
 
-        axios.post('http://localhost:8000/api/auth/comment/response/' + commentId, response)
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/comment/response/' + commentId, response)
         .then(response => {
             this.props.onNotificationAdd({
                 'type': 'success',
@@ -180,7 +180,7 @@ class CourseView extends Component {
             content: this.state.comment
         }
 
-        axios.post('http://localhost:8000/api/auth/comment/'+this.state.chapterId, response)
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/comment/'+this.state.chapterId, response)
         .then(response => {
             this.props.onNotificationAdd({
                 'type': 'success',
@@ -209,7 +209,7 @@ class CourseView extends Component {
 
         let course = this.props.courses.find(ps => ps.name === this.props.match.params.courseName.split('-').join(' '));
 
-        axios.post('http://localhost:8000/api/auth/comment-course/'+course.id, review)
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/comment-course/'+course.id, review)
         .then(response => {
             this.props.onNotificationAdd({
                 'type': 'success',
@@ -223,7 +223,7 @@ class CourseView extends Component {
     }
 
     likeComment = (commentId) => {
-        axios.get('http://localhost:8000/api/auth/like-unlike-comment/'+commentId)
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/like-unlike-comment/'+commentId)
         .then(response => {
             this.getChapterComments(this.state.chapterId);
             if (response.data.liked === 'liked') {
@@ -246,7 +246,7 @@ class CourseView extends Component {
     }
 
     likeResponse = (responseId) => {
-        axios.get('http://localhost:8000/api/auth/like-unlike-response/'+responseId)
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/like-unlike-response/'+responseId)
         .then(response => {
             this.getChapterComments(this.state.chapterId);
 
@@ -343,7 +343,7 @@ class CourseView extends Component {
 
         if (progression) {
             if (nextChapterId > progression.chapter_id) {
-                axios.put('http://localhost:8000/api/auth/progression/' + progression.id + '/' + nextChapterId)
+                axios.put('https://limitless-wildwood-57587.herokuapp.com/api/auth/progression/' + progression.id + '/' + nextChapterId)
                 .then(response => {
                     console.log(response);
                     this.props.onNotificationAdd({
@@ -371,7 +371,7 @@ class CourseView extends Component {
 
     followCourse = (type) => {
         let courseId = this.props.courses.find(ps => ps.name === this.props.match.params.courseName.split('-').join(' '))
-        axios.get('http://localhost:8000/api/auth/follow/' + courseId.id)
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/follow/' + courseId.id)
         .then (response => {
             console.log('ok !');
             if (type === 'follow') {
@@ -531,7 +531,7 @@ class CourseView extends Component {
                         <h2>Thread</h2>
                         <div className={classes.threadModalScroll}>
                             <div className={classes.threadComment} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', border:'none'} : null}>
-                                <div className={classes.threadCommentImg} onClick={() => {this.props.history.push('/profile/' + this.state.chapterComments[this.state.commentId].user.name.split(' ').join('-'))}} style={{cursor:'pointer', backgroundImage: this.state.chapterComments[this.state.commentId].user.image ? "url('http://localhost:8000/storage/images/" + this.state.chapterComments[this.state.commentId].user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                                <div className={classes.threadCommentImg} onClick={() => {this.props.history.push('/profile/' + this.state.chapterComments[this.state.commentId].user.name.split(' ').join('-'))}} style={{cursor:'pointer', backgroundImage: this.state.chapterComments[this.state.commentId].user.image ? "url('https://limitless-wildwood-57587.herokuapp.com/storage/images/" + this.state.chapterComments[this.state.commentId].user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                                 <div className={classes.threadCommentInfos} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                                     {this.state.chapterComments[this.state.commentId].user.name} 
                                     {this.props.courses.find(cs => cs.name === this.props.match.params.courseName.split('-').join(' ')).user_id === this.state.chapterComments[this.state.commentId].user.id ? <em style={localStorage.getItem('theme') === 'dark' ? {border:'1px solid white'} : null}>Auteur du cours</em> : null}
@@ -556,7 +556,7 @@ class CourseView extends Component {
                                     likedResponse = <button onClick={() => {this.likeResponse(response.id)}} style={{backgroundColor: '#e74c3c'}}><img src={unlikeIcon} alt="like" width="10px" height="10px" /></button>
                                 }
                                 return <div key={response.id} className={classes.threadResponse} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839', border:'none'} : null}>
-                                    <div className={classes.threadResponseImg} onClick={() => {this.props.history.push('/profile/' + response.user.name.split(' ').join('-'))}} style={{cursor:'pointer', backgroundImage: response.user.image ? "url('http://localhost:8000/storage/images/" + response.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                                    <div className={classes.threadResponseImg} onClick={() => {this.props.history.push('/profile/' + response.user.name.split(' ').join('-'))}} style={{cursor:'pointer', backgroundImage: response.user.image ? "url('https://limitless-wildwood-57587.herokuapp.com/storage/images/" + response.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                                     <div className={classes.threadResponseInfos} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                                         {response.user.name} 
                                         {this.props.courses.find(cs => cs.name === this.props.match.params.courseName.split('-').join(' ')).user_id === this.state.chapterComments[this.state.commentId].user.id ? <em style={localStorage.getItem('theme') === 'dark' ? {border:'1px solid white'} : null}>Auteur du cours</em> : null}
@@ -595,7 +595,7 @@ class CourseView extends Component {
                         likedComment = <button onClick={() => {this.likeComment(chapterComment.id)}} style={{backgroundColor: '#e74c3c'}}><img src={unlikeIcon} alt="like" width="10px" height="10px" /></button>
                     }
                     return <div key={chapterComment.id} className={classes.comment} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor: '#2C2839'} : null}>
-                        <div className={classes.commentImg} onClick={() => {this.props.history.push('/profile/' + chapterComment.user.name.split(' ').join('-'))}} style={{cursor:'pointer', backgroundImage: chapterComment.user.image ? "url('http://localhost:8000/storage/images/" + chapterComment.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                        <div className={classes.commentImg} onClick={() => {this.props.history.push('/profile/' + chapterComment.user.name.split(' ').join('-'))}} style={{cursor:'pointer', backgroundImage: chapterComment.user.image ? "url('https://limitless-wildwood-57587.herokuapp.com/storage/images/" + chapterComment.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                         <div className={classes.commentInfos} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                             {chapterComment.user.name} 
                             {this.props.courses.find(cs => cs.name === this.props.match.params.courseName.split('-').join(' ')).user_id === chapterComment.user.id ? <em style={localStorage.getItem('theme') === 'dark' ? {border:'1px solid white'} : null}>Auteur du cours</em> : null}

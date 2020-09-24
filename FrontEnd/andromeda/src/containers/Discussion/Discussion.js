@@ -77,7 +77,7 @@ class Discussion extends Component {
             'text': this.state.message,
             'discussion_id': this.state.currentDiscussion.id
         }
-        axios.post('http://localhost:8000/api/auth/message/send/groupe', message)
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/message/send/groupe', message)
         .then(response => {
             console.log(response);
         })
@@ -129,7 +129,7 @@ class Discussion extends Component {
                 if (this.state.currentDiscussion) {
                     if (discussion.users.name === this.state.currentDiscussion.users.name) {
                         return <div key={discussion.id} className={classes.selectedDiscussion}>
-                        <div className={classes.selectedDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('http://localhost:8000/storage/images/" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                        <div className={classes.selectedDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('https://limitless-wildwood-57587.herokuapp.com/storage/images/" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                         <div className={classes.selectedDiscussionInfos}>
                             <br/><br/>
                             <span>{discussion.users.name}</span>
@@ -141,7 +141,7 @@ class Discussion extends Component {
                     </div>
                     } else {
                         return <div style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null} key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
-                            <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('http://localhost:8000/storage/images/" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                            <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('https://limitless-wildwood-57587.herokuapp.com/storage/images/" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                             <div className={classes.aDiscussionInfos}>
                                 <br/><br/>
                                 <span style={localStorage.getItem('theme') === 'dark' ? {color: 'white'} : null}>{discussion.users.name}</span>
@@ -155,7 +155,7 @@ class Discussion extends Component {
                 }
                 else {
                     return <div style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null} key={discussion.id} onClick={() => {this.setCurrentDiscussionHandler(discussion, id)}} className={classes.aDiscussion}>
-                    <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('http://localhost:8000/storage/images/" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                    <div className={classes.aDiscussionImg} style={{backgroundImage: discussion.users.image ? "url('https://limitless-wildwood-57587.herokuapp.com/storage/images/" + discussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                     <div className={classes.aDiscussionInfos}>
                         <br/><br/>
                         <span style={localStorage.getItem('theme') === 'dark' ? {color: 'white'} : null}>{discussion.users.name}</span>
@@ -182,7 +182,7 @@ class Discussion extends Component {
 
                 <div className={classes.DiscussionsRight} style={localStorage.getItem('theme') === 'dark' ? {backgroundColor:'#2C2839', color: 'white'} : null}>
                     {this.state.currentDiscussion ? <React.Fragment><div className={classes.DiscussionInfos}>
-                    <div className={classes.DiscussionInfosImg} style={{backgroundImage: this.state.currentDiscussion.users.image ? "url('http://localhost:8000/storage/images/" + this.state.currentDiscussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                    <div className={classes.DiscussionInfosImg} style={{backgroundImage: this.state.currentDiscussion.users.image ? "url('https://limitless-wildwood-57587.herokuapp.com/storage/images/" + this.state.currentDiscussion.users.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
                         <br/>
                         <span style={localStorage.getItem('theme') === 'dark' ? {color: 'white'} : null}>{this.state.currentDiscussion.users.name}</span>
                         <br/><br/>

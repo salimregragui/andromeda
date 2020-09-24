@@ -147,7 +147,7 @@ class CourseAdd extends Component {
             headers:{'Content-Type' : 'multipart/form-data'}
         };
 
-        axios.post('http://localhost:8000/api/auth/course', courseInfos, config)
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/course', courseInfos, config)
         .then(response => {
           console.log(response.data);
           let courseId = response.data.courseId;
@@ -157,7 +157,7 @@ class CourseAdd extends Component {
                 name: section.name,
                 number: sid
             }
-            axios.post('http://localhost:8000/api/auth/section/' + courseId, sectionInfos)
+            axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/section/' + courseId, sectionInfos)
             .then(response => {
                 console.log(response.data);
                 let sectionId = response.data.sectionId;
@@ -168,7 +168,7 @@ class CourseAdd extends Component {
                         link: chapter.link
                     }
 
-                    axios.post('http://localhost:8000/api/auth/chapter/' + sectionId, chapterInfos)
+                    axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/chapter/' + sectionId, chapterInfos)
                     .then(response => {
                         console.log(response.data);
                     })

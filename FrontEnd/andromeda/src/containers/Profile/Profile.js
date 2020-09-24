@@ -38,7 +38,7 @@ class Profile extends Component {
 
     getSelectedUserHandler = (name) => {
         console.log("okay !");
-        axios.get('http://localhost:8000/api/auth/user/' + name.split('-').join(' '), this.props.user)
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/user/' + name.split('-').join(' '), this.props.user)
         .then(response => {
             this.setState({selectedUser:response.data.User});  
         })
@@ -57,7 +57,7 @@ class Profile extends Component {
     }
 
     startDiscussion = () => {
-        axios.get('http://localhost:8000/api/auth/discussion/user/' + this.state.selectedUser.id)
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/discussion/user/' + this.state.selectedUser.id)
         .then(response => {
             console.log(response);
             if (response.data.discussion_id === null) {
@@ -109,7 +109,7 @@ class Profile extends Component {
             'text': this.state.message
         }
 
-        axios.post('http://localhost:8000/api/auth/message/send/groupe', message)
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/message/send/groupe', message)
         .then(response => {
             console.log(response);
             this.setState({showModal: false, message: ''});

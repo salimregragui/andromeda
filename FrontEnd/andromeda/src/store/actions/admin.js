@@ -11,10 +11,10 @@ export const coursesAllSuccessAdmin = (courses) => {
 export const coursesAllAdmin = () => {
     return dispatch => {
         let courses = null;
-        axios.get('http://localhost:8000/api/auth/course')
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/course')
         .then(response => {
             courses = [...response.data.courses];
-            axios.get('http://localhost:8000/api/auth/course/invalide')
+            axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/course/invalide')
             .then(resp => {
                 courses.push(...resp.data.courses);
                 dispatch(coursesAllSuccessAdmin(courses));
@@ -38,7 +38,7 @@ export const usersAllAdminSuccess = (users) => {
 
 export const usersAllAdmin = () => {
     return dispatch => {
-        axios.get('http://localhost:8000/api/auth/user')
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/user')
         .then(response => {
             dispatch(usersAllAdminSuccess(response.data.Users));
         })

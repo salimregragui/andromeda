@@ -18,7 +18,7 @@ export const coursesProgressionSuccess = (progression) => {
 
 export const coursesAll = () => {
     return dispatch => {
-        axios.get('http://localhost:8000/api/auth/course')
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/course')
         .then(response => {
             console.log(response);
             dispatch(coursesAllSuccess(response.data.courses));
@@ -31,7 +31,7 @@ export const coursesAll = () => {
 
 export const coursesProgression = () => {
     return dispatch => {
-        axios.get('http://localhost:8000/api/auth/course/progression')
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/course/progression')
         .then(response => {
             console.log(response);
             dispatch(coursesProgressionSuccess(response.data.Courses));

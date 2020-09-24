@@ -33,7 +33,7 @@ export const auth = (email, password) => {
             password: password
         }
 
-        axios.post('http://localhost:8000/api/auth/login', authData)
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/login', authData)
         .then(response => {
             console.log(response.data.user);
             localStorage.setItem('token', response.data.access_token);
@@ -62,7 +62,7 @@ export const register = (signUpData) => {
             username: signUpData.username,
             role: signUpData.role
         }
-        axios.post('http://localhost:8000/api/auth/register', user)
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/register', user)
             .then(response => {
                 console.log(response);
                 dispatch(auth(signUpData.email, signUpData.password));

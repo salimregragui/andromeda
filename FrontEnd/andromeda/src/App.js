@@ -41,7 +41,7 @@ class App extends Component {
       //   }
       // });
       this.props.onAuthStart();
-      axios.post('http://localhost:8000/api/auth/me')
+      axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/me')
       .then(response => {
         console.log(response);
         this.props.onGetUser(token, response.data);

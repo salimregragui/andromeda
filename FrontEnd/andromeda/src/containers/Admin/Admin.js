@@ -116,7 +116,7 @@ class Admin extends Component {
     }
 
     banUser = (userId, username) => {
-        axios.post('http://localhost:8000/api/auth/user/' + userId + '/banned')
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/user/' + userId + '/banned')
         .then(response => {
             this.props.onAddNotification({
                 'type': 'success',
@@ -132,7 +132,7 @@ class Admin extends Component {
     }
 
     unbanUser = (userId, username) => {
-        axios.post('http://localhost:8000/api/auth/user/' + userId + '/unbanned')
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/user/' + userId + '/unbanned')
         .then(response => {
             console.log(response);
             this.props.onAddNotification({
@@ -149,7 +149,7 @@ class Admin extends Component {
     }
 
     validateCourse = () => {
-        axios.get('http://localhost:8000/api/auth/course-validation/' + this.state.selectedCourse.id)
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/course-validation/' + this.state.selectedCourse.id)
         .then(response => {
             console.log(response);
             this.props.onAddNotification({

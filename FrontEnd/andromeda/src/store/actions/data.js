@@ -10,7 +10,7 @@ export const tasksAllSuccess = (tasks) => {
 
 export const tasksAll = () => {
     return dispatch => {
-        axios.get('http://localhost:8000/api/auth/task')
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/task')
         .then(response => {
             dispatch(tasksAllSuccess(response.data.tasks));
         })
@@ -22,7 +22,7 @@ export const tasksAll = () => {
 
 export const taskAdd = (task) => {
     return dispatch => {
-        axios.post('http://localhost:8000/api/auth/task', task)
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/task', task)
         .then(response => {
             dispatch(addNotification({
                 'type':'success',
@@ -47,7 +47,7 @@ export const taskEdit = (task) => {
     delete task.id;
     console.log(task);
     return dispatch => {
-        axios.put('http://localhost:8000/api/auth/task/'+ id, task)
+        axios.put('https://limitless-wildwood-57587.herokuapp.com/api/auth/task/'+ id, task)
         .then(response => {
             dispatch(addNotification({
                 'type':'success',
@@ -70,7 +70,7 @@ export const taskEdit = (task) => {
 export const taskDelete = (task) => {
     let taskId = task.id;
     return dispatch => {
-        axios.delete('http://localhost:8000/api/auth/task/'+ taskId)
+        axios.delete('https://limitless-wildwood-57587.herokuapp.com/api/auth/task/'+ taskId)
         .then(response => {
             dispatch(addNotification({
                 'type':'success',
@@ -101,7 +101,7 @@ export const resourcesAllSuccess = (resources) => {
 
 export const resourcesAll = () => {
     return dispatch => {
-        axios.get('http://localhost:8000/api/auth/resource')
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/resource')
         .then(response => {
             dispatch(resourcesAllSuccess(response.data.CoursesResources));
         })
@@ -121,7 +121,7 @@ export const discussionsAllSuccess = (discussions) => {
 
 export const discussionsAll = () => {
     return dispatch => {
-        axios.get('http://localhost:8000/api/auth/discussion')
+        axios.get('https://limitless-wildwood-57587.herokuapp.com/api/auth/discussion')
         .then(response => {
             dispatch(discussionsAllSuccess(response.data.Discussions));
         })
