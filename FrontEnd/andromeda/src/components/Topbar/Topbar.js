@@ -42,7 +42,7 @@ const Topbar = (props) => {
         window.location.reload();
     }
 
-    let image = <div className={classes.ProfileImg} style={{backgroundImage: "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+    let image = <div className={classes.ProfileImg} style={{backgroundImage: "url('https://andromeda-learning.netlify.com/profile-placeholder.jpg')"}}></div>
     let navigation = <NavigationItems />;
 
     if (props.user) {
