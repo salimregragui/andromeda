@@ -47,7 +47,7 @@ const Topbar = (props) => {
 
     if (props.user) {
         if (props.user.image) {
-            image = <div className={classes.ProfileImg} style={{backgroundImage: "url('http://localhost:8000/storage/images/" + props.user.image + "')"}}></div>
+            image = <div className={classes.ProfileImg} style={{backgroundImage: "url('https://limitless-wildwood-57587.herokuapp.com/storage/images/" + props.user.image + "')"}}></div>
         }
     }
 
