@@ -31,7 +31,7 @@ const ProfileUser = (props) => {
         userData = <React.Fragment>
             <div className={classes.Profile}>
                 <div className={classes.userInfos}>
-                    <div className={classes.userImage} style={{backgroundImage:props.user.image ? "url('" + props.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                    <div className={classes.userImage} style={{backgroundImage:props.user.image ? "url('" + props.user.image + "')" : "url('https://andromeda-learning.netlify.com/profile-placeholder.jpg')"}}></div>
                     <div className={classes.userInfosText} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
                         {props.user.name}<br/>
                         <span>Compte crée : {timeago.format(props.user.created_at)}</span>

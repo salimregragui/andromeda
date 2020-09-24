@@ -39,11 +39,11 @@ const Profile = (props) => {
             headers:{'Content-Type' : 'multipart/form-data'}
         };
 
-        axios.post('http://localhost:8000/api/auth/user/'+ props.user.id +'/profile-photo', image, config)
+        axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/user/'+ props.user.id +'/profile-photo', image, config)
         .then (response => {
             console.log(response.data);
             document.getElementById('userImage').style.backgroundImage = "url('" + response.data.image + "')";
-            axios.post('http://localhost:8000/api/auth/me')
+            axios.post('https://limitless-wildwood-57587.herokuapp.com/api/auth/me')
             .then(response => {
                 props.onImageChangedNotification();
                 props.onImageChange(localStorage.getItem('token'), response.data);
@@ -65,7 +65,7 @@ const Profile = (props) => {
     return (
         <div className={classes.Profile}>
             <div className={classes.userInfos}>
-                <div id="userImage" onClick={() => handleClick()} className={classes.userImage} style={{backgroundImage:props.user.image ? "url('http://localhost:8000/storage/images/" + props.user.image + "')" : "url('http://localhost:3000/profile-placeholder.jpg')"}}></div>
+                <div id="userImage" onClick={() => handleClick()} className={classes.userImage} style={{backgroundImage:props.user.image ? "url('https://limitless-wildwood-57587.herokuapp.com/storage/images/" + props.user.image + "')" : "url('https://andromeda-learning.netlify.com/profile-placeholder.jpg')"}}></div>
                 
                 <input style={{display:'none'}} id="uploadFile" type="file" name="image" ref={fileInput} onChange={(event) => {handleFileChange(event)}}/>
                 <div className={classes.userInfosText} style={localStorage.getItem('theme') === 'dark' ? {color:'white'} : null}>
